@@ -1,0 +1,6 @@
+#ErrorDocument 404 lioncms/index.php
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ lioncms/index.php?u=$1 [L]

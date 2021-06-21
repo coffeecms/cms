@@ -1,0 +1,1 @@
+<?php Configs::$_['menu_data']=[];Configs::$_['sub_menu_data']=[];Configs::$_['menu_data_json']='[{"menu_id":"11015030","parent_menu_id":"","title":"Home","is_url":"0","page_url":"","menu_type":"1","content":null,"status":"1","sort_order":"-2","ent_dt":"2021-05-30 15:08:54","upd_dt":"2021-05-30 15:08:54"}]';Configs::$_['sub_menu_data_json']='[]';

@@ -1,0 +1,5 @@
+Coffee Stats
+Track individual visitors using your website in real-time
+1.0
+https://github.com/coffeecms
+CoffeeCMS Team
