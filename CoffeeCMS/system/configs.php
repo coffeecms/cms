@@ -47,3 +47,7 @@ class Configs
     public static $admin_plugin_shortcode_js=array();
 
 }
+
+spl_autoload_register(function ($classname) {
+    require_once(SYSTEM_PATH . 'autoloads_class/' . $classname . '.php');
+});

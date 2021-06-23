@@ -27,6 +27,7 @@
                   <tr>
                     <th><button type="button" class="btn btn-default btn-xs btn-checkall" data-checked="no"><i class="fas fa-square"></i></button></th>
                     <th><?php echo get_text_by_lang('Date','admin');?></th>
+                    <th><?php echo get_text_by_lang('Short Url','admin');?></th>
                     <th><?php echo get_text_by_lang('Target Url','admin');?></th>
                     <th><?php echo get_text_by_lang('Status','admin');?></th>
                   </tr>
@@ -121,6 +122,7 @@ function prepareShowPost()
     li+='<tr class="tr-id-'+pageData['theList'][i]['code']+'">';
     li+='<td><button type="button" class="btn btn-default btn-xs btn-checkbox" data-checked="no" data-id="'+pageData['theList'][i]['code']+'"><i class="fas fa-square"></i></button></td>';
     li+='<td>'+pageData['theList'][i]['ent_dt']+'</td>';
+    li+='<td><a href="'+SITE_URL+'go/'+pageData['theList'][i]['code']+'" style="color:#000;" target="_blank">'+SITE_URL+'go/'+pageData['theList'][i]['code']+'</a></td>';
     li+='<td>'+pageData['theList'][i]['target_url']+'</td>';
 
     li+='<td>'+postStatus+'</td>';

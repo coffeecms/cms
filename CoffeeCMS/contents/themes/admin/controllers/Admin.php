@@ -37,7 +37,7 @@ class Admin
 
 		);
 
-		useClass('UserAgent');
+		// useClass('UserAgent');
 
 		// $useragent = UserAgentFactory::analyze($_SERVER['HTTP_USER_AGENT']);
 		// print_r($useragent->browser);die();
@@ -417,6 +417,101 @@ class Admin
 		view('header');
 		view('left');
 		view('projects',$theData);
+		view('footer');
+	}
+
+	public static function projects_task()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+
+		$theData=array(
+			'listCat'=>[],
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+		$queryStr="";
+		$addqueryStr="";
+
+		if(!isset(Configs::$_['user_permissions']['menu05']))
+		{
+			redirect_to(SITE_URL.'admin');
+		}		
+
+        $db=new Database();    
+      
+		$queryStr="";
+
+		$queryStr=" select * from kanban_board_project_mst order by title desc";
+
+        $result=$db->query($queryStr);
+
+        $theData['theList']=json_encode($result);
+
+        // $theData['totalPost']=count($result);
+
+		view('header');
+		view('left');
+		view('projects_task',$theData);
+		view('footer');
+	}
+
+	public static function tasks()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+		$project_c=getGet('project_c','');
+
+		if(!isset($project_c[2]))
+		{
+			redirect_to(SITE_URL.'admin/projects');
+		}
+
+		$theData=array(
+			'listCat'=>[],
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+		$queryStr="";
+		$addqueryStr="";
+
+		if(!isset(Configs::$_['user_permissions']['menu05']))
+		{
+			redirect_to(SITE_URL.'admin');
+		}		
+
+        $db=new Database();    
+      
+		$queryStr="";
+
+		$theData['theProject']=$db->query("select * from kanban_board_project_mst where project_c='".$project_c."'");
+		$theData['listUsers']=$db->query("select username,user_id from user_mst order by username asc");
+		$theData['listTask']=$db->query("select a.*,b.username from kanban_task_data as a join user_mst as b ON a.user_id=b.user_id where project_c='".$project_c."' order by a.ent_dt asc");
+
+        $theData['project_c']=$project_c;
+        // $theData['totalPost']=count($result);
+
+		view('header');
+		view('left');
+		view('tasks',$theData);
 		view('footer');
 	}
 

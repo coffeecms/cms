@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 20, 2021 at 09:48 AM
+-- Generation Time: Jun 23, 2021 at 02:14 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -129,7 +129,25 @@ INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent
 ('user_login', 'Login success', 'admin', '2021-06-20 10:26:29'),
 ('user_login', 'Login success', 'admin', '2021-06-20 10:26:36'),
 ('user_login', 'Login success', 'admin', '2021-06-20 10:27:06'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:28:03');
+('user_login', 'Login success', 'admin', '2021-06-20 10:28:03'),
+('user_login', 'Login success', 'admin', '2021-06-21 10:50:49'),
+('short_url_add', 'Add new short url GuFvCwrKA', '11015035', '2021-06-21 16:07:22'),
+('user_login', 'Login success', 'admin', '2021-06-21 16:17:13'),
+('usergroup_update', 'update user group Administrator', '11015035', '2021-06-22 11:01:36'),
+('project_task_add', 'Add new task test', '11015035', '2021-06-22 14:33:36'),
+('project_task_add', 'Add new task This is test task in test project mangement plugin', '11015035', '2021-06-22 14:41:31'),
+('project_task_add', 'Add new task tset 2', '11015035', '2021-06-22 16:33:44'),
+('project_task_add', 'Add new task test 6', '11015035', '2021-06-22 16:34:20'),
+('project_task_update', 'update task This is test task in test project mangement plugin', '11015035', '2021-06-22 16:51:15'),
+('project_task_update', 'update task test 6', '11015035', '2021-06-22 16:52:12'),
+('project_task_delete', 'Delete task ', '11015035', '2021-06-23 08:57:46'),
+('project_task_delete', 'Delete task ', '11015035', '2021-06-23 08:58:59'),
+('project_task_delete', 'Delete task 1416074531620558876', '11015035', '2021-06-23 08:59:22'),
+('project_task_delete', 'Delete task 4763671632910852166', '11015035', '2021-06-23 08:59:28'),
+('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:00:34'),
+('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:07:30'),
+('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:07:57'),
+('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:08:08');
 
 -- --------------------------------------------------------
 
@@ -176,7 +194,7 @@ INSERT INTO `admin_menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `
 ('11015021', '11011018', 'Email Templates', 0, 'admin/email_templates', NULL, 'nav-icon fas fa-tag', 5, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11015022', '11011012', 'Categories', 0, 'admin/categories', NULL, 'nav-icon fas fa-tag', 4, '2021-01-31 08:22:16', '2021-01-31 08:22:16'),
 ('11015023', '11011017', 'All Plugins', 0, 'admin/plugins', NULL, 'nav-icon fas fa-tag', 0, '2021-01-31 08:42:42', '2021-01-31 08:42:42'),
-('11015024', '11011014', 'All Projects', 0, 'admin/projects', NULL, 'nav-icon fas fa-tag', 0, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
+('11015024', '11011014', 'All Projects', 0, 'admin/projects', NULL, 'nav-icon fas fa-tag', 1, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
 ('11015025', '11011016', 'Permissions', 0, 'admin/global_permission', NULL, 'nav-icon fas fa-tag', 5, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
 ('11015026', '11011016', 'Groups', 0, 'admin/group_user', NULL, 'nav-icon fas fa-tag', 4, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
 ('11015027', NULL, 'Email Marketings', 0, '', NULL, 'nav-icon fas fa-inbox', 30, '2021-01-31 08:26:07', '2021-01-31 08:26:07'),
@@ -187,6 +205,7 @@ INSERT INTO `admin_menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `
 ('11015032', '11015027', 'UnSubscrible List', 0, 'admin/email_marketing_unsubscrible', NULL, 'nav-icon fas fa-tag', 7, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11015034', '11015027', 'Dashboard', 0, 'admin/email_marketing_dashboard', NULL, 'nav-icon fas fa-tag', 0, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11015035', '11015027', 'Job List', 0, 'admin/email_marketing_jobs', NULL, 'nav-icon fas fa-tag', 2, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
+('11015424', '11011014', 'All Tasks', 0, 'admin/projects_task', NULL, 'nav-icon fas fa-tag', 2, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
 ('11017021', '11011018', 'Activities', 0, 'admin/activities_logs', NULL, 'nav-icon fas fa-tag', 6, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11017121', '11011018', 'Short Urls', 0, 'admin/short_urls', NULL, 'nav-icon fas fa-tag', 8, '2021-01-31 13:07:22', '2021-01-31 13:07:22');
 
@@ -523,29 +542,33 @@ CREATE TABLE `group_permission_data` (
 --
 
 INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_dt`) VALUES
-('11016011', 'category01', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'category02', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu01', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu02', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu03', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu04', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu05', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu06', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu07', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu08', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu09', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'menu10', '11015035', '2021-06-19 15:22:59'),
-('11016011', 'menu11', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post01', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post02', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post04', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post05', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post06', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post08', '11015035', '2021-06-19 15:22:59'),
-('11016011', 'post09', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post10', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post11', '11015035', '2021-06-19 15:23:00'),
-('11016011', 'post12', '11015035', '2021-06-19 15:23:00'),
+('11016011', 'category01', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'category02', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu01', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu02', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu03', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu04', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu05', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'menu06', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu07', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu08', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'menu09', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'menu10', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'menu11', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'per1101101', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'per1101102', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'per1101103', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'per1101105', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post01', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post02', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'post04', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'post05', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post06', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post08', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post09', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'post10', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'post11', '11015035', '2021-06-23 09:07:30'),
+('11016011', 'post12', '11015035', '2021-06-23 09:07:31'),
 ('11016012', 'category01', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'category02', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'menu01', '11015035', '2021-06-19 14:56:29'),
@@ -556,22 +579,22 @@ INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_
 ('11016012', 'post02', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'post04', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'post05', '11015035', '2021-06-19 14:56:29'),
-('11016013', 'category01', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu01', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu02', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu03', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu04', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu05', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu06', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu07', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu08', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu09', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu10', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'menu11', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'post01', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'post02', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'post04', '11015035', '2021-06-19 14:57:40'),
-('11016013', 'post05', '11015035', '2021-06-19 14:57:40'),
+('11016013', 'category01', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu01', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu02', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu03', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu04', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu05', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu06', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu07', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu08', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu09', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu10', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'menu11', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'post01', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'post02', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'post04', '11015035', '2021-06-23 09:08:08'),
+('11016013', 'post05', '11015035', '2021-06-23 09:08:08'),
 ('11016016', 'menu01', '11015035', '2021-06-19 14:58:39'),
 ('11016016', 'menu06', '11015035', '2021-06-19 14:58:39'),
 ('11016016', 'post04', '11015035', '2021-06-19 14:58:39'),
@@ -658,6 +681,79 @@ CREATE TABLE `kanban_board_project_mst` (
 
 INSERT INTO `kanban_board_project_mst` (`project_c`, `title`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
 ('21423523', 'Default', 1, '', '2021-05-19 08:01:33', '2021-05-19 08:01:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kanban_task_comment_data`
+--
+
+CREATE TABLE `kanban_task_comment_data` (
+  `comment_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `task_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `content` text COLLATE utf8_bin NOT NULL,
+  `attach_files` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kanban_task_data`
+--
+
+CREATE TABLE `kanban_task_data` (
+  `task_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `project_c` varchar(16) COLLATE utf8_bin NOT NULL,
+  `title` varchar(500) COLLATE utf8_bin NOT NULL,
+  `assigned_to` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `progress` int(3) NOT NULL DEFAULT '0',
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upd_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `kanban_task_data`
+--
+
+INSERT INTO `kanban_task_data` (`task_id`, `project_c`, `title`, `assigned_to`, `progress`, `start_date`, `end_date`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
+('3407867696490430220', '21423523', 'This is test task in test project mangement plugin', '11015035', 70, '2021-06-15', '2021-06-29', 1, '11015035', '2021-06-22 14:41:31', '2021-06-22 14:41:31'),
+('8267299739366316837', '21423523', 'test', '11015035', 100, '2021-06-22', '2021-07-22', 1, '11015035', '2021-06-22 14:33:36', '2021-06-22 14:33:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kanboard_category_mst`
+--
+
+CREATE TABLE `kanboard_category_mst` (
+  `category_c` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_category_c` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `friendly_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descriptions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contents` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `views` int(9) NOT NULL DEFAULT '0',
+  `sort_order` int(9) NOT NULL DEFAULT '0',
+  `user_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upd_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `kanboard_category_mst`
+--
+
+INSERT INTO `kanboard_category_mst` (`category_c`, `title`, `parent_category_c`, `friendly_url`, `thumbnail`, `keywords`, `descriptions`, `contents`, `status`, `views`, `sort_order`, `user_id`, `ent_dt`, `upd_dt`) VALUES
+('9844612265587', 'Non Title', '', 'Non-Title', '', 'Non Title', 'Non Title', NULL, 1, 0, 0, '', '2021-06-05 09:36:23', '2021-06-05 09:36:23');
 
 -- --------------------------------------------------------
 
@@ -833,6 +929,10 @@ INSERT INTO `permissions_mst` (`permission_c`, `title`, `status`, `user_id`, `en
 ('menu09', 'Can change system theme ?', 1, '15904', '2021-03-27 16:40:18'),
 ('menu10', 'Can activate plugin ?', 1, '15904', '2021-03-27 16:40:37'),
 ('menu11', 'Can deactivate plugin ?', 1, '15904', '2021-03-27 16:40:49'),
+('per1101101', 'Can update all task ?', 1, '', '2021-03-28 10:05:49'),
+('per1101102', 'Can view all task ?', 1, '', '2021-03-28 10:05:49'),
+('per1101103', 'Can delete all task ?', 1, '', '2021-03-28 10:05:49'),
+('per1101105', 'Can add new task ?', 1, '', '2021-03-28 10:05:49'),
 ('post01', 'Can change post status ?', 1, '', '2021-03-28 10:04:52'),
 ('post02', 'Can delete post ?', 1, '', '2021-03-28 10:05:03'),
 ('post04', 'Can view post ?', 1, '', '2021-03-28 10:05:49'),
@@ -872,13 +972,6 @@ CREATE TABLE `plugin_mst` (
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `upd_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `plugin_mst`
---
-
-INSERT INTO `plugin_mst` (`plugin_dir`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
-('BasicBBCode', 1, '', '2021-05-21 16:21:58', '2021-05-21 16:21:58');
 
 -- --------------------------------------------------------
 
@@ -1383,16 +1476,6 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016012', 'admin', '11015029'),
 ('11016012', 'admin', '11015031'),
 ('11016012', 'admin', '11015032'),
-('11016013', 'admin', '11011011'),
-('11016013', 'admin', '11011012'),
-('11016013', 'admin', '11015014'),
-('11016013', 'admin', '11015011'),
-('11016013', 'admin', '11015018'),
-('11016013', 'admin', '11011013'),
-('11016013', 'admin', '11015016'),
-('11016013', 'admin', '11015013'),
-('11016013', 'admin', '11011016'),
-('11016013', 'admin', '11017121'),
 ('11016016', 'admin', '11011011'),
 ('11016016', 'admin', '11011012'),
 ('11016016', 'admin', '11015014'),
@@ -1413,7 +1496,9 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016011', 'admin', '11015016'),
 ('11016011', 'admin', '11015013'),
 ('11016011', 'admin', '11011014'),
+('11016011', 'admin', '11015425'),
 ('11016011', 'admin', '11015024'),
+('11016011', 'admin', '11015424'),
 ('11016011', 'admin', '11011015'),
 ('11016011', 'admin', '11015017'),
 ('11016011', 'admin', '11015020'),
@@ -1436,7 +1521,19 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016011', 'admin', '11015028'),
 ('11016011', 'admin', '11015029'),
 ('11016011', 'admin', '11015031'),
-('11016011', 'admin', '11015032');
+('11016011', 'admin', '11015032'),
+('11016013', 'admin', '11011011'),
+('11016013', 'admin', '11011012'),
+('11016013', 'admin', '11015014'),
+('11016013', 'admin', '11015011'),
+('11016013', 'admin', '11015018'),
+('11016013', 'admin', '11011013'),
+('11016013', 'admin', '11015016'),
+('11016013', 'admin', '11015013'),
+('11016013', 'admin', '11011014'),
+('11016013', 'admin', '11015424'),
+('11016013', 'admin', '11011016'),
+('11016013', 'admin', '11017121');
 
 -- --------------------------------------------------------
 
@@ -1676,6 +1773,46 @@ ALTER TABLE `kanban_board_project_mst`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `ent_dt` (`ent_dt`),
   ADD KEY `upd_dt` (`upd_dt`);
+
+--
+-- Indexes for table `kanban_task_comment_data`
+--
+ALTER TABLE `kanban_task_comment_data`
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ent_dt` (`ent_dt`);
+
+--
+-- Indexes for table `kanban_task_data`
+--
+ALTER TABLE `kanban_task_data`
+  ADD PRIMARY KEY (`task_id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `project_c` (`project_c`),
+  ADD KEY `assigned_to` (`assigned_to`),
+  ADD KEY `progress` (`progress`),
+  ADD KEY `start_date` (`start_date`),
+  ADD KEY `end_date` (`end_date`),
+  ADD KEY `status` (`status`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ent_dt` (`ent_dt`),
+  ADD KEY `upd_dt` (`upd_dt`);
+
+--
+-- Indexes for table `kanboard_category_mst`
+--
+ALTER TABLE `kanboard_category_mst`
+  ADD PRIMARY KEY (`category_c`),
+  ADD KEY `ix1` (`category_c`),
+  ADD KEY `ix2` (`title`),
+  ADD KEY `ix3` (`friendly_url`),
+  ADD KEY `ix4` (`status`),
+  ADD KEY `sort_order` (`sort_order`),
+  ADD KEY `upd_dt` (`upd_dt`),
+  ADD KEY `views` (`views`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `language_mst`

@@ -89,11 +89,17 @@ class Api
     public static function user_login()
     {
         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
-        $username=getPost('username','');
+        $username=addslashes(getPost('username',''));
         
-        $password=getPost('password','');
+        $password=addslashes(getPost('password',''));
 
         if(!isset($username[1]) || !isset($password[1]))
+        {
+            echo responseData('ERROR','yes');
+            return false;
+        }
+
+        if(isset($username[155]) || isset($password[155]))
         {
             echo responseData('ERROR','yes');
             return false;
@@ -1613,6 +1619,97 @@ public static function project_action_apply()
 
      }
 
+    public static function update_kanban_board_task()
+    {
+        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $task_id=getPost('task_id','');
+
+        $updateData=array();
+
+        if(!isset(Configs::$_['user_permissions']['per1101101']))
+        {
+            $updateData=array(
+                'progress'=>addslashes(getPost('progress','0')),
+            );
+        }
+        else
+        {
+            $updateData=array(
+                'title'=>addslashes(getPost('title','')),
+                'start_date'=>addslashes(getPost('start_date','')),
+                'end_date'=>addslashes(getPost('end_date','')),
+                'progress'=>addslashes(getPost('progress','0')),
+                'assigned_to'=>addslashes(getPost('assign_to','')),
+            );
+        }
+
+
+        $insertData=array(
+            'update'=>$updateData,
+            'where'=>array(
+                'task_id'=>"='".$task_id."'",
+            )
+
+        );
+
+        $queryStr=arrayToUpdateStr('kanban_task_data',$insertData);
+
+        $db=new Database(); 
+
+        // $loadData=$db->query("select * from kanban_task_data where user_id='".$username."'"); 
+
+
+        $db->nonquery($queryStr);   
+
+        saveActivities('project_task_update','Update task '.$updateData['title'],$username);
+
+        echo responseData('OK');
+
+     }
+
+    public static function delete_kanban_board_task()
+    {
+        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+
+        $cookie_username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $task_id=getPost('task_id','');
+
+        $addqueryStr='';
+
+        
+       if(!isset(Configs::$_['user_permissions']['per1101103']))
+       {
+        $addqueryStr=" AND user_id='".$cookie_username."' ";
+       }
+      
+        $db=new Database(); 
+
+        $db->nonquery("delete from kanban_task_data where task_id='".$task_id."' ".$addqueryStr);   
+
+        saveActivities('project_task_delete','Delete task '.$task_id,$cookie_username);
+
+        echo responseData('OK');
+
+     }
+
      public static function add_new_kanban_board_project()
      {
             //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
@@ -1642,6 +1739,45 @@ public static function project_action_apply()
         $db->nonquery($queryStr);   
 
         saveActivities('project_add','Add new project '.$insertData['title'],$username);
+
+        echo responseData('OK');
+    }
+
+     public static function add_new_kanban_board_task()
+     {
+            //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        if(!isset(Configs::$_['user_permissions']['per1101105']))
+        {
+            echo responseData('ERROR_01','yes');return false;
+        }
+
+        $insertData=array(
+            'task_id'=>newID(18),
+            'project_c'=>addslashes(getPost('project_c')),
+            'title'=>addslashes(getPost('title')),
+            'start_date'=>addslashes(getPost('start_date')),
+            'end_date'=>addslashes(getPost('end_date')),
+            'progress'=>addslashes(getPost('progress')),
+            'assigned_to'=>addslashes(getPost('assign_to')),
+            'user_id'=>$username,
+        );
+
+        $queryStr=arrayToInsertStr('kanban_task_data',$insertData);
+ 
+        $db=new Database(); 
+        $db->nonquery($queryStr);   
+
+        saveActivities('project_task_add','Add new task '.$insertData['title'],$username);
 
         echo responseData('OK');
     }
@@ -1862,6 +1998,38 @@ public static function project_action_apply()
        }
    
        echo responseData('OK');
+   }
+
+   public static function get_kanban_board_task()
+   {
+           //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+   
+   
+       $cookie_username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+   
+       try {
+           isValidAccessAPI();
+       } catch (\Exception $e) {
+           echo responseData($e->getMessage(),'yes');return false;
+       }
+   
+       $project_c=addslashes(getPost('project_c',''));
+       $year=addslashes(getPost('year',''));
+   
+       $queryStr='';
+       $addqueryStr='';
+
+       if(!isset(Configs::$_['user_permissions']['per1101102']))
+       {
+        $addqueryStr=" AND (a.user_id='".$cookie_username."' OR a.assigned_to='".$cookie_username."') ";
+       }
+
+       $queryStr="select a.*,b.username from kanban_task_data as a join user_mst as b ON a.user_id=b.user_id where project_c='".$project_c."' AND YEAR(a.start_date)='".$year."' ".$addqueryStr." order by a.ent_dt asc";
+
+       $db=new Database(); 
+       $result=$db->query($queryStr);
+   
+       echo responseData($result,'no');
    }
 
    public static function get_list_kanban_board_comment()
