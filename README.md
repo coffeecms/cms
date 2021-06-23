@@ -11,8 +11,9 @@
 - Free & Friendly: It's free and theme design very friendly
 - Fast: It's Fast: x5 speed more than Wordpress and others CMS 
 - Easy & Full customize system: You can build your custom system with Coffee CMS + Plugins + Themes
-- Build on many premium functions: 
+- Build in many premium functions: 
 - Kanban boards for small/private project management
+- Project tasks management
 - Email Marketing System: Easy send mail to others and tracking send/read
 - Manage users with groups & permissions
 - Media management & easy upload
