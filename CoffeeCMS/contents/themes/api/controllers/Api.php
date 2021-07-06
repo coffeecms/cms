@@ -123,6 +123,8 @@ class Api
 
         $db->nonquery("update user_mst set last_logined=now() where (username='".$username."' OR email='".$username."') AND password='".$rePassword."'");
 
+        createLoginSession($username,$rePassword);
+        
         saveActivities('user_login','Login success',$username);
         echo responseData('OK');
         
@@ -1713,7 +1715,6 @@ public static function project_action_apply()
      public static function add_new_kanban_board_project()
      {
             //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
-
 
         $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
 

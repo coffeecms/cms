@@ -79,7 +79,7 @@ function KeyCheck(e) {
         }
         else
         {
-          location.href=SITE_URL+'admin';
+          location.href=SITE_URL+'admin/dashboard';
         }
       }); 
        
@@ -101,7 +101,7 @@ $(document).on('click','.btnLogin',function(){
     }
     else
     {
-      location.href=SITE_URL+'admin/home';
+      location.href=SITE_URL+'admin/dashboard';
     }
   }); 
 

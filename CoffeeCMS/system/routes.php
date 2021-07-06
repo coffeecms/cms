@@ -15,7 +15,7 @@ class Routes
         {
             return false;
         }
-
+     
 
     	if(strlen($inputPattern) > 0)
     	{
@@ -115,8 +115,7 @@ class Routes
             Configs::$_['controller_variable']=isset($matchPath[4])?$matchPath[4]:'';
 
             // print_r(Configs::$_['controller_variable']);
-            // // print_r(Configs::$_);
-
+            // print_r(Configs::$_);
             // die();
     
     		if(is_file($themePath))

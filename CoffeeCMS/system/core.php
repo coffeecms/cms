@@ -2,13 +2,15 @@
 
 function get_text_by_lang($inputStr='',$method='frontend')
 {
-    $langDir='frontend';
-
-    $langDir=Configs::$_['frontend_lang'];
+    $langDir='en';
 
     if($method=='admin')
     {
         $langDir=Configs::$_['system_admin_lang'];
+    }
+    else
+    {
+        $langDir=Configs::$_['frontend_lang'];
     }
 
     if(!isset(Configs::$_['lang'][$langDir]))
@@ -498,7 +500,7 @@ function redirect_to($reUrl = '')
         $url = SITE_URL . $reUrl;
     }
     
-    header("HTTP/1.1 301 Moved Permanently"); 
+    // header("HTTP/1.1 301 Moved Permanently"); 
     header("Location: " . $url);
 
     die();
@@ -508,13 +510,63 @@ function isLogined()
 {
     $result=false;
 
-    if(isset($_COOKIE['cf_u']) && $_COOKIE['cf_u'][1])
+    $ip_add=$_SERVER['REMOTE_ADDR'];
+
+    $user_agent=isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
+
+    $sessionid=md5($ip_add.$user_agent);
+
+    $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';    
+
+    if(file_exists($savePath))
     {
         $result=true;
+        require_once($savePath);
+
+        $_COOKIE['cf_u']=Configs::$_['cf_u'];
+        $_COOKIE['cf_p']=Configs::$_['cf_p'];
+
         user_load_data_when_logined();
     }
 
     return $result;
+}
+
+
+function removeLoginSession()
+{
+    $ip_add=$_SERVER['REMOTE_ADDR'];
+
+    $user_agent=isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
+
+    $sessionid=md5($ip_add.$user_agent);
+
+    $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';
+
+
+    if(file_exists($savePath))
+    {
+
+        
+        unlink($savePath);
+    }
+
+}
+function createLoginSession($user,$pass)
+{
+    $ip_add=$_SERVER['REMOTE_ADDR'];
+
+    $user_agent=isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
+
+    $sessionid=md5($ip_add.$user_agent);
+
+    $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';
+
+    $content='';
+    $content.="Configs::\$_['cf_u']='".$user."';";
+    $content.="Configs::\$_['cf_p']='".$pass."';";
+
+    create_file($savePath,"<?php ".$content);
 }
 
 function user_has_permission($permission_c='')
@@ -536,7 +588,7 @@ function user_load_data_when_logined()
     $queryStr.="select a.user_id,a.username,a.fullname,a.group_c,a.level_c,b.title as group_title,c.title as level_title ";
     $queryStr.=" from user_mst a left join user_group_mst b ON a.group_c=b.group_c ";
     $queryStr.=" left join user_level_mst c ON a.level_c=c.level_id ";
-    $queryStr.=" where (a.username='".$_COOKIE['cf_u']."' OR a.email='".$_COOKIE['cf_u']."') AND a.password='".$_COOKIE['cf_p']."'";
+    $queryStr.=" where (a.username='".Configs::$_['cf_u']."' OR a.email='".Configs::$_['cf_u']."') AND a.password='".Configs::$_['cf_p']."'";
 
     $result=$db->query($queryStr);
 
@@ -1328,8 +1380,8 @@ function tagsToInsertStr($post_c,$tags='')
 function isValidAccessAPI()
 {
 
-    $username=isset($_COOKIE['cf_u'])?$_COOKIE['cf_u']:'';
-    $password=isset($_COOKIE['password'])?$_COOKIE['password']:'';
+    $username=isset(Configs::$_['cf_u'])?Configs::$_['cf_u']:'';
+    $password=isset(Configs::$_['password'])?Configs::$_['password']:'';
     $type=trim(getPost('type'));
 
     if(isset($type[0]))
@@ -1345,8 +1397,8 @@ function isValidAccessAPI()
         }
         if((int)$type==2)
         {
-        // $username=isset($_COOKIE['cf_u'])?$_COOKIE['cf_u']:'';
-        // $password=isset($_COOKIE['password'])?$_COOKIE['password']:'';
+        // $username=isset(Configs::$_['cf_u'])?Configs::$_['cf_u']:'';
+        // $password=isset(Configs::$_['password'])?Configs::$_['password']:'';
 
             if(!isset($username[2]) && !isset($password[2]))
             {

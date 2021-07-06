@@ -68,7 +68,20 @@
 
 						<div class="row" style="margin-top:10px;margin-bottom:10px;">
 								<div class="col-lg-9">
-								<span><?php echo get_text_by_lang('System status','admin');?>:</span>
+									<span><?php echo get_text_by_lang('Timezone','admin');?>:</span>
+								</div>
+								<div class="col-lg-3">
+									<select name="general[timezone]" id="timezone" class="form-control timezone setting-page1 select2js">
+										<?php for ($i=0; $i < count($listTimeZones); $i++) { 
+											echo '<option value="'.$listTimeZones[$i].'">'.$listTimeZones[$i].'</option>';
+										} ?>
+									</select>
+								</div>
+
+							</div>
+						<div class="row" style="margin-top:10px;margin-bottom:10px;">
+								<div class="col-lg-9">
+									<span><?php echo get_text_by_lang('System status','admin');?>:</span>
 								</div>
 								<div class="col-lg-3">
 									<select name="general[system_status]" id="system_status" class="form-control system_status setting-page1 select2js">
@@ -590,6 +603,7 @@ $(document).on('click','.btnSavePage1',function(){
     var sendData={};
 
 	var jsonData={};
+    jsonData['timezone']=$('.timezone > option:selected').val();
     jsonData['system_status']=$('.system_status > option:selected').val();
     jsonData['register_user_status']=$('.register_user_status > option:selected').val();
     jsonData['register_verify_email']=$('.register_verify_email > option:selected').val();

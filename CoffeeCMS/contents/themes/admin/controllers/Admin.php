@@ -22,12 +22,15 @@ class Admin
 		}
 		else
 		{
-			redirect_to(SITE_URL.'admin/home');
+			redirect_to(SITE_URL.'admin/dashboard');
 		}
 
 	}
-	public static function home()
+
+	
+	public static function dashboard()
 	{
+
 		if(!isLogined())
 		{
 			redirect_to(SITE_URL.'admin/login');
@@ -36,6 +39,7 @@ class Admin
 		$theData=array(
 
 		);
+
 
 		// useClass('UserAgent');
 
@@ -104,8 +108,75 @@ class Admin
 		echo view('footer');
 	}	
 
+	public static function project_task_report()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+		$theData=array(
+
+		);
+
+		// useClass('UserAgent');
+
+		// $useragent = UserAgentFactory::analyze($_SERVER['HTTP_USER_AGENT']);
+		// print_r($useragent->browser);die();
+
+		$queryStr='';
+		$db=new Database();
+		
+		$queryStr=" select MONTH(ent_dt) as work_month,YEAR(ent_dt) as work_year ,count(*) as total";
+		$queryStr.=" from post_view_data";
+		$queryStr.=" where CAST(ent_dt as date) BETWEEN '".date("Y-m-d", strtotime('-11 months'))."' AND '".date("Y-m-d")."'";
+		$queryStr.=" group by MONTH(ent_dt),YEAR(ent_dt)";
+		$queryStr.=" order by MONTH(ent_dt),YEAR(ent_dt) asc";
+
+		$theData['stats_12months']=$db->query($queryStr);
+
+		$queryStr=" select CAST(ent_dt as date) as work_date,count(*) as total";
+		$queryStr.=" from post_view_data";
+		$queryStr.=" where CAST(ent_dt as date) BETWEEN '".date("Y-m-d", strtotime('-30 days'))."' AND '".date("Y-m-d")."'";
+		$queryStr.=" group by CAST(ent_dt as date)";
+		$queryStr.=" order by CAST(ent_dt as date) asc";
+
+		$theData['stats_30days']=$db->query($queryStr);
+
+		$queryStr=" select a.title,a.group_c,count(*) as total_users";
+		$queryStr.=" from user_group_mst a join user_mst b";
+		$queryStr.=" ON a.group_c=b.group_c";
+		$queryStr.=" group by a.title,a.group_c";
+		$queryStr.=" order by a.title asc limit 0,50";
+
+		$theData['top_user_group_stats']=$db->query($queryStr);
+
+		$queryStr=" select post_c,title,views";
+		$queryStr.=" from post_data";
+		$queryStr.=" order by views desc limit 0,50";
+		
+		$theData['top_50_popular_post']=$db->query($queryStr);
+
+		$queryStr=" select a.user_id,a.username,count(*) as total_post";
+		$queryStr.=" from user_mst a join post_data b";
+		$queryStr.=" ON a.user_id=b.user_id";
+		$queryStr.=" group by a.user_id,a.username";
+		$queryStr.=" order by total_post desc limit 0,50";
+		
+		$theData['top_50_writers']=$db->query($queryStr);
+
+	
+		echo view('header');
+		echo view('left');
+		echo view('project_task_report',$theData);
+		echo view('footer');
+	}	
+
 	public static function login()
 	{
+
+		// var_dump(isLogined());die();
+
 		echo view('header_login');
 		echo view('login');
 		echo view('footer_login');
@@ -141,13 +212,15 @@ class Admin
 		echo view('footer_login');
 	}
 
-	public static function logout()
+	public static function user_logout()
 	{
         //Set cookie
         setcookie('username', '', time()- 360000, '/');
         setcookie('user_id', '', time()- 360000, '/');
         setcookie('group_c', '', time()- 360000, '/');
         setcookie('level_c', '', time()- 360000, '/');
+
+		removeLoginSession();
 
 		redirect_to(SITE_URL.'admin/login');
 	}
@@ -2008,8 +2081,11 @@ class Admin
 			$theData['has_update']=true;
 			$theData['update_info']=file_get_contents(PUBLIC_PATH.'updates/changes_log.txt');
 		}
-		
 
+		// print_r(timezone_identifiers_list());die();
+
+		$theData['listTimeZones']=timezone_identifiers_list();
+		
 		echo view('header');
 		echo view('left');
 		echo view('setting_general',$theData);

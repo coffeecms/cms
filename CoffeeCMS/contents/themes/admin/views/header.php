@@ -253,7 +253,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
             </a>
             
             <div class="dropdown-divider"></div>
-            <a href="<?php echo SITE_URL;?>admin/logout" class="dropdown-item">
+            <a href="<?php echo SITE_URL;?>admin/user_logout" class="dropdown-item">
               <?php echo get_text_by_lang('Logout','admin');?>
             </a>
 

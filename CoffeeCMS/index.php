@@ -3,7 +3,6 @@ ob_start();
 //session_start();
 error_reporting(-1);
 
-date_default_timezone_set('America/Los_Angeles');
 
 require_once('system/configs.php');
 require_once('system/Database.php');
@@ -13,6 +12,9 @@ require_once('system/routes.php');
 load_hook('before_load_frontend');
 
 loadSystemSetting();
+
+date_default_timezone_set(Configs::$_['timezone']);
+
 
 Configs::$_['dirname']=basename(dirname(__FILE__));
 Configs::$_['uri']=str_replace('/'.Configs::$_['dirname'].'/', '', $_SERVER['REQUEST_URI']);
@@ -32,8 +34,7 @@ if(isset(Configs::$_['default_adminpage_url'][2]) && (Configs::$_['uri']=='admin
 
 Routes::get('admin/(:word)','admin/Admin@$1');
 
-// print_r(Configs::$_['uri']);
-// die();
+
 
 Routes::get('admin','admin/Admin@index');
 

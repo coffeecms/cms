@@ -70,10 +70,11 @@ if(isset($add['dbhost']))
         $db->db[$db->dbGroup]['username']=$add['dbusername'];
         $db->db[$db->dbGroup]['password']=$add['dbpassword'];
         $db->db[$db->dbGroup]['database']=$add['dbname'];
-        // $db->db[$db->dbGroup]['DBPrefix']=$add['dbprefix'];
-        $db->db[$db->dbGroup]['DBPrefix']='';
+        $db->db[$db->dbGroup]['DBPrefix']=$add['dbprefix'];
 
+        // die($dbContent);
         $db->nonquery($dbContent);
+        $db->db[$db->dbGroup]['DBPrefix']='';
 
     }
     else

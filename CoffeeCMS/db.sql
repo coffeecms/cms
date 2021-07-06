@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 23, 2021 at 02:14 AM
+-- Generation Time: Jul 06, 2021 at 02:01 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -147,7 +147,25 @@ INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent
 ('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:00:34'),
 ('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:07:30'),
 ('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:07:57'),
-('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:08:08');
+('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:08:08'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:35:43'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:35:48'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:44:56'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:45:16'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:48:18'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:48:39'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:51:30'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:54:32'),
+('user_login', 'Login success', 'admin', '2021-07-01 16:55:52'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:16:16'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:32:30'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:32:42'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:33:01'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:34:52'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:35:30'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:35:43'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:51:35'),
+('user_login', 'Login success', 'admin', '2021-07-06 08:53:11');
 
 -- --------------------------------------------------------
 
@@ -1164,8 +1182,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('email_sender_name', 'Sender Name', 'Coffee CMS', 1),
 ('email_smtp', 'Enable SMTP', 'no', 1),
 ('enable_rss', 'Enable RSS Feed', 'no', 1),
-('enable_sitemap', 'Enable Sitemap', 'no', 1),
-('frontend_lang', 'Frontend Language', 'en', 1),
+('frontend_lang ', 'Frontend Language', 'en', 1),
 ('is_construction', 'Is Construction', 'no', 1),
 ('post_back_when_add_new_payment', 'Postback url when add new payment', '', 1),
 ('post_back_when_add_new_product_success', 'Postback url when add new product success', '', 1),
@@ -1188,6 +1205,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('system_setting_cache', 'System Setting Cached', 'no', 1),
 ('system_status', 'system_status', 'working', 1),
 ('theme_layout', 'Theme layout', 'default', 1),
+('timezone', 'Timezone', 'America/Los_Angeles', 1),
 ('website_view_cache', 'Website View Cache', 'no', 1);
 
 -- --------------------------------------------------------
@@ -1406,7 +1424,6 @@ CREATE TABLE `user_mst` (
 --
 -- Dumping data for table `user_mst`
 --
-
 
 INSERT INTO `user_mst` (`user_id`, `username`, `password`, `email`, `fullname`, `avatar`, `verify_c`, `group_c`, `level_c`, `status`, `forgot_password_c`, `last_logined`, `ent_dt`, `upd_dt`) VALUES
 ('11015035', '{{admin_username}}', '{{admin_password}}', '{{admin_email}}', NULL, NULL, NULL, '11016011', '1101701', 1, NULL, '2021-05-17 13:33:42', '2021-05-06 16:40:54', '2021-05-06 16:40:54');
