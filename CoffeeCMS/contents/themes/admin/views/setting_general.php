@@ -58,6 +58,7 @@
                   <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab"><?php echo get_text_by_lang('Email','admin');?></a></li>
 				  <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"><?php echo get_text_by_lang('Postback','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab"><?php echo get_text_by_lang('Updates','admin');?></a></li>
+                  <li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"><?php echo get_text_by_lang('Clean','admin');?></a></li>
                   
                 
                 </ul>
@@ -499,6 +500,36 @@
                   </div>
                   <!-- /.tab-pane -->
 
+                  <div class="tab-pane" id="tab_8">
+					<div class="row" style="margin-top:10px;margin-bottom:10px;">
+						<div class="col-lg-8">
+							<span><?php echo get_text_by_lang('Views data last 3 months before','admin');?></span>
+							</div>
+							<div class="col-lg-4 text-right">
+							<button type="button" name="btnClearViewsData3Month" class="btn btn-info btnClearViewsData3Month"><?php echo get_text_by_lang('Clear','admin');?></button>								
+						</div>
+					</div>
+					<div class="row" style="margin-top:10px;margin-bottom:10px;">
+						<div class="col-lg-8">
+							<span><?php echo get_text_by_lang('Activities last months','admin');?></span>
+							</div>
+							<div class="col-lg-4 text-right">
+							<button type="button" name="btnClearActivitiesData1Month" class="btn btn-info btnClearActivitiesData1Month"><?php echo get_text_by_lang('Clear','admin');?></button>								
+						</div>
+					</div>
+					<div class="row" style="margin-top:10px;margin-bottom:10px;">
+						<div class="col-lg-8">
+							<span><?php echo get_text_by_lang('Short urls not working','admin');?></span>
+							</div>
+							<div class="col-lg-4 text-right">
+							<button type="button" name="btnClearShortUrlNotWorking" class="btn btn-info btnClearShortUrlNotWorking"><?php echo get_text_by_lang('Clear','admin');?></button>								
+						</div>
+					</div>
+
+
+                  </div>
+                  <!-- /.tab-pane -->
+
 
 
                 </div>
@@ -712,6 +743,39 @@ $(document).on('click','.btnClearSystemCache',function(){
     sendData['type']='1';
 
     postData(API_URL+'system_cache_clear', sendData).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      showAlertOK('','Done!');
+    });        
+});
+
+$(document).on('click','.btnClearViewsData3Month',function(){
+    var sendData={};
+
+    sendData['type']='1';
+
+    postData(API_URL+'clear_view_data_last_months', sendData).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      showAlertOK('','Done!');
+    });        
+});
+
+$(document).on('click','.btnClearActivitiesData1Month',function(){
+    var sendData={};
+
+    sendData['type']='1';
+
+    postData(API_URL+'clear_activities_data_last_months', sendData).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      showAlertOK('','Done!');
+    });        
+});
+
+$(document).on('click','.btnClearShortUrlNotWorking',function(){
+    var sendData={};
+
+    sendData['type']='1';
+
+    postData(API_URL+'clear_shorturls_not_working', sendData).then(data => {
       console.log(data); // JSON data parsed by `data.json()` call
       showAlertOK('','Done!');
     });        

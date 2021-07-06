@@ -20,7 +20,8 @@ class ShortUrl
             }
             else
             {
-                header("HTTP/1.1 301 Moved Permanently"); 
+                $db->nonquery("update short_url_data set views=views+1 where code='".$id."'");
+                // header("HTTP/1.1 301 Moved Permanently"); 
                 header("Location: " . $result[0]['target_url']);die();
             }
         }

@@ -181,6 +181,70 @@ class Api
 
     }
 
+    public static function clear_view_data_last_months()
+    {
+         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $db=new Database(); 
+
+        $db->nonquery("delete from post_tag_view_data where CAST(ent_dt as date) < '".date('Y-m-',strtotime("-3 months",time()))."01'");
+        $db->nonquery("delete from post_view_data where CAST(ent_dt as date) < '".date('Y-m-',strtotime("-3 months",time()))."01'");
+        
+        // saveActivities('clear_view_data','Clear views data',$username);
+
+        echo responseData('OK');
+
+    }
+
+    public static function clear_activities_data_last_months()
+    {
+         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $db=new Database(); 
+
+        $db->nonquery("delete from activities_data where CAST(ent_dt as date) < '".date('Y-m-',strtotime("-3 months",time()))."01'");
+        
+        // saveActivities('clear_view_data','Clear views data',$username);
+
+        echo responseData('OK');
+
+    }
+
+    public static function clear_shorturls_not_working()
+    {
+         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $db=new Database(); 
+
+        $db->nonquery("delete from short_url_data where views='0'");
+        
+        // saveActivities('clear_view_data','Clear views data',$username);
+
+        echo responseData('OK');
+
+    }
+
     public static function update_system()
     {
         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false

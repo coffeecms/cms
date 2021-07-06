@@ -3,7 +3,7 @@ ob_start();
 //session_start();
 error_reporting(-1);
 
-
+// echo date('Y-m-',strtotime("-3 months",time()))."01";die();
 require_once('system/configs.php');
 require_once('system/Database.php');
 require_once('system/core.php');

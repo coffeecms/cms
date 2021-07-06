@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2021 at 02:01 AM
+-- Generation Time: Jul 06, 2021 at 06:17 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -165,7 +165,9 @@ INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent
 ('user_login', 'Login success', 'admin', '2021-07-06 08:35:30'),
 ('user_login', 'Login success', 'admin', '2021-07-06 08:35:43'),
 ('user_login', 'Login success', 'admin', '2021-07-06 08:51:35'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:53:11');
+('user_login', 'Login success', 'admin', '2021-07-06 08:53:11'),
+('user_login', 'Login success', 'admin', '2021-07-06 09:03:03'),
+('short_url_add', 'Add new short url RosqlKikS', '11015035', '2021-07-06 11:00:01');
 
 -- --------------------------------------------------------
 
@@ -191,7 +193,7 @@ CREATE TABLE `admin_menu_data` (
 --
 
 INSERT INTO `admin_menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `page_url`, `plugin_name`, `icon_text`, `sort_order`, `ent_dt`, `upd_dt`) VALUES
-('11011011', NULL, 'Dashboard', 0, 'admin/home', NULL, 'nav-icon fas fa-calendar-alt', 0, '2021-01-31 08:16:27', '2021-01-31 08:16:27'),
+('11011011', NULL, 'Dashboard', 0, 'admin/dashboard', NULL, 'nav-icon fas fa-calendar-alt', 0, '2021-01-31 08:16:27', '2021-01-31 08:16:27'),
 ('11011012', NULL, 'Posts', 0, '/', NULL, 'nav-icon fas fa-file', 1, '2021-01-31 08:20:20', '2021-01-31 08:20:20'),
 ('11011013', NULL, 'Pages', 0, '/', NULL, 'nav-icon fas fa-file', 2, '2021-01-31 08:20:20', '2021-01-31 08:20:20'),
 ('11011014', NULL, 'Projects', 0, 'admin/projects', NULL, 'nav-icon fas fa-file', 15, '2021-01-31 08:20:20', '2021-01-31 08:20:20'),
@@ -1232,9 +1234,17 @@ CREATE TABLE `shortcode_data` (
 CREATE TABLE `short_url_data` (
   `code` varchar(30) COLLATE utf8_bin NOT NULL,
   `target_url` varchar(255) COLLATE utf8_bin NOT NULL,
+  `views` int(9) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL DEFAULT '1',
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `short_url_data`
+--
+
+INSERT INTO `short_url_data` (`code`, `target_url`, `views`, `status`, `ent_dt`) VALUES
+('RosqlKikS', 'http://localhost/lioncms/admin/setting_general#', 0, 1, '2021-07-06 11:00:01');
 
 -- --------------------------------------------------------
 
