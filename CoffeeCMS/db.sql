@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2021 at 06:17 AM
+-- Generation Time: Jul 06, 2021 at 09:36 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -167,7 +167,18 @@ INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent
 ('user_login', 'Login success', 'admin', '2021-07-06 08:51:35'),
 ('user_login', 'Login success', 'admin', '2021-07-06 08:53:11'),
 ('user_login', 'Login success', 'admin', '2021-07-06 09:03:03'),
-('short_url_add', 'Add new short url RosqlKikS', '11015035', '2021-07-06 11:00:01');
+('short_url_add', 'Add new short url RosqlKikS', '11015035', '2021-07-06 11:00:01'),
+('bb_forum_add', 'Add new forum tset', '11015035', '2021-07-06 14:47:22'),
+('bb_forum_add', 'Add new forum tets45', '11015035', '2021-07-06 14:47:40'),
+('bb_forum_add', 'Add new forum tets454545', '11015035', '2021-07-06 14:48:14'),
+('bb_forum_add', 'Add new forum tetste', '11015035', '2021-07-06 14:49:32'),
+('bb_forum_add', 'Add new forum tsets45343434', '11015035', '2021-07-06 14:50:35'),
+('bb_forum_add', 'Add new forum tests222222', '11015035', '2021-07-06 14:54:57'),
+('bb_forum_add', 'Add new forum testsub 45', '11015035', '2021-07-06 14:55:20'),
+('bb_forum_add', 'Add new forum test78', '11015035', '2021-07-06 14:56:46'),
+('bb_forum_add', 'Add new forum tset 89', '11015035', '2021-07-06 14:57:02'),
+('bb_forum_edit', 'update forum ', '11015035', '2021-07-06 16:10:07'),
+('bb_forum_edit', 'update forum tets4511111111', '11015035', '2021-07-06 16:10:36');
 
 -- --------------------------------------------------------
 

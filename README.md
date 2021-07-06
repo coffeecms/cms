@@ -7,6 +7,10 @@
 [Speed](https://github.com/coffeecms/cms/blob/main/speed.md)
 </div>
 
+## Benchmark
+<img src="https://raw.githubusercontent.com/coffeecms/cms/main/benchmark.JPG">
+
+
 ## Features of Coffee CMS
 - Free & Friendly: It's free and theme design very friendly
 - Fast: It's Fast: x5 speed more than Wordpress and others CMS 
@@ -42,8 +46,6 @@
 - Coffee Stats FAST & FULL CUSTOMIZE & EASY SCALABLE & SUPPORT BIG DATA
 - In future, we will provide many plugins that support you build friendly & fast & professional websites
 
-## Benchmark
-<img src="https://raw.githubusercontent.com/coffeecms/cms/main/benchmark.JPG">
 
 ## Plugins
 - [Coffee Stats](https://github.com/coffeecms/coffeestats) : Track individual visitors using your website in real-time

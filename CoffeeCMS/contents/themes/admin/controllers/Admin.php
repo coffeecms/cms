@@ -244,6 +244,12 @@ class Admin
 		$pageName=getGet('page');
 
 		$pagePath=PLUGINS_PATH.$pluginName.'/admin/'.$pageName.'.php';
+		$libsPath=PLUGINS_PATH.$pluginName.'/libs.php';
+
+		if(file_exists($libsPath))
+		{
+			require_once($libsPath);
+		}
 
 		view('header');
 		view('left');
@@ -267,6 +273,13 @@ class Admin
 		if(!is_file($pagePath))
 		{
 			redirect_to(SITE_URL.'admin');
+		}
+
+		$libsPath=THEMES_PATH.$themeName.'/libs.php';
+
+		if(file_exists($libsPath))
+		{
+			require_once($libsPath);
 		}
 
 		view('header');
