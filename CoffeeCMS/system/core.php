@@ -656,6 +656,107 @@ function load_user_group_permissions_data()
 
 }
 
+function load_shorturl_cache($shortUrlCode='')
+{
+    if(!isset($shortUrlCode[2]))
+    {
+        return false;
+    }
+
+    $savePath=PUBLIC_PATH.'caches/short_urls/'.$shortUrlCode.'.php';
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+
+        $queryStr.="SELECT * from short_url_data where code='".$shortUrlCode."' AND status='1' ";
+
+        $result=$db->query($queryStr);
+
+        if(is_array($result) && count($result) > 0)
+        {
+            $contents='';
+    
+            $contents.="Configs::\$_['short_url_code']='".$shortUrlCode."';";
+            $contents.="Configs::\$_['short_url_target']='".$result[0]['target_url']."';";
+
+            create_file($savePath,"<?php ".$contents);
+        }
+
+    }
+
+    require_once($savePath);
+}
+
+function post_exists($friendlyUrl)
+{
+    $result=false;
+
+    load_post_data($friendlyUrl);
+
+    if(isset(Configs::$_['post_data']) && isset(Configs::$_['post_data']['post_c']))
+    {
+        $result=true;
+    }
+
+    return $result;
+}
+
+function load_post_data($friendlyUrl)
+{
+    if(!isset($friendlyUrl[2]))
+    {
+        return false;
+    }
+
+    $savePath=PUBLIC_PATH.'caches/posts/'.md5($friendlyUrl).'.php';
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+
+        $queryStr.="SELECT a.*,b.username,c.title as category_title,c.friendly_url as category_friendly_url  from post_data as a join user_mst as b ON a.user_id=b.user_id ";
+        $queryStr.=" join category_mst as c ON a.category_c=c.category_c ";
+        $queryStr.=" where a.friendly_url='".$friendlyUrl."' AND a.status='1' ";
+
+        $result=$db->query($queryStr);
+
+        if(is_array($result) && count($result) > 0)
+        {
+            $contents='';
+    
+            $contents.="Configs::\$_['post_data']=[];";
+            $contents.="Configs::\$_['post_data']['post_c']='".$result[0]['post_c']."';";
+            $contents.="Configs::\$_['post_data']['title']='".addslashes($result[0]['title'])."';";
+            $contents.="Configs::\$_['post_data']['content']='".addslashes($result[0]['content'])."';";
+            $contents.="Configs::\$_['post_data']['descriptions']='".addslashes($result[0]['descriptions'])."';";
+            $contents.="Configs::\$_['post_data']['keywords']='".addslashes($result[0]['keywords'])."';";
+            $contents.="Configs::\$_['post_data']['thumbnail']='".addslashes($result[0]['thumbnail'])."';";
+            $contents.="Configs::\$_['post_data']['tags']='".addslashes($result[0]['tags'])."';";
+            $contents.="Configs::\$_['post_data']['post_type']='".addslashes($result[0]['post_type'])."';";
+            $contents.="Configs::\$_['post_data']['parent_post_c']='".addslashes($result[0]['parent_post_c'])."';";
+            $contents.="Configs::\$_['post_data']['views']='".addslashes($result[0]['views'])."';";
+            $contents.="Configs::\$_['post_data']['category_c']='".addslashes($result[0]['category_c'])."';";
+            $contents.="Configs::\$_['post_data']['user_id']='".addslashes($result[0]['user_id'])."';";
+            $contents.="Configs::\$_['post_data']['ent_dt']='".addslashes($result[0]['ent_dt'])."';";
+            $contents.="Configs::\$_['post_data']['upd_dt']='".addslashes($result[0]['upd_dt'])."';";
+            $contents.="Configs::\$_['post_data']['username']='".addslashes($result[0]['username'])."';";
+            $contents.="Configs::\$_['post_data']['category_title']='".addslashes($result[0]['category_title'])."';";
+            $contents.="Configs::\$_['post_data']['category_friendly_url']='".addslashes($result[0]['category_friendly_url'])."';";
+
+            create_file($savePath,"<?php ".$contents);
+        }
+
+    }
+
+    require_once($savePath);
+    
+}
+
 function load_user_group_menu_permissions_data()
 {
     $savePath=PUBLIC_PATH.'caches/user_group_menu_permissions.php';

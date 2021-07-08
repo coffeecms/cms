@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2021 at 09:36 AM
+-- Generation Time: Jul 08, 2021 at 09:28 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -178,7 +178,30 @@ INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent
 ('bb_forum_add', 'Add new forum test78', '11015035', '2021-07-06 14:56:46'),
 ('bb_forum_add', 'Add new forum tset 89', '11015035', '2021-07-06 14:57:02'),
 ('bb_forum_edit', 'update forum ', '11015035', '2021-07-06 16:10:07'),
-('bb_forum_edit', 'update forum tets4511111111', '11015035', '2021-07-06 16:10:36');
+('bb_forum_edit', 'update forum tets4511111111', '11015035', '2021-07-06 16:10:36'),
+('user_login', 'Login success', 'admin', '2021-07-07 08:36:51'),
+('user_login', 'Login success', 'admin', '2021-07-07 16:27:22'),
+('user_login', 'Login success', 'admin', '2021-07-08 08:09:43'),
+('user_login', 'Login success', 'admin', '2021-07-08 08:11:53'),
+('bb_banned_email_add', 'Banned email test@gmail.com', '11015035', '2021-07-08 09:45:07'),
+('bb_banned_email_add', 'Banned email tsetsets@gmail.com', '11015035', '2021-07-08 09:49:12'),
+('bb_banned_email_add', 'Banned email test2@gmail.com', '11015035', '2021-07-08 09:49:17'),
+('bb_banned_username_add', 'Banned username admin', '11015035', '2021-07-08 09:52:26'),
+('bb_banned_ip_add', 'Banned ip 10.220.3.3', '11015035', '2021-07-08 09:55:19'),
+('bb_banned_ip_add', 'Banned ip 10.22.5.2', '11015035', '2021-07-08 09:57:39'),
+('bb_banned_username_add', 'Banned username dfdfdf', '11015035', '2021-07-08 09:58:19'),
+('bb_banned_ip_add', 'Banned ip 10.220.3.9', '11015035', '2021-07-08 10:02:33'),
+('user_login', 'Login success', 'admin', '2021-07-08 10:44:53'),
+('user_login', 'Login success', 'admin', '2021-07-08 10:45:51'),
+('short_url_add', 'Add new short url nWrsMNDUi', '11015035', '2021-07-08 10:54:09'),
+('short_url_add', 'Add new short url mzESCnOLu', '11015035', '2021-07-08 10:59:14'),
+('user_login', 'Login success', 'admin', '2021-07-08 11:45:15'),
+('bb_smiles_add_category_data', 'Add smile category ', '11015035', '2021-07-08 13:28:02'),
+('bb_smiles_edit_category_data', 'update smile category tset 111', '11015035', '2021-07-08 13:31:13'),
+('bb_smiles_edit_category_data', 'update smile category tset 1112323', '11015035', '2021-07-08 13:31:29'),
+('usergroup_update', 'update user group Administrator', '11015035', '2021-07-08 14:15:58'),
+('user_login', 'Login success', 'admin', '2021-07-08 15:45:57'),
+('add_calendar', 'Add new calendar test test', '11015035', '2021-07-08 16:09:31');
 
 -- --------------------------------------------------------
 
@@ -243,6 +266,21 @@ INSERT INTO `admin_menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bb_attach_files_data`
+--
+
+CREATE TABLE `bb_attach_files_data` (
+  `file_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `post_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `file_path` varchar(255) COLLATE utf8_bin NOT NULL,
+  `file_size` float NOT NULL DEFAULT '0',
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cache_data`
 --
 
@@ -264,20 +302,24 @@ CREATE TABLE `cache_data` (
 --
 
 CREATE TABLE `calendar_data` (
-  `id` varchar(68) COLLATE utf8_bin NOT NULL,
-  `calendar_id` varchar(10) COLLATE utf8_bin NOT NULL,
+  `calendar_id` varchar(28) COLLATE utf8_bin NOT NULL,
   `title` varchar(500) COLLATE utf8_bin NOT NULL,
   `start_dt` datetime NOT NULL,
   `end_dt` datetime NOT NULL,
   `all_day` int(1) NOT NULL DEFAULT '0',
-  `location` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `state` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'Free',
-  `is_event` int(1) NOT NULL DEFAULT '0',
+  `comment` text COLLATE utf8_bin,
+  `color_c` varchar(10) COLLATE utf8_bin DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
-  `group_c` varchar(8) COLLATE utf8_bin NOT NULL,
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `upd_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `calendar_data`
+--
+
+INSERT INTO `calendar_data` (`calendar_id`, `title`, `start_dt`, `end_dt`, `all_day`, `comment`, `color_c`, `status`, `ent_dt`, `upd_dt`) VALUES
+('8855744123794432624752345', 'test test', '2021-07-08 09:00:00', '2021-07-08 10:00:00', 0, NULL, '#5DB7D1', 0, '2021-07-08 16:09:31', '2021-07-08 16:09:31');
 
 -- --------------------------------------------------------
 
@@ -573,33 +615,33 @@ CREATE TABLE `group_permission_data` (
 --
 
 INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_dt`) VALUES
-('11016011', 'category01', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'category02', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu01', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu02', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu03', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu04', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu05', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'menu06', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu07', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu08', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'menu09', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'menu10', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'menu11', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'per1101101', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'per1101102', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'per1101103', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'per1101105', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post01', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post02', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'post04', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'post05', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post06', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post08', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post09', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'post10', '11015035', '2021-06-23 09:07:31'),
-('11016011', 'post11', '11015035', '2021-06-23 09:07:30'),
-('11016011', 'post12', '11015035', '2021-06-23 09:07:31'),
+('11016011', 'category01', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'category02', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu01', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'menu02', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu03', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'menu04', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'menu05', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu06', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'menu07', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'menu08', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu09', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu10', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'menu11', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'per1101101', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'per1101102', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'per1101103', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'per1101105', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post01', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post02', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post04', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'post05', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post06', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post08', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post09', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post10', '11015035', '2021-07-08 14:15:59'),
+('11016011', 'post11', '11015035', '2021-07-08 14:15:58'),
+('11016011', 'post12', '11015035', '2021-07-08 14:15:58'),
 ('11016012', 'category01', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'category02', '11015035', '2021-06-19 14:56:29'),
 ('11016012', 'menu01', '11015035', '2021-06-19 14:56:29'),
@@ -1181,7 +1223,6 @@ CREATE TABLE `setting_data` (
 
 INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('allow_comment', 'Allow Comments', 'yes', 1),
-('default_adminpage_url', 'Default Adminpage Url', '', 1),
 ('default_guest_groupid', 'Default Guest Group', '11016017', 1),
 ('default_member_banned_groupid', 'default_member_banned_groupid', '11016014', 1),
 ('default_member_groupid', 'Default Member Group', '11016013', 1),
@@ -1217,6 +1258,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('system_admin_lang', 'Administrator Language', 'en', 1),
 ('system_setting_cache', 'System Setting Cached', 'no', 1),
 ('system_status', 'system_status', 'working', 1),
+('system_title', 'System title', 'Coffee CMS', 1),
 ('theme_layout', 'Theme layout', 'default', 1),
 ('timezone', 'Timezone', 'America/Los_Angeles', 1),
 ('website_view_cache', 'Website View Cache', 'no', 1);
@@ -1249,13 +1291,6 @@ CREATE TABLE `short_url_data` (
   `status` int(1) NOT NULL DEFAULT '1',
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `short_url_data`
---
-
-INSERT INTO `short_url_data` (`code`, `target_url`, `views`, `status`, `ent_dt`) VALUES
-('RosqlKikS', 'http://localhost/lioncms/admin/setting_general#', 0, 1, '2021-07-06 11:00:01');
 
 -- --------------------------------------------------------
 
@@ -1446,6 +1481,7 @@ CREATE TABLE `user_mst` (
 -- Dumping data for table `user_mst`
 --
 
+
 INSERT INTO `user_mst` (`user_id`, `username`, `password`, `email`, `fullname`, `avatar`, `verify_c`, `group_c`, `level_c`, `status`, `forgot_password_c`, `last_logined`, `ent_dt`, `upd_dt`) VALUES
 ('11015035', '{{admin_username}}', '{{admin_password}}', '{{admin_email}}', NULL, NULL, NULL, '11016011', '1101701', 1, NULL, '2021-05-17 13:33:42', '2021-05-06 16:40:54', '2021-05-06 16:40:54');
 
@@ -1524,6 +1560,18 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016016', 'admin', '11015016'),
 ('11016016', 'admin', '11015013'),
 ('11016016', 'admin', '11017121'),
+('11016013', 'admin', '11011011'),
+('11016013', 'admin', '11011012'),
+('11016013', 'admin', '11015014'),
+('11016013', 'admin', '11015011'),
+('11016013', 'admin', '11015018'),
+('11016013', 'admin', '11011013'),
+('11016013', 'admin', '11015016'),
+('11016013', 'admin', '11015013'),
+('11016013', 'admin', '11011014'),
+('11016013', 'admin', '11015424'),
+('11016013', 'admin', '11011016'),
+('11016013', 'admin', '11017121'),
 ('11016011', 'admin', '11011011'),
 ('11016011', 'admin', '11011012'),
 ('11016011', 'admin', '11015014'),
@@ -1534,7 +1582,7 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016011', 'admin', '11015016'),
 ('11016011', 'admin', '11015013'),
 ('11016011', 'admin', '11011014'),
-('11016011', 'admin', '11015425'),
+('11016011', 'admin', '11016024'),
 ('11016011', 'admin', '11015024'),
 ('11016011', 'admin', '11015424'),
 ('11016011', 'admin', '11011015'),
@@ -1559,19 +1607,7 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016011', 'admin', '11015028'),
 ('11016011', 'admin', '11015029'),
 ('11016011', 'admin', '11015031'),
-('11016011', 'admin', '11015032'),
-('11016013', 'admin', '11011011'),
-('11016013', 'admin', '11011012'),
-('11016013', 'admin', '11015014'),
-('11016013', 'admin', '11015011'),
-('11016013', 'admin', '11015018'),
-('11016013', 'admin', '11011013'),
-('11016013', 'admin', '11015016'),
-('11016013', 'admin', '11015013'),
-('11016013', 'admin', '11011014'),
-('11016013', 'admin', '11015424'),
-('11016013', 'admin', '11011016'),
-('11016013', 'admin', '11017121');
+('11016011', 'admin', '11015032');
 
 -- --------------------------------------------------------
 
@@ -1610,6 +1646,17 @@ ALTER TABLE `admin_menu_data`
   ADD KEY `is_url` (`is_url`);
 
 --
+-- Indexes for table `bb_attach_files_data`
+--
+ALTER TABLE `bb_attach_files_data`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `file_id` (`file_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `file_size` (`file_size`),
+  ADD KEY `file_path` (`file_path`);
+
+--
 -- Indexes for table `cache_data`
 --
 ALTER TABLE `cache_data`
@@ -1623,15 +1670,13 @@ ALTER TABLE `cache_data`
 -- Indexes for table `calendar_data`
 --
 ALTER TABLE `calendar_data`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`calendar_id`),
   ADD KEY `calendar_id` (`calendar_id`),
-  ADD KEY `id` (`id`),
   ADD KEY `start_dt` (`start_dt`),
   ADD KEY `end_dt` (`end_dt`),
   ADD KEY `all_day` (`all_day`),
   ADD KEY `status` (`status`),
-  ADD KEY `group_c` (`group_c`),
-  ADD KEY `is_event` (`is_event`);
+  ADD KEY `color_c` (`color_c`);
 
 --
 -- Indexes for table `calendar_group`

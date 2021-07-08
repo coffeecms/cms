@@ -70,7 +70,7 @@ class Database
 
         if($this->dbConnect->connect_error)
         {
-            die("Connection failed: " . $this->dbConnect->connect_error);
+            die("Connection failed: " . $this->dbConnect->connect_error." - Query: ".$queryStr);
         }        
 
         $queryStr=$this->addPrefix($queryStr);
@@ -83,7 +83,7 @@ class Database
         {
             mysqli_close($this->dbConnect);
    
-            die($this->dbConnect->error);
+            die($this->dbConnect->error." - Query: ".$queryStr);
         }
 
         if((int)$queryDB->num_rows > 0)
@@ -120,7 +120,7 @@ class Database
         {
             mysqli_close($this->dbConnect);
    
-            die($this->dbConnect->error);
+            die($this->dbConnect->error." - Query: ".$queryStr);
         }
 
         mysqli_close($this->dbConnect);

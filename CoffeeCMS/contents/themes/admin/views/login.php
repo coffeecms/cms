@@ -1,6 +1,6 @@
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>CoffeeCMS</a>
+    <a href="#"><b><?php echo Configs::$_['system_title'];?></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

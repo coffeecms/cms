@@ -304,6 +304,10 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2">
+				  	<p><?php echo get_text_by_lang('System title','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control system_title setting-page2" placeholder="<?php echo get_text_by_lang('Title','admin');?>..." name="general[title]" id="title" value="" />
+					</p>
 				  	<p><?php echo get_text_by_lang('Title','admin');?>:</p>
 					<p>
 					<input type="text" class="form-control site_title setting-page2" placeholder="<?php echo get_text_by_lang('Title','admin');?>..." name="general[title]" id="title" value="" />
@@ -665,6 +669,7 @@ $(document).on('click','.btnSavePage2',function(){
     var sendData={};
 
 	var jsonData={};
+    jsonData['system_title']=$('.system_title').val();
     jsonData['site_title']=$('.site_title').val();
     jsonData['site_description']=$('.site_description').val();
     jsonData['site_keywords']=$('.site_keywords').val();

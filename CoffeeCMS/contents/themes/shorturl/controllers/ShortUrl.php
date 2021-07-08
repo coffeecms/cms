@@ -4,26 +4,19 @@ class ShortUrl
 {
     public static function index($id)
     {
-        $db=new Database(); 
+        load_shorturl_cache($id);
 
-        $result=$db->query("select code,target_url from short_url_data where code='".$id."' AND status='1'");
-
-        if(!is_array($result))
+        if(!isset(Configs::$_['short_url_target']))
         {
             echo responseData('ERROR','yes');
         }
         else
         {
-            if(!isset($result[0]))
-            {
-                echo responseData('ERROR','yes');
-            }
-            else
-            {
-                $db->nonquery("update short_url_data set views=views+1 where code='".$id."'");
-                // header("HTTP/1.1 301 Moved Permanently"); 
-                header("Location: " . $result[0]['target_url']);die();
-            }
+            $db=new Database();
+
+            $db->nonquery("update short_url_data set views=views+1 where code='".$id."'");
+            // header("HTTP/1.1 301 Moved Permanently"); 
+            header("Location: " . Configs::$_['short_url_target']);die();
         }
 
     }

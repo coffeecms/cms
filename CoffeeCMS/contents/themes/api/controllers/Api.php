@@ -1134,12 +1134,27 @@ class Api
         $queryStr='';
 
 
-
+        $savePath='';
         if($action=='delete')
         {
             if(isset(Configs::$_['user_permissions']['post12']))
             {
                 $queryStr="delete from short_url_data where code  IN (".$reformat_post_c.")";
+
+                $savePath='';
+                for ($i=0; $i < $total; $i++) { 
+
+                    if(strlen($split_post_c[$i]) > 2)
+                    {
+                        $savePath=PUBLIC_PATH.'caches/short_urls/'.$split_post_c[$i].'.php';
+                        
+                        if(file_exists($savePath))
+                        {
+                            unlink($savePath);
+                        }
+                    }
+       
+                }
             }
         }        
         elseif($action=='deactivate')
@@ -1147,6 +1162,22 @@ class Api
             if(isset(Configs::$_['user_permissions']['post10']))
             {
                 $queryStr="update short_url_data set status='0' where code  IN (".$reformat_post_c.")";
+
+                $savePath='';
+
+                for ($i=0; $i < $total; $i++) { 
+
+                    if(strlen($split_post_c[$i]) > 2)
+                    {
+                        $savePath=PUBLIC_PATH.'caches/short_urls/'.$split_post_c[$i].'.php';
+                        
+                        if(file_exists($savePath))
+                        {
+                            unlink($savePath);
+                        }
+                    }
+       
+                }
             }       
         }        
         elseif($action=='activate')
@@ -1398,7 +1429,11 @@ class Api
 
         $queryStr='';
 
-    
+        $savePath='';
+
+        $db=new Database(); 
+
+
         if($action=='delete')
         {
 
@@ -1408,6 +1443,22 @@ class Api
             }
 
             $queryStr.="delete from post_data where post_c IN (".$reformat_post_c.");";
+            
+            $loadData=$db->query("select friendly_url from post_data where post_c IN (".$reformat_post_c.")");
+
+            $total=count($loadData);
+
+            $savePath='';
+            for ($i=0; $i < $total; $i++) { 
+
+                $savePath=PUBLIC_PATH.'caches/posts/'.md5($loadData[$i]['friendly_url']).'.php';
+                    
+                if(file_exists($savePath))
+                {
+                    unlink($savePath);
+                }
+   
+            }
            
         }        
         elseif($action=='deactivate')
@@ -1419,6 +1470,22 @@ class Api
             }
 
             $queryStr.="update post_data set status='0' where post_c IN (".$reformat_post_c.");";
+
+            $loadData=$db->query("select friendly_url from post_data where post_c IN (".$reformat_post_c.")");
+
+            $total=count($loadData);
+
+            $savePath='';
+            for ($i=0; $i < $total; $i++) { 
+
+                $savePath=PUBLIC_PATH.'caches/posts/'.md5($loadData[$i]['friendly_url']).'.php';
+                    
+                if(file_exists($savePath))
+                {
+                    unlink($savePath);
+                }
+   
+            }
            
         }        
         elseif($action=='activate')
@@ -1434,7 +1501,6 @@ class Api
 
         }
 
-        $db=new Database(); 
 
         $db->nonquery($queryStr);
 
@@ -1572,8 +1638,47 @@ class Api
 
     // End post api
 
+    
     // Project api
    
+    public static function add_calendar()
+    {
+           //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+       $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+       try {
+           isValidAccessAPI();
+       } catch (\Exception $e) {
+           echo responseData($e->getMessage(),'yes');return false;
+       }
+
+
+       $calendar_id=newID(24);
+       $id=newID(60);
+
+       $color_c='#5DB7D1';
+
+       $insertData=array(
+           'calendar_id'=>$calendar_id,
+           'title'=>addslashes(getPost('event')),
+           'start_dt'=>addslashes(getPost('start_date')),
+           'end_dt'=>addslashes(getPost('end_date')),
+           'all_day'=>addslashes(getPost('allday')),
+           'status'=>addslashes(getPost('status')),
+           'color_c'=>$color_c,
+       );
+
+       $queryStr=arrayToInsertStr('calendar_data',$insertData);
+
+       $db=new Database(); 
+       $db->nonquery($queryStr);   
+
+       saveActivities('add_calendar','Add new calendar '.$insertData['title'],$username);
+
+       echo responseData('OK');
+   }
+
 public static function project_action_apply()
 {
         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false

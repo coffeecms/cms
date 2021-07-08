@@ -174,7 +174,7 @@ class Admin
 
 	public static function login()
 	{
-
+		// print_r(Configs::$_);die();
 		// var_dump(isLogined());die();
 
 		echo view('header_login');
