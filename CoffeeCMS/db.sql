@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 08, 2021 at 09:28 AM
+-- Generation Time: Sep 01, 2021 at 07:25 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `activities_data`
 --
 
+DROP TABLE IF EXISTS `activities_data`;
 CREATE TABLE `activities_data` (
   `activity_c` varchar(100) COLLATE utf8_bin NOT NULL,
   `activity_content` varchar(500) COLLATE utf8_bin NOT NULL,
@@ -34,181 +35,13 @@ CREATE TABLE `activities_data` (
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `activities_data`
---
-
-INSERT INTO `activities_data` (`activity_c`, `activity_content`, `user_id`, `ent_dt`) VALUES
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-05 13:56:23'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-05 14:02:21'),
-('user_login', 'Login success', 'admin', '2021-06-09 16:08:16'),
-('email_template_update', 'update email template New user registered', '', '2021-06-11 07:41:24'),
-('email_template_update', 'update email template Change password', '', '2021-06-11 07:49:33'),
-('email_template_update', 'update email template Forgot Password', '', '2021-06-11 07:53:00'),
-('emailmarketing_group_add', 'Add new email marketing group test', '', '2021-06-11 10:28:18'),
-('emailmarketing_group_add', 'Add new email marketing group test', '', '2021-06-11 10:28:27'),
-('emailmarketing_group_add', 'Add new email marketing group test', '', '2021-06-11 10:35:58'),
-('emailmarketing_group_add', 'Add new email marketing group test', '', '2021-06-11 10:36:52'),
-('emailmarketing_group_add', 'Add new email marketing group test', '', '2021-06-11 10:37:30'),
-('emailmarketing_group_add', 'Add new email marketing group test 2', '', '2021-06-11 10:38:01'),
-('emailmarketing_group_update', 'update email marketing group test333', '', '2021-06-11 10:41:57'),
-('emailmarketing_group_update', 'update email marketing group test 26666', '', '2021-06-11 10:42:04'),
-('kanban_message_add', 'Add new kanban board message 9812375772636921883123', '', '2021-06-13 07:52:44'),
-('kanban_add', 'Add new kanban board ', '', '2021-06-13 08:33:23'),
-('kanban_comment_add', 'Add new kanban board comment', '', '2021-06-13 08:35:40'),
-('kanban_comment_add', 'Add new kanban board comment', '', '2021-06-13 08:37:09'),
-('kanban_message_add', 'Add new kanban board message 4723423742769568847717', '', '2021-06-13 08:39:00'),
-('kanban_message_remove', 'Remove kanban board message 9812375772636921883123', '', '2021-06-13 08:39:19'),
-('kanban_message_remove', 'Remove kanban board message 4723423742769568847717', '', '2021-06-13 08:39:21'),
-('post_add', 'Add new post What is Lorem Ipsum?', '', '2021-06-13 08:58:48'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:02:25'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:03:36'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:09:35'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:13:24'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:15:40'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:17:32'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:18:36'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:22:35'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:23:31'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:23:57'),
-('plugin_deactivate', 'Deactivate plugin coffeecommerce', '', '2021-06-13 10:28:48'),
-('user_login', 'Login success', 'admin', '2021-06-14 08:21:54'),
-('usergroup_update', 'update user group Moderator', '', '2021-06-14 14:05:19'),
-('usergroup_update', 'update user group Moderator', '', '2021-06-14 14:05:53'),
-('user_add', 'Add new user tienlm', '', '2021-06-14 14:07:06'),
-('user_login', 'Login success', 'tienlm', '2021-06-14 14:07:19'),
-('usergroup_update', 'update user group Administrator', '', '2021-06-14 14:14:00'),
-('usergroup_update', 'update user group Moderator', '', '2021-06-14 14:14:05'),
-('usergroup_update', 'update user group Moderator', '', '2021-06-14 14:14:35'),
-('usergroup_update', 'update user group Writer', '', '2021-06-14 14:14:45'),
-('usergroup_update', 'update user group Writer', '', '2021-06-14 14:14:51'),
-('usergroup_update', 'update user group Writer', '', '2021-06-14 14:15:01'),
-('usergroup_update', 'update user group User', '', '2021-06-14 14:15:17'),
-('usergroup_update', 'update user group Administrator', '', '2021-06-14 14:15:40'),
-('usergroup_update', 'update user group Moderator', '', '2021-06-14 14:16:51'),
-('usergroup_update', 'update user group Writer', '', '2021-06-14 14:17:01'),
-('post_add', 'Add new post test post 1', '', '2021-06-14 14:18:39'),
-('post_activate', 'Activate post Array', '11015035', '2021-06-14 14:50:45'),
-('post_activate', 'Activate post \'88017389550190\',\'\'', '11015035', '2021-06-14 14:54:07'),
-('post_deactivate', 'Deactivate post \'88017389550190\',\'\'', '11015035', '2021-06-14 14:55:44'),
-('user_login', 'Login success', 'admin', '2021-06-14 19:24:15'),
-('user_login', 'Login success', 'admin', '2021-06-15 07:50:39'),
-('short_url_add', 'Add new short url RMohpXncn', '11015035', '2021-06-18 11:38:53'),
-('short_url_add', 'Add new short url tshAsyJwk', '11015035', '2021-06-18 11:39:18'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 09:32:52'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 09:34:14'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 09:35:00'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 09:36:43'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 09:44:42'),
-('coffeestats_add_post', 'Add new tracking id', '11015035', '2021-06-19 10:34:38'),
-('user_login', 'Login success', 'admin', '2021-06-19 13:14:56'),
-('usergroup_add', 'Add new user group Test', '11015035', '2021-06-19 14:44:04'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:54:23'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:55:20'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:55:35'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:55:52'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:56:22'),
-('usergroup_update', 'update user group Moderator', '11015035', '2021-06-19 14:56:29'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 14:56:34'),
-('usergroup_update', 'update user group User', '11015035', '2021-06-19 14:57:40'),
-('usergroup_update', 'update user group Writer', '11015035', '2021-06-19 14:58:39'),
-('user_login', 'Login success', 'admin', '2021-06-19 15:05:21'),
-('user_login', 'Login success', 'admin', '2021-06-19 15:05:26'),
-('user_login', 'Login success', 'admin', '2021-06-19 15:05:44'),
-('user_login', 'Login success', 'admin', '2021-06-19 15:05:49'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 15:15:28'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 15:16:01'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 15:22:54'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-19 15:22:59'),
-('usergroup_remove', 'Remove user group \'765143705\',\'\'', '11015035', '2021-06-19 15:24:53'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:17:06'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:17:19'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:17:39'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:18:34'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:25:15'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:26:29'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:26:36'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:27:06'),
-('user_login', 'Login success', 'admin', '2021-06-20 10:28:03'),
-('user_login', 'Login success', 'admin', '2021-06-21 10:50:49'),
-('short_url_add', 'Add new short url GuFvCwrKA', '11015035', '2021-06-21 16:07:22'),
-('user_login', 'Login success', 'admin', '2021-06-21 16:17:13'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-22 11:01:36'),
-('project_task_add', 'Add new task test', '11015035', '2021-06-22 14:33:36'),
-('project_task_add', 'Add new task This is test task in test project mangement plugin', '11015035', '2021-06-22 14:41:31'),
-('project_task_add', 'Add new task tset 2', '11015035', '2021-06-22 16:33:44'),
-('project_task_add', 'Add new task test 6', '11015035', '2021-06-22 16:34:20'),
-('project_task_update', 'update task This is test task in test project mangement plugin', '11015035', '2021-06-22 16:51:15'),
-('project_task_update', 'update task test 6', '11015035', '2021-06-22 16:52:12'),
-('project_task_delete', 'Delete task ', '11015035', '2021-06-23 08:57:46'),
-('project_task_delete', 'Delete task ', '11015035', '2021-06-23 08:58:59'),
-('project_task_delete', 'Delete task 1416074531620558876', '11015035', '2021-06-23 08:59:22'),
-('project_task_delete', 'Delete task 4763671632910852166', '11015035', '2021-06-23 08:59:28'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:00:34'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-06-23 09:07:30'),
-('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:07:57'),
-('usergroup_update', 'update user group User', '11015035', '2021-06-23 09:08:08'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:35:43'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:35:48'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:44:56'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:45:16'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:48:18'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:48:39'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:51:30'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:54:32'),
-('user_login', 'Login success', 'admin', '2021-07-01 16:55:52'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:16:16'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:32:30'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:32:42'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:33:01'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:34:52'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:35:30'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:35:43'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:51:35'),
-('user_login', 'Login success', 'admin', '2021-07-06 08:53:11'),
-('user_login', 'Login success', 'admin', '2021-07-06 09:03:03'),
-('short_url_add', 'Add new short url RosqlKikS', '11015035', '2021-07-06 11:00:01'),
-('bb_forum_add', 'Add new forum tset', '11015035', '2021-07-06 14:47:22'),
-('bb_forum_add', 'Add new forum tets45', '11015035', '2021-07-06 14:47:40'),
-('bb_forum_add', 'Add new forum tets454545', '11015035', '2021-07-06 14:48:14'),
-('bb_forum_add', 'Add new forum tetste', '11015035', '2021-07-06 14:49:32'),
-('bb_forum_add', 'Add new forum tsets45343434', '11015035', '2021-07-06 14:50:35'),
-('bb_forum_add', 'Add new forum tests222222', '11015035', '2021-07-06 14:54:57'),
-('bb_forum_add', 'Add new forum testsub 45', '11015035', '2021-07-06 14:55:20'),
-('bb_forum_add', 'Add new forum test78', '11015035', '2021-07-06 14:56:46'),
-('bb_forum_add', 'Add new forum tset 89', '11015035', '2021-07-06 14:57:02'),
-('bb_forum_edit', 'update forum ', '11015035', '2021-07-06 16:10:07'),
-('bb_forum_edit', 'update forum tets4511111111', '11015035', '2021-07-06 16:10:36'),
-('user_login', 'Login success', 'admin', '2021-07-07 08:36:51'),
-('user_login', 'Login success', 'admin', '2021-07-07 16:27:22'),
-('user_login', 'Login success', 'admin', '2021-07-08 08:09:43'),
-('user_login', 'Login success', 'admin', '2021-07-08 08:11:53'),
-('bb_banned_email_add', 'Banned email test@gmail.com', '11015035', '2021-07-08 09:45:07'),
-('bb_banned_email_add', 'Banned email tsetsets@gmail.com', '11015035', '2021-07-08 09:49:12'),
-('bb_banned_email_add', 'Banned email test2@gmail.com', '11015035', '2021-07-08 09:49:17'),
-('bb_banned_username_add', 'Banned username admin', '11015035', '2021-07-08 09:52:26'),
-('bb_banned_ip_add', 'Banned ip 10.220.3.3', '11015035', '2021-07-08 09:55:19'),
-('bb_banned_ip_add', 'Banned ip 10.22.5.2', '11015035', '2021-07-08 09:57:39'),
-('bb_banned_username_add', 'Banned username dfdfdf', '11015035', '2021-07-08 09:58:19'),
-('bb_banned_ip_add', 'Banned ip 10.220.3.9', '11015035', '2021-07-08 10:02:33'),
-('user_login', 'Login success', 'admin', '2021-07-08 10:44:53'),
-('user_login', 'Login success', 'admin', '2021-07-08 10:45:51'),
-('short_url_add', 'Add new short url nWrsMNDUi', '11015035', '2021-07-08 10:54:09'),
-('short_url_add', 'Add new short url mzESCnOLu', '11015035', '2021-07-08 10:59:14'),
-('user_login', 'Login success', 'admin', '2021-07-08 11:45:15'),
-('bb_smiles_add_category_data', 'Add smile category ', '11015035', '2021-07-08 13:28:02'),
-('bb_smiles_edit_category_data', 'update smile category tset 111', '11015035', '2021-07-08 13:31:13'),
-('bb_smiles_edit_category_data', 'update smile category tset 1112323', '11015035', '2021-07-08 13:31:29'),
-('usergroup_update', 'update user group Administrator', '11015035', '2021-07-08 14:15:58'),
-('user_login', 'Login success', 'admin', '2021-07-08 15:45:57'),
-('add_calendar', 'Add new calendar test test', '11015035', '2021-07-08 16:09:31');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `admin_menu_data`
 --
 
+DROP TABLE IF EXISTS `admin_menu_data`;
 CREATE TABLE `admin_menu_data` (
   `menu_id` varchar(18) COLLATE utf8_unicode_ci NOT NULL,
   `parent_menu_id` varchar(18) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -259,24 +92,11 @@ INSERT INTO `admin_menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `
 ('11015032', '11015027', 'UnSubscrible List', 0, 'admin/email_marketing_unsubscrible', NULL, 'nav-icon fas fa-tag', 7, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11015034', '11015027', 'Dashboard', 0, 'admin/email_marketing_dashboard', NULL, 'nav-icon fas fa-tag', 0, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11015035', '11015027', 'Job List', 0, 'admin/email_marketing_jobs', NULL, 'nav-icon fas fa-tag', 2, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
+('11015123', '11011017', 'Import', 0, 'admin/import_plugin', NULL, 'nav-icon fas fa-tag', 2, '2021-01-31 08:42:42', '2021-01-31 08:42:42'),
 ('11015424', '11011014', 'All Tasks', 0, 'admin/projects_task', NULL, 'nav-icon fas fa-tag', 2, '2021-01-31 08:20:48', '2021-01-31 08:20:48'),
+('11016117', '11011015', 'Import', 0, 'admin/import_theme', NULL, 'nav-icon fas fa-tag', 5, '2021-01-31 08:24:30', '2021-01-31 08:24:30'),
 ('11017021', '11011018', 'Activities', 0, 'admin/activities_logs', NULL, 'nav-icon fas fa-tag', 6, '2021-01-31 13:07:22', '2021-01-31 13:07:22'),
 ('11017121', '11011018', 'Short Urls', 0, 'admin/short_urls', NULL, 'nav-icon fas fa-tag', 8, '2021-01-31 13:07:22', '2021-01-31 13:07:22');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bb_attach_files_data`
---
-
-CREATE TABLE `bb_attach_files_data` (
-  `file_id` varchar(28) COLLATE utf8_bin NOT NULL,
-  `post_id` varchar(28) COLLATE utf8_bin NOT NULL,
-  `file_path` varchar(255) COLLATE utf8_bin NOT NULL,
-  `file_size` float NOT NULL DEFAULT '0',
-  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
-  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -284,6 +104,7 @@ CREATE TABLE `bb_attach_files_data` (
 -- Table structure for table `cache_data`
 --
 
+DROP TABLE IF EXISTS `cache_data`;
 CREATE TABLE `cache_data` (
   `cache_id` varchar(26) COLLATE utf8_unicode_ci NOT NULL,
   `cache_key` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
@@ -301,6 +122,7 @@ CREATE TABLE `cache_data` (
 -- Table structure for table `calendar_data`
 --
 
+DROP TABLE IF EXISTS `calendar_data`;
 CREATE TABLE `calendar_data` (
   `calendar_id` varchar(28) COLLATE utf8_bin NOT NULL,
   `title` varchar(500) COLLATE utf8_bin NOT NULL,
@@ -327,6 +149,7 @@ INSERT INTO `calendar_data` (`calendar_id`, `title`, `start_dt`, `end_dt`, `all_
 -- Table structure for table `calendar_group`
 --
 
+DROP TABLE IF EXISTS `calendar_group`;
 CREATE TABLE `calendar_group` (
   `group_c` varchar(8) COLLATE utf8_bin NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -342,6 +165,7 @@ CREATE TABLE `calendar_group` (
 -- Table structure for table `category_mst`
 --
 
+DROP TABLE IF EXISTS `category_mst`;
 CREATE TABLE `category_mst` (
   `category_c` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -372,6 +196,7 @@ INSERT INTO `category_mst` (`category_c`, `title`, `parent_category_c`, `friendl
 -- Table structure for table `comment_data`
 --
 
+DROP TABLE IF EXISTS `comment_data`;
 CREATE TABLE `comment_data` (
   `comment_id` varchar(38) COLLATE utf8_unicode_ci NOT NULL,
   `parent_comment_id` varchar(38) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -397,6 +222,7 @@ INSERT INTO `comment_data` (`comment_id`, `parent_comment_id`, `post_id`, `owner
 -- Table structure for table `contact_data`
 --
 
+DROP TABLE IF EXISTS `contact_data`;
 CREATE TABLE `contact_data` (
   `contact_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
@@ -412,6 +238,7 @@ CREATE TABLE `contact_data` (
 -- Table structure for table `cronjob_data`
 --
 
+DROP TABLE IF EXISTS `cronjob_data`;
 CREATE TABLE `cronjob_data` (
   `id` int(9) NOT NULL,
   `command_content` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -424,6 +251,7 @@ CREATE TABLE `cronjob_data` (
 -- Table structure for table `cronjob_log_data`
 --
 
+DROP TABLE IF EXISTS `cronjob_log_data`;
 CREATE TABLE `cronjob_log_data` (
   `id` int(11) NOT NULL,
   `job_content` varchar(500) COLLATE utf8_bin NOT NULL,
@@ -436,6 +264,7 @@ CREATE TABLE `cronjob_log_data` (
 -- Table structure for table `emailmarketing_email_data`
 --
 
+DROP TABLE IF EXISTS `emailmarketing_email_data`;
 CREATE TABLE `emailmarketing_email_data` (
   `id` int(9) NOT NULL,
   `email` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -459,6 +288,7 @@ INSERT INTO `emailmarketing_email_data` (`id`, `email`, `group_id`, `ent_dt`) VA
 -- Table structure for table `emailmarketing_group_data`
 --
 
+DROP TABLE IF EXISTS `emailmarketing_group_data`;
 CREATE TABLE `emailmarketing_group_data` (
   `group_id` varchar(8) COLLATE utf8_bin NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -480,6 +310,7 @@ INSERT INTO `emailmarketing_group_data` (`group_id`, `title`, `user_id`, `ent_dt
 -- Table structure for table `emailmarketing_jobs_data`
 --
 
+DROP TABLE IF EXISTS `emailmarketing_jobs_data`;
 CREATE TABLE `emailmarketing_jobs_data` (
   `job_id` varchar(12) COLLATE utf8_bin NOT NULL,
   `template_id` varchar(12) COLLATE utf8_bin NOT NULL,
@@ -490,23 +321,13 @@ CREATE TABLE `emailmarketing_jobs_data` (
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `emailmarketing_jobs_data`
---
-
-INSERT INTO `emailmarketing_jobs_data` (`job_id`, `template_id`, `group_id`, `total_sended`, `total_readed`, `total_email`, `ent_dt`) VALUES
-('100154', '124231', '1001201', 1, 1, 4, '2021-06-11 13:58:59'),
-('223068614903', '143664', '1001201', 4, 0, 4, '2021-06-11 16:04:36'),
-('436222308507', '124231', '1001201', 0, 0, 4, '2021-06-11 14:28:19'),
-('590752545373', '137454', '1001201', 0, 0, 4, '2021-06-11 16:03:33'),
-('694553137520', '137454', '1001201', 0, 0, 4, '2021-06-11 14:24:16');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `emailmarketing_sent_data`
 --
 
+DROP TABLE IF EXISTS `emailmarketing_sent_data`;
 CREATE TABLE `emailmarketing_sent_data` (
   `send_id` int(9) NOT NULL,
   `job_id` varchar(12) COLLATE utf8_bin NOT NULL,
@@ -516,33 +337,13 @@ CREATE TABLE `emailmarketing_sent_data` (
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `emailmarketing_sent_data`
---
-
-INSERT INTO `emailmarketing_sent_data` (`send_id`, `job_id`, `to_email`, `status`, `is_readed`, `ent_dt`) VALUES
-(1, '100154', 'test2@gmail.com', 0, 0, '2021-06-11 11:47:07'),
-(2, '100154', 'test3@gmail.com', 0, 0, '2021-06-11 11:47:07'),
-(3, '100154', 'test4@gmail.com', 1, 1, '2021-06-11 11:47:07'),
-(4, '436222308507', 'sadsadsad@gmail.com', 0, 0, '2021-06-11 16:00:05'),
-(5, '436222308507', 'test1@gmail.com', 0, 0, '2021-06-11 16:00:05'),
-(6, '436222308507', 'test2@gmail.com', 0, 0, '2021-06-11 16:00:05'),
-(7, '436222308507', 'test4@gmail.com', 0, 0, '2021-06-11 16:00:05'),
-(11, '590752545373', 'sadsadsad@gmail.com', 0, 0, '2021-06-11 16:03:33'),
-(12, '590752545373', 'test1@gmail.com', 0, 0, '2021-06-11 16:03:33'),
-(13, '590752545373', 'test2@gmail.com', 0, 0, '2021-06-11 16:03:33'),
-(14, '590752545373', 'test4@gmail.com', 0, 0, '2021-06-11 16:03:33'),
-(18, '223068614903', 'sadsadsad@gmail.com', 1, 0, '2021-06-11 16:04:36'),
-(19, '223068614903', 'test1@gmail.com', 1, 0, '2021-06-11 16:04:36'),
-(20, '223068614903', 'test2@gmail.com', 1, 0, '2021-06-11 16:04:36'),
-(21, '223068614903', 'test4@gmail.com', 1, 0, '2021-06-11 16:04:36');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `emailmarketing_unsubscrible_data`
 --
 
+DROP TABLE IF EXISTS `emailmarketing_unsubscrible_data`;
 CREATE TABLE `emailmarketing_unsubscrible_data` (
   `id` int(9) NOT NULL,
   `email` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -562,6 +363,7 @@ INSERT INTO `emailmarketing_unsubscrible_data` (`id`, `email`, `ent_dt`) VALUES
 -- Table structure for table `email_sent_data`
 --
 
+DROP TABLE IF EXISTS `email_sent_data`;
 CREATE TABLE `email_sent_data` (
   `send_id` int(9) NOT NULL,
   `template_id` varchar(8) COLLATE utf8_bin NOT NULL,
@@ -578,6 +380,7 @@ CREATE TABLE `email_sent_data` (
 -- Table structure for table `email_template_data`
 --
 
+DROP TABLE IF EXISTS `email_template_data`;
 CREATE TABLE `email_template_data` (
   `template_id` varchar(8) COLLATE utf8_bin NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -603,6 +406,7 @@ INSERT INTO `email_template_data` (`template_id`, `title`, `subject`, `content`,
 -- Table structure for table `group_permission_data`
 --
 
+DROP TABLE IF EXISTS `group_permission_data`;
 CREATE TABLE `group_permission_data` (
   `group_c` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `permission_c` varchar(18) COLLATE utf8_unicode_ci NOT NULL,
@@ -615,43 +419,6 @@ CREATE TABLE `group_permission_data` (
 --
 
 INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_dt`) VALUES
-('11016011', 'category01', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'category02', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu01', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'menu02', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu03', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'menu04', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'menu05', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu06', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'menu07', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'menu08', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu09', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu10', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'menu11', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'per1101101', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'per1101102', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'per1101103', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'per1101105', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post01', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post02', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post04', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'post05', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post06', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post08', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post09', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post10', '11015035', '2021-07-08 14:15:59'),
-('11016011', 'post11', '11015035', '2021-07-08 14:15:58'),
-('11016011', 'post12', '11015035', '2021-07-08 14:15:58'),
-('11016012', 'category01', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'category02', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'menu01', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'menu02', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'menu06', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'menu08', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'post01', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'post02', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'post04', '11015035', '2021-06-19 14:56:29'),
-('11016012', 'post05', '11015035', '2021-06-19 14:56:29'),
 ('11016013', 'category01', '11015035', '2021-06-23 09:08:08'),
 ('11016013', 'menu01', '11015035', '2021-06-23 09:08:08'),
 ('11016013', 'menu02', '11015035', '2021-06-23 09:08:08'),
@@ -673,7 +440,44 @@ INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_
 ('11016016', 'post04', '11015035', '2021-06-19 14:58:39'),
 ('11016016', 'post05', '11015035', '2021-06-19 14:58:39'),
 ('554546466', 'menu02', 'mrtienmi4', '2021-05-10 06:29:52'),
-('554546466', 'menu08', 'mrtienmi4', '2021-05-10 06:29:52');
+('554546466', 'menu08', 'mrtienmi4', '2021-05-10 06:29:52'),
+('11016011', 'menu10', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post08', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post05', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post11', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'per1101105', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post06', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post01', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu05', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu09', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu11', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'per1101103', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post09', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post02', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post12', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'category02', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu02', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu08', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'category01', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu01', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu03', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu06', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'post10', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu04', '11015035', '2021-09-01 13:56:09'),
+('11016011', 'menu07', '11015035', '2021-09-01 13:56:10'),
+('11016011', 'per1101101', '11015035', '2021-09-01 13:56:10'),
+('11016011', 'per1101102', '11015035', '2021-09-01 13:56:10'),
+('11016011', 'post04', '11015035', '2021-09-01 13:56:10'),
+('11016012', 'post05', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'post01', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'post02', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'category02', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'menu02', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'menu08', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'category01', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'menu01', '11015035', '2021-09-01 14:03:22'),
+('11016012', 'menu06', '11015035', '2021-09-01 14:03:23'),
+('11016012', 'post04', '11015035', '2021-09-01 14:03:23');
 
 -- --------------------------------------------------------
 
@@ -681,6 +485,7 @@ INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_
 -- Table structure for table `kanban_board_comment_data`
 --
 
+DROP TABLE IF EXISTS `kanban_board_comment_data`;
 CREATE TABLE `kanban_board_comment_data` (
   `id` int(9) NOT NULL,
   `message_id` varchar(24) COLLATE utf8_bin NOT NULL,
@@ -695,6 +500,7 @@ CREATE TABLE `kanban_board_comment_data` (
 -- Table structure for table `kanban_board_data`
 --
 
+DROP TABLE IF EXISTS `kanban_board_data`;
 CREATE TABLE `kanban_board_data` (
   `message_id` varchar(24) COLLATE utf8_bin NOT NULL,
   `board_c` varchar(16) COLLATE utf8_bin NOT NULL,
@@ -712,6 +518,7 @@ CREATE TABLE `kanban_board_data` (
 -- Table structure for table `kanban_board_mst`
 --
 
+DROP TABLE IF EXISTS `kanban_board_mst`;
 CREATE TABLE `kanban_board_mst` (
   `board_c` varchar(16) COLLATE utf8_bin NOT NULL,
   `project_c` varchar(16) COLLATE utf8_bin DEFAULT NULL,
@@ -739,6 +546,7 @@ INSERT INTO `kanban_board_mst` (`board_c`, `project_c`, `title`, `sort_order`, `
 -- Table structure for table `kanban_board_project_mst`
 --
 
+DROP TABLE IF EXISTS `kanban_board_project_mst`;
 CREATE TABLE `kanban_board_project_mst` (
   `project_c` varchar(16) COLLATE utf8_bin NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -758,9 +566,27 @@ INSERT INTO `kanban_board_project_mst` (`project_c`, `title`, `status`, `user_id
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kanban_task_checklist_data`
+--
+
+DROP TABLE IF EXISTS `kanban_task_checklist_data`;
+CREATE TABLE `kanban_task_checklist_data` (
+  `check_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `task_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `title` varchar(500) COLLATE utf8_bin NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upd_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kanban_task_comment_data`
 --
 
+DROP TABLE IF EXISTS `kanban_task_comment_data`;
 CREATE TABLE `kanban_task_comment_data` (
   `comment_id` varchar(28) COLLATE utf8_bin NOT NULL,
   `task_id` varchar(28) COLLATE utf8_bin NOT NULL,
@@ -776,6 +602,7 @@ CREATE TABLE `kanban_task_comment_data` (
 -- Table structure for table `kanban_task_data`
 --
 
+DROP TABLE IF EXISTS `kanban_task_data`;
 CREATE TABLE `kanban_task_data` (
   `task_id` varchar(28) COLLATE utf8_bin NOT NULL,
   `project_c` varchar(16) COLLATE utf8_bin NOT NULL,
@@ -804,6 +631,7 @@ INSERT INTO `kanban_task_data` (`task_id`, `project_c`, `title`, `assigned_to`, 
 -- Table structure for table `kanboard_category_mst`
 --
 
+DROP TABLE IF EXISTS `kanboard_category_mst`;
 CREATE TABLE `kanboard_category_mst` (
   `category_c` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -834,6 +662,7 @@ INSERT INTO `kanboard_category_mst` (`category_c`, `title`, `parent_category_c`,
 -- Table structure for table `language_mst`
 --
 
+DROP TABLE IF EXISTS `language_mst`;
 CREATE TABLE `language_mst` (
   `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -849,6 +678,7 @@ CREATE TABLE `language_mst` (
 -- Table structure for table `media_data`
 --
 
+DROP TABLE IF EXISTS `media_data`;
 CREATE TABLE `media_data` (
   `id` varchar(28) COLLATE utf8_bin NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -870,6 +700,7 @@ INSERT INTO `media_data` (`id`, `name`, `file_path`, `user_id`, `ent_dt`) VALUES
 -- Table structure for table `menu_data`
 --
 
+DROP TABLE IF EXISTS `menu_data`;
 CREATE TABLE `menu_data` (
   `menu_id` varchar(18) COLLATE utf8_unicode_ci NOT NULL,
   `parent_menu_id` varchar(18) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -897,6 +728,7 @@ INSERT INTO `menu_data` (`menu_id`, `parent_menu_id`, `title`, `is_url`, `page_u
 -- Table structure for table `message_data`
 --
 
+DROP TABLE IF EXISTS `message_data`;
 CREATE TABLE `message_data` (
   `message_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `to_user_id` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
@@ -913,6 +745,7 @@ CREATE TABLE `message_data` (
 -- Table structure for table `newsletter_data`
 --
 
+DROP TABLE IF EXISTS `newsletter_data`;
 CREATE TABLE `newsletter_data` (
   `id` int(9) NOT NULL,
   `email` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -928,6 +761,7 @@ CREATE TABLE `newsletter_data` (
 -- Table structure for table `options_data`
 --
 
+DROP TABLE IF EXISTS `options_data`;
 CREATE TABLE `options_data` (
   `option_c` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `target_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
@@ -941,6 +775,7 @@ CREATE TABLE `options_data` (
 -- Table structure for table `options_mst`
 --
 
+DROP TABLE IF EXISTS `options_mst`;
 CREATE TABLE `options_mst` (
   `option_c` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `option_type` int(5) NOT NULL DEFAULT '1',
@@ -954,6 +789,7 @@ CREATE TABLE `options_mst` (
 -- Table structure for table `page_data`
 --
 
+DROP TABLE IF EXISTS `page_data`;
 CREATE TABLE `page_data` (
   `page_c` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -976,6 +812,7 @@ CREATE TABLE `page_data` (
 -- Table structure for table `permissions_mst`
 --
 
+DROP TABLE IF EXISTS `permissions_mst`;
 CREATE TABLE `permissions_mst` (
   `permission_c` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1023,6 +860,7 @@ INSERT INTO `permissions_mst` (`permission_c`, `title`, `status`, `user_id`, `en
 -- Table structure for table `plugin_hook_data`
 --
 
+DROP TABLE IF EXISTS `plugin_hook_data`;
 CREATE TABLE `plugin_hook_data` (
   `plugin_dir` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `hook_key` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
@@ -1038,6 +876,7 @@ CREATE TABLE `plugin_hook_data` (
 -- Table structure for table `plugin_mst`
 --
 
+DROP TABLE IF EXISTS `plugin_mst`;
 CREATE TABLE `plugin_mst` (
   `plugin_dir` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
@@ -1052,6 +891,7 @@ CREATE TABLE `plugin_mst` (
 -- Table structure for table `post_cache_data`
 --
 
+DROP TABLE IF EXISTS `post_cache_data`;
 CREATE TABLE `post_cache_data` (
   `post_c` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1076,6 +916,7 @@ CREATE TABLE `post_cache_data` (
 -- Table structure for table `post_data`
 --
 
+DROP TABLE IF EXISTS `post_data`;
 CREATE TABLE `post_data` (
   `post_c` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1109,6 +950,7 @@ INSERT INTO `post_data` (`post_c`, `title`, `friendly_url`, `content`, `descript
 -- Table structure for table `post_tag_data`
 --
 
+DROP TABLE IF EXISTS `post_tag_data`;
 CREATE TABLE `post_tag_data` (
   `post_c` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `tag` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -1139,6 +981,7 @@ INSERT INTO `post_tag_data` (`post_c`, `tag`, `ent_dt`) VALUES
 -- Table structure for table `post_tag_view_data`
 --
 
+DROP TABLE IF EXISTS `post_tag_view_data`;
 CREATE TABLE `post_tag_view_data` (
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -1150,6 +993,7 @@ CREATE TABLE `post_tag_view_data` (
 -- Table structure for table `post_type_data`
 --
 
+DROP TABLE IF EXISTS `post_type_data`;
 CREATE TABLE `post_type_data` (
   `type_c` varchar(100) COLLATE utf8_bin NOT NULL,
   `title` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -1185,6 +1029,7 @@ INSERT INTO `post_type_data` (`type_c`, `title`, `ent_dt`) VALUES
 -- Table structure for table `post_view_data`
 --
 
+DROP TABLE IF EXISTS `post_view_data`;
 CREATE TABLE `post_view_data` (
   `post_c` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ip_add` varchar(24) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1207,9 +1052,288 @@ INSERT INTO `post_view_data` (`post_c`, `ip_add`, `user_agent`, `ent_dt`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ppv_fb_survey_data`
+--
+
+DROP TABLE IF EXISTS `ppv_fb_survey_data`;
+CREATE TABLE `ppv_fb_survey_data` (
+  `id` int(9) NOT NULL,
+  `title` varchar(500) COLLATE utf8_bin NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `cover_image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `descriptions` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
+  `keywords` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `tags` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_payment_data`
+--
+
+DROP TABLE IF EXISTS `ppv_payment_data`;
+CREATE TABLE `ppv_payment_data` (
+  `id` int(9) NOT NULL,
+  `amount` double NOT NULL DEFAULT '0',
+  `receiver_user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `content` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `comments` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `status` int(2) NOT NULL DEFAULT '0',
+  `is_verify` int(1) NOT NULL DEFAULT '0',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_payment_method`
+--
+
+DROP TABLE IF EXISTS `ppv_payment_method`;
+CREATE TABLE `ppv_payment_method` (
+  `payment_method` varchar(155) COLLATE utf8_bin NOT NULL,
+  `title` varchar(255) COLLATE utf8_bin NOT NULL,
+  `content` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_post_views_summaries_daily_data`
+--
+
+DROP TABLE IF EXISTS `ppv_post_views_summaries_daily_data`;
+CREATE TABLE `ppv_post_views_summaries_daily_data` (
+  `post_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `view_dt` date NOT NULL,
+  `country_code` varchar(30) COLLATE utf8_bin NOT NULL,
+  `views` int(11) NOT NULL DEFAULT '0',
+  `author_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `author_username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `category_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_ref_link_data`
+--
+
+DROP TABLE IF EXISTS `ppv_ref_link_data`;
+CREATE TABLE `ppv_ref_link_data` (
+  `link_id` bigint(11) NOT NULL,
+  `link_c` varchar(28) COLLATE utf8_bin NOT NULL,
+  `url` varchar(255) COLLATE utf8_bin NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_survey_answer_data`
+--
+
+DROP TABLE IF EXISTS `ppv_survey_answer_data`;
+CREATE TABLE `ppv_survey_answer_data` (
+  `id` bigint(11) NOT NULL,
+  `exam_id` int(9) NOT NULL,
+  `question_id` int(9) NOT NULL,
+  `content` varchar(1000) COLLATE utf8_bin NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_survey_question_data`
+--
+
+DROP TABLE IF EXISTS `ppv_survey_question_data`;
+CREATE TABLE `ppv_survey_question_data` (
+  `id` int(9) NOT NULL,
+  `title` varchar(5000) COLLATE utf8_bin NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `exam_id` int(9) NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_task_data`
+--
+
+DROP TABLE IF EXISTS `ppv_task_data`;
+CREATE TABLE `ppv_task_data` (
+  `id` bigint(11) NOT NULL,
+  `title` varchar(500) COLLATE utf8_bin NOT NULL,
+  `cover_image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `requirement` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_task_result_data`
+--
+
+DROP TABLE IF EXISTS `ppv_task_result_data`;
+CREATE TABLE `ppv_task_result_data` (
+  `id` bigint(11) NOT NULL,
+  `task_id` int(9) NOT NULL,
+  `user_id` int(28) NOT NULL,
+  `content` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `img_result` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_user_data`
+--
+
+DROP TABLE IF EXISTS `ppv_user_data`;
+CREATE TABLE `ppv_user_data` (
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `ref_user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `last_logined_dt` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_user_earning_data`
+--
+
+DROP TABLE IF EXISTS `ppv_user_earning_data`;
+CREATE TABLE `ppv_user_earning_data` (
+  `id` bigint(11) NOT NULL,
+  `publisher_user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `total_earned` double NOT NULL DEFAULT '0',
+  `comment` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `content` varchar(5000) COLLATE utf8_bin DEFAULT NULL,
+  `action_type` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT 'post_views',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_user_earn_estimate_daily_data`
+--
+
+DROP TABLE IF EXISTS `ppv_user_earn_estimate_daily_data`;
+CREATE TABLE `ppv_user_earn_estimate_daily_data` (
+  `id` bigint(20) NOT NULL,
+  `publisher_user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `work_dt` date NOT NULL,
+  `total_earn` double NOT NULL DEFAULT '0',
+  `total_earn_act` double NOT NULL DEFAULT '0',
+  `total_views` bigint(11) NOT NULL DEFAULT '0',
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_user_ref_friend_summaries_data`
+--
+
+DROP TABLE IF EXISTS `ppv_user_ref_friend_summaries_data`;
+CREATE TABLE `ppv_user_ref_friend_summaries_data` (
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `total_ref_friend` int(9) NOT NULL DEFAULT '0',
+  `work_dt` date NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_user_views_summaries_daily_data`
+--
+
+DROP TABLE IF EXISTS `ppv_user_views_summaries_daily_data`;
+CREATE TABLE `ppv_user_views_summaries_daily_data` (
+  `id` bigint(20) NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
+  `view_dt` date NOT NULL,
+  `country_code` varchar(30) COLLATE utf8_bin NOT NULL,
+  `views` int(11) NOT NULL DEFAULT '0',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_visitor_answer_data`
+--
+
+DROP TABLE IF EXISTS `ppv_visitor_answer_data`;
+CREATE TABLE `ppv_visitor_answer_data` (
+  `id` bigint(11) NOT NULL,
+  `session_id` varchar(70) COLLATE utf8_bin NOT NULL,
+  `user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `answer_id` int(11) NOT NULL,
+  `exam_id` int(9) NOT NULL,
+  `question_id` bigint(11) NOT NULL,
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ppv_visitor_views_data`
+--
+
+DROP TABLE IF EXISTS `ppv_visitor_views_data`;
+CREATE TABLE `ppv_visitor_views_data` (
+  `id` int(9) NOT NULL,
+  `session_id` varchar(155) COLLATE utf8_bin NOT NULL,
+  `username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `ip_address` varchar(24) COLLATE utf8_bin NOT NULL,
+  `user_agent` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  `referrer_url` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `referrer_site` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `referrer_type` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT 'website',
+  `os_title` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `os_version` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `browser_title` varchar(155) COLLATE utf8_bin DEFAULT NULL,
+  `browser_version` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `is_mobile` int(1) NOT NULL DEFAULT '0',
+  `is_tablet` int(1) NOT NULL DEFAULT '0',
+  `is_windows` int(1) NOT NULL DEFAULT '0',
+  `is_linux` int(1) NOT NULL DEFAULT '0',
+  `is_android` int(1) NOT NULL DEFAULT '0',
+  `is_ios` int(1) NOT NULL DEFAULT '0',
+  `country_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `refer_user_id` varchar(28) COLLATE utf8_bin DEFAULT NULL,
+  `page_type` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT 'post',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `setting_data`
 --
 
+DROP TABLE IF EXISTS `setting_data`;
 CREATE TABLE `setting_data` (
   `key_c` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1228,7 +1352,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('default_member_groupid', 'Default Member Group', '11016013', 1),
 ('default_member_levelid', 'Default Member Level', '11017013', 1),
 ('default_page', 'Default Page', '', 1),
-('default_theme', 'Default Theme', 'cfnews', 1),
+('default_theme', 'Default Theme', 'bb_simple', 1),
 ('email_change_password_template', 'Change password template', '143664', 1),
 ('email_forgotpassword_template', 'Email forgot password template', '137454', 1),
 ('email_new_user_template', 'Email new user template', '124231', 1),
@@ -1238,6 +1362,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('enable_rss', 'Enable RSS Feed', 'no', 1),
 ('frontend_lang ', 'Frontend Language', 'en', 1),
 ('is_construction', 'Is Construction', 'no', 1),
+('mobile_website_url', 'Website url for mobile device', '', 1),
 ('post_back_when_add_new_payment', 'Postback url when add new payment', '', 1),
 ('post_back_when_add_new_product_success', 'Postback url when add new product success', '', 1),
 ('post_back_when_add_new_user', 'Postback url when have new user', '', 1),
@@ -1246,7 +1371,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('post_back_when_change_user_group', 'Postback url when change user group', '', 1),
 ('post_back_when_change_user_level', 'Postback url when change user level', '', 1),
 ('post_back_when_have_new_order', 'Postback url when have new order with status', '', 1),
-('register_user_status', 'register_user_status', 'no', 1),
+('register_user_status', 'register_user_status', 'yes', 1),
 ('register_verify_email', 'register_verify_email', 'no', 1),
 ('require_login_if_is_guest', 'Require login if is guest', '1', 1),
 ('site_description', 'Descriptions', 'Site descriptions', 1),
@@ -1256,9 +1381,14 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('smtp_port', 'SMTP Port', '587', 1),
 ('smtp_username', 'SMTP Username', 'test', 1),
 ('system_admin_lang', 'Administrator Language', 'en', 1),
+('system_category_id_len', 'System category id length', '12', 1),
+('system_groupuser_id_len', 'System group user id length', '16', 1),
+('system_post_id_len', 'System post id length', '12', 1),
 ('system_setting_cache', 'System Setting Cached', 'no', 1),
 ('system_status', 'system_status', 'working', 1),
 ('system_title', 'System title', 'Coffee CMS', 1),
+('system_user_id_len', 'System user id length', '12', 1),
+('tablet_website_url', 'Website url for tablet device', '', 1),
 ('theme_layout', 'Theme layout', 'default', 1),
 ('timezone', 'Timezone', 'America/Los_Angeles', 1),
 ('website_view_cache', 'Website View Cache', 'no', 1);
@@ -1269,6 +1399,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 -- Table structure for table `shortcode_data`
 --
 
+DROP TABLE IF EXISTS `shortcode_data`;
 CREATE TABLE `shortcode_data` (
   `name` varchar(255) NOT NULL,
   `type` varchar(30) NOT NULL DEFAULT 'plugin',
@@ -1284,6 +1415,7 @@ CREATE TABLE `shortcode_data` (
 -- Table structure for table `short_url_data`
 --
 
+DROP TABLE IF EXISTS `short_url_data`;
 CREATE TABLE `short_url_data` (
   `code` varchar(30) COLLATE utf8_bin NOT NULL,
   `target_url` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -1298,6 +1430,7 @@ CREATE TABLE `short_url_data` (
 -- Table structure for table `theme_hook_data`
 --
 
+DROP TABLE IF EXISTS `theme_hook_data`;
 CREATE TABLE `theme_hook_data` (
   `theme_dir` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `hook_key` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
@@ -1313,6 +1446,7 @@ CREATE TABLE `theme_hook_data` (
 -- Table structure for table `theme_mst`
 --
 
+DROP TABLE IF EXISTS `theme_mst`;
 CREATE TABLE `theme_mst` (
   `theme_dir` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
@@ -1326,7 +1460,7 @@ CREATE TABLE `theme_mst` (
 --
 
 INSERT INTO `theme_mst` (`theme_dir`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
-('cfnews', 1, '', '2021-05-29 07:57:31', '2021-05-29 07:57:31');
+('bb_simple', 1, '11015035', '2021-08-27 14:55:33', '2021-08-27 14:55:33');
 
 -- --------------------------------------------------------
 
@@ -1334,6 +1468,7 @@ INSERT INTO `theme_mst` (`theme_dir`, `status`, `user_id`, `ent_dt`, `upd_dt`) V
 -- Table structure for table `user_api_key_data`
 --
 
+DROP TABLE IF EXISTS `user_api_key_data`;
 CREATE TABLE `user_api_key_data` (
   `user_id` varchar(28) COLLATE utf8_bin NOT NULL,
   `api_key` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -1351,6 +1486,7 @@ CREATE TABLE `user_api_key_data` (
 -- Table structure for table `user_api_key_permission_data`
 --
 
+DROP TABLE IF EXISTS `user_api_key_permission_data`;
 CREATE TABLE `user_api_key_permission_data` (
   `api_key` varchar(255) COLLATE utf8_bin NOT NULL,
   `permission_c` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -1364,6 +1500,7 @@ CREATE TABLE `user_api_key_permission_data` (
 -- Table structure for table `user_api_key_permission_mst`
 --
 
+DROP TABLE IF EXISTS `user_api_key_permission_mst`;
 CREATE TABLE `user_api_key_permission_mst` (
   `permission_c` varchar(155) COLLATE utf8_bin NOT NULL,
   `permission_nm` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -1378,9 +1515,12 @@ CREATE TABLE `user_api_key_permission_mst` (
 -- Table structure for table `user_group_mst`
 --
 
+DROP TABLE IF EXISTS `user_group_mst`;
 CREATE TABLE `user_group_mst` (
   `group_c` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `left_str` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `right_str` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
   `user_id` varchar(28) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1391,14 +1531,14 @@ CREATE TABLE `user_group_mst` (
 -- Dumping data for table `user_group_mst`
 --
 
-INSERT INTO `user_group_mst` (`group_c`, `title`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
-('11016011', 'Administrator', 1, '11015035', '2021-03-28 10:01:17', '2021-03-28 10:01:17'),
-('11016012', 'Moderator', 1, '11015035', '2021-03-28 10:01:17', '2021-03-28 10:01:17'),
-('11016013', 'User', 1, '11015035', '2021-03-28 10:01:25', '2021-03-28 10:01:25'),
-('11016014', 'Banned User', 1, NULL, '2021-03-28 10:01:53', '2021-03-28 10:01:53'),
-('11016015', 'Pending activation user', 1, NULL, '2021-03-28 10:02:14', '2021-03-28 10:02:14'),
-('11016016', 'Writer', 1, '11015035', '2021-03-28 10:02:39', '2021-03-28 10:02:39'),
-('11016017', 'Guest', 1, NULL, '2021-03-28 10:02:39', '2021-03-28 10:02:39');
+INSERT INTO `user_group_mst` (`group_c`, `title`, `left_str`, `right_str`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
+('11016011', 'Administrator', '<span style=\"color:red;\">', '</span>', 1, '11015035', '2021-03-28 10:01:17', '2021-03-28 10:01:17'),
+('11016012', 'Moderator', '<span style=\"color:blue;\">', '</span>', 1, '11015035', '2021-03-28 10:01:17', '2021-03-28 10:01:17'),
+('11016013', 'User', NULL, NULL, 1, '11015035', '2021-03-28 10:01:25', '2021-03-28 10:01:25'),
+('11016014', 'Banned User', NULL, NULL, 1, NULL, '2021-03-28 10:01:53', '2021-03-28 10:01:53'),
+('11016015', 'Pending activation user', NULL, NULL, 1, NULL, '2021-03-28 10:02:14', '2021-03-28 10:02:14'),
+('11016016', 'Writer', NULL, NULL, 1, '11015035', '2021-03-28 10:02:39', '2021-03-28 10:02:39'),
+('11016017', 'Guest', NULL, NULL, 1, NULL, '2021-03-28 10:02:39', '2021-03-28 10:02:39');
 
 -- --------------------------------------------------------
 
@@ -1406,6 +1546,7 @@ INSERT INTO `user_group_mst` (`group_c`, `title`, `status`, `user_id`, `ent_dt`,
 -- Table structure for table `user_info_data`
 --
 
+DROP TABLE IF EXISTS `user_info_data`;
 CREATE TABLE `user_info_data` (
   `user_c` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1434,6 +1575,7 @@ CREATE TABLE `user_info_data` (
 -- Table structure for table `user_level_mst`
 --
 
+DROP TABLE IF EXISTS `user_level_mst`;
 CREATE TABLE `user_level_mst` (
   `level_id` varchar(30) COLLATE utf8_bin NOT NULL,
   `title` varchar(155) COLLATE utf8_bin NOT NULL,
@@ -1460,6 +1602,7 @@ INSERT INTO `user_level_mst` (`level_id`, `title`, `title_left_string`, `title_r
 -- Table structure for table `user_mst`
 --
 
+DROP TABLE IF EXISTS `user_mst`;
 CREATE TABLE `user_mst` (
   `user_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -1470,6 +1613,9 @@ CREATE TABLE `user_mst` (
   `verify_c` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `group_c` varchar(18) COLLATE utf8_unicode_ci DEFAULT NULL,
   `level_c` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pin_verify_number` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `left_str` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `right_str` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(2) NOT NULL DEFAULT '1',
   `forgot_password_c` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_logined` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1491,6 +1637,7 @@ INSERT INTO `user_mst` (`user_id`, `username`, `password`, `email`, `fullname`, 
 -- Table structure for table `user_online_data`
 --
 
+DROP TABLE IF EXISTS `user_online_data`;
 CREATE TABLE `user_online_data` (
   `user_id` varchar(28) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1505,6 +1652,7 @@ CREATE TABLE `user_online_data` (
 -- Table structure for table `user_permission_menu_data`
 --
 
+DROP TABLE IF EXISTS `user_permission_menu_data`;
 CREATE TABLE `user_permission_menu_data` (
   `group_c` varchar(20) COLLATE utf8_bin NOT NULL,
   `menu_type` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'admin',
@@ -1516,6 +1664,65 @@ CREATE TABLE `user_permission_menu_data` (
 --
 
 INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALUES
+('11016016', 'admin', '11011011'),
+('11016016', 'admin', '11011012'),
+('11016016', 'admin', '11015014'),
+('11016016', 'admin', '11015011'),
+('11016016', 'admin', '11015022'),
+('11016016', 'admin', '11015018'),
+('11016016', 'admin', '11011013'),
+('11016016', 'admin', '11015016'),
+('11016016', 'admin', '11015013'),
+('11016016', 'admin', '11017121'),
+('11016013', 'admin', '11011011'),
+('11016013', 'admin', '11011012'),
+('11016013', 'admin', '11015014'),
+('11016013', 'admin', '11015011'),
+('11016013', 'admin', '11015018'),
+('11016013', 'admin', '11011013'),
+('11016013', 'admin', '11015016'),
+('11016013', 'admin', '11015013'),
+('11016013', 'admin', '11011014'),
+('11016013', 'admin', '11015424'),
+('11016013', 'admin', '11011016'),
+('11016013', 'admin', '11017121'),
+('11016011', 'admin', '11011011'),
+('11016011', 'admin', '11011012'),
+('11016011', 'admin', '11015014'),
+('11016011', 'admin', '11015011'),
+('11016011', 'admin', '11015022'),
+('11016011', 'admin', '11015018'),
+('11016011', 'admin', '11011013'),
+('11016011', 'admin', '11015016'),
+('11016011', 'admin', '11015013'),
+('11016011', 'admin', '11011014'),
+('11016011', 'admin', '11015024'),
+('11016011', 'admin', '11015424'),
+('11016011', 'admin', '11011015'),
+('11016011', 'admin', '11015017'),
+('11016011', 'admin', '11015020'),
+('11016011', 'admin', '11016117'),
+('11016011', 'admin', '11011016'),
+('11016011', 'admin', '11015015'),
+('11016011', 'admin', '11015026'),
+('11016011', 'admin', '11015025'),
+('11016011', 'admin', '11015019'),
+('11016011', 'admin', '11011017'),
+('11016011', 'admin', '11015023'),
+('11016011', 'admin', '11015123'),
+('11016011', 'admin', '11011018'),
+('11016011', 'admin', '11015012'),
+('11016011', 'admin', '11015021'),
+('11016011', 'admin', '11017021'),
+('11016011', 'admin', '11017121'),
+('11016011', 'admin', '11015027'),
+('11016011', 'admin', '11015034'),
+('11016011', 'admin', '11015030'),
+('11016011', 'admin', '11015035'),
+('11016011', 'admin', '11015028'),
+('11016011', 'admin', '11015029'),
+('11016011', 'admin', '11015031'),
+('11016011', 'admin', '11015032'),
 ('11016012', 'admin', '11011011'),
 ('11016012', 'admin', '11011012'),
 ('11016012', 'admin', '11015014'),
@@ -1549,65 +1756,7 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016012', 'admin', '11015028'),
 ('11016012', 'admin', '11015029'),
 ('11016012', 'admin', '11015031'),
-('11016012', 'admin', '11015032'),
-('11016016', 'admin', '11011011'),
-('11016016', 'admin', '11011012'),
-('11016016', 'admin', '11015014'),
-('11016016', 'admin', '11015011'),
-('11016016', 'admin', '11015022'),
-('11016016', 'admin', '11015018'),
-('11016016', 'admin', '11011013'),
-('11016016', 'admin', '11015016'),
-('11016016', 'admin', '11015013'),
-('11016016', 'admin', '11017121'),
-('11016013', 'admin', '11011011'),
-('11016013', 'admin', '11011012'),
-('11016013', 'admin', '11015014'),
-('11016013', 'admin', '11015011'),
-('11016013', 'admin', '11015018'),
-('11016013', 'admin', '11011013'),
-('11016013', 'admin', '11015016'),
-('11016013', 'admin', '11015013'),
-('11016013', 'admin', '11011014'),
-('11016013', 'admin', '11015424'),
-('11016013', 'admin', '11011016'),
-('11016013', 'admin', '11017121'),
-('11016011', 'admin', '11011011'),
-('11016011', 'admin', '11011012'),
-('11016011', 'admin', '11015014'),
-('11016011', 'admin', '11015011'),
-('11016011', 'admin', '11015022'),
-('11016011', 'admin', '11015018'),
-('11016011', 'admin', '11011013'),
-('11016011', 'admin', '11015016'),
-('11016011', 'admin', '11015013'),
-('11016011', 'admin', '11011014'),
-('11016011', 'admin', '11016024'),
-('11016011', 'admin', '11015024'),
-('11016011', 'admin', '11015424'),
-('11016011', 'admin', '11011015'),
-('11016011', 'admin', '11015017'),
-('11016011', 'admin', '11015020'),
-('11016011', 'admin', '11011016'),
-('11016011', 'admin', '11015015'),
-('11016011', 'admin', '11015026'),
-('11016011', 'admin', '11015025'),
-('11016011', 'admin', '11015019'),
-('11016011', 'admin', '11011017'),
-('11016011', 'admin', '11015023'),
-('11016011', 'admin', '11011018'),
-('11016011', 'admin', '11015012'),
-('11016011', 'admin', '11015021'),
-('11016011', 'admin', '11017021'),
-('11016011', 'admin', '11017121'),
-('11016011', 'admin', '11015027'),
-('11016011', 'admin', '11015034'),
-('11016011', 'admin', '11015030'),
-('11016011', 'admin', '11015035'),
-('11016011', 'admin', '11015028'),
-('11016011', 'admin', '11015029'),
-('11016011', 'admin', '11015031'),
-('11016011', 'admin', '11015032');
+('11016012', 'admin', '11015032');
 
 -- --------------------------------------------------------
 
@@ -1615,6 +1764,7 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 -- Table structure for table `user_prefix_data`
 --
 
+DROP TABLE IF EXISTS `user_prefix_data`;
 CREATE TABLE `user_prefix_data` (
   `user_id` varchar(28) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1644,17 +1794,6 @@ ALTER TABLE `admin_menu_data`
   ADD KEY `title` (`title`),
   ADD KEY `plugin_name` (`plugin_name`),
   ADD KEY `is_url` (`is_url`);
-
---
--- Indexes for table `bb_attach_files_data`
---
-ALTER TABLE `bb_attach_files_data`
-  ADD PRIMARY KEY (`file_id`),
-  ADD KEY `file_id` (`file_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `file_size` (`file_size`),
-  ADD KEY `file_path` (`file_path`);
 
 --
 -- Indexes for table `cache_data`
@@ -1814,7 +1953,6 @@ ALTER TABLE `email_template_data`
 -- Indexes for table `group_permission_data`
 --
 ALTER TABLE `group_permission_data`
-  ADD PRIMARY KEY (`group_c`,`permission_c`),
   ADD KEY `ix1` (`group_c`),
   ADD KEY `ix2` (`permission_c`);
 
@@ -1856,6 +1994,15 @@ ALTER TABLE `kanban_board_project_mst`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `ent_dt` (`ent_dt`),
   ADD KEY `upd_dt` (`upd_dt`);
+
+--
+-- Indexes for table `kanban_task_checklist_data`
+--
+ALTER TABLE `kanban_task_checklist_data`
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ent_dt` (`ent_dt`),
+  ADD KEY `check_id` (`check_id`);
 
 --
 -- Indexes for table `kanban_task_comment_data`
@@ -2069,6 +2216,143 @@ ALTER TABLE `post_view_data`
   ADD KEY `ix5` (`ent_dt`);
 
 --
+-- Indexes for table `ppv_fb_survey_data`
+--
+ALTER TABLE `ppv_fb_survey_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `ppv_payment_data`
+--
+ALTER TABLE `ppv_payment_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `receiver_user_id` (`receiver_user_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ent_dt` (`ent_dt`),
+  ADD KEY `status` (`status`),
+  ADD KEY `is_verify` (`is_verify`);
+
+--
+-- Indexes for table `ppv_payment_method`
+--
+ALTER TABLE `ppv_payment_method`
+  ADD KEY `payment_method` (`payment_method`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `ppv_post_views_summaries_daily_data`
+--
+ALTER TABLE `ppv_post_views_summaries_daily_data`
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `view_dt` (`view_dt`),
+  ADD KEY `country_code` (`country_code`),
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `author_username` (`author_username`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `ppv_ref_link_data`
+--
+ALTER TABLE `ppv_ref_link_data`
+  ADD PRIMARY KEY (`link_id`),
+  ADD KEY `link_id` (`link_id`),
+  ADD KEY `link_c` (`link_c`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ent_dt` (`ent_dt`);
+
+--
+-- Indexes for table `ppv_survey_answer_data`
+--
+ALTER TABLE `ppv_survey_answer_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_id` (`exam_id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
+-- Indexes for table `ppv_survey_question_data`
+--
+ALTER TABLE `ppv_survey_question_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `status` (`status`),
+  ADD KEY `exam_id` (`exam_id`),
+  ADD KEY `ent_dt` (`ent_dt`);
+
+--
+-- Indexes for table `ppv_task_data`
+--
+ALTER TABLE `ppv_task_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `ppv_task_result_data`
+--
+ALTER TABLE `ppv_task_result_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ppv_user_data`
+--
+ALTER TABLE `ppv_user_data`
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `ppv_user_earning_data`
+--
+ALTER TABLE `ppv_user_earning_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `publisher_user_id` (`publisher_user_id`),
+  ADD KEY `action_type` (`action_type`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `ppv_user_earn_estimate_daily_data`
+--
+ALTER TABLE `ppv_user_earn_estimate_daily_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `publisher_user_id` (`publisher_user_id`),
+  ADD KEY `work_dt` (`work_dt`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `ppv_user_ref_friend_summaries_data`
+--
+ALTER TABLE `ppv_user_ref_friend_summaries_data`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `work_dt` (`work_dt`);
+
+--
+-- Indexes for table `ppv_user_views_summaries_daily_data`
+--
+ALTER TABLE `ppv_user_views_summaries_daily_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `view_dt` (`view_dt`),
+  ADD KEY `country_code` (`country_code`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `ppv_visitor_answer_data`
+--
+ALTER TABLE `ppv_visitor_answer_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `session_id` (`session_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `answer_id` (`answer_id`);
+
+--
+-- Indexes for table `ppv_visitor_views_data`
+--
+ALTER TABLE `ppv_visitor_views_data`
+  ADD KEY `session_id` (`session_id`),
+  ADD KEY `username` (`username`),
+  ADD KEY `ip_address` (`ip_address`),
+  ADD KEY `country_name` (`country_name`),
+  ADD KEY `referrer_site` (`referrer_site`),
+  ADD KEY `refer_user_id` (`refer_user_id`);
+
+--
 -- Indexes for table `setting_data`
 --
 ALTER TABLE `setting_data`
@@ -2246,7 +2530,7 @@ ALTER TABLE `emailmarketing_email_data`
 -- AUTO_INCREMENT for table `emailmarketing_sent_data`
 --
 ALTER TABLE `emailmarketing_sent_data`
-  MODIFY `send_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `send_id` int(9) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `emailmarketing_unsubscrible_data`
@@ -2271,6 +2555,72 @@ ALTER TABLE `kanban_board_comment_data`
 --
 ALTER TABLE `newsletter_data`
   MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_fb_survey_data`
+--
+ALTER TABLE `ppv_fb_survey_data`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_payment_data`
+--
+ALTER TABLE `ppv_payment_data`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_ref_link_data`
+--
+ALTER TABLE `ppv_ref_link_data`
+  MODIFY `link_id` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_survey_answer_data`
+--
+ALTER TABLE `ppv_survey_answer_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_survey_question_data`
+--
+ALTER TABLE `ppv_survey_question_data`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_task_data`
+--
+ALTER TABLE `ppv_task_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_task_result_data`
+--
+ALTER TABLE `ppv_task_result_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_user_earning_data`
+--
+ALTER TABLE `ppv_user_earning_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_user_earn_estimate_daily_data`
+--
+ALTER TABLE `ppv_user_earn_estimate_daily_data`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_user_views_summaries_daily_data`
+--
+ALTER TABLE `ppv_user_views_summaries_daily_data`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ppv_visitor_answer_data`
+--
+ALTER TABLE `ppv_visitor_answer_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -33,18 +33,7 @@
                   </tr>
                   </thead>
                   <tbody class='tbody-list'>
-                  <tr>
-                    <td>
-                      <span style='display:block;margin-bottom:10px;'>Some Product</span>
-                      <span class='pointer change-status-plugin activate-plugin' style='color:blue;font-size: 10pt;' data-dir=''>Activate</span>
-                      <span class='pointer change-status-plugin deactivate-plugin hide' style='color:red;font-size: 10pt;' data-dir=''>Deactivate</span>
-                    </td>
-                    <td>
-                    <span style='display:block;margin-bottom:10px;'>Add bbcode to system: [youtube][/youtube],[audio][/audio]</span>
-                    <span class='' style='font-size: 10pt;' data-dir=''>Version: 1.0</span>                
-                    <span class='' style='font-size: 10pt;' data-dir=''> - Author:</span>   <a href="sdfsadsad" style='font-size: 10pt;' data-dir=''>CoffeeCMS Team</a>                
-                    </td>
-                  </tr>
+                  
                  
                   </tbody>
                 </table>
@@ -117,18 +106,28 @@ function prepareShowData()
 
     pageData['theList'][i]['dir']=pageData['theList'][i]['dir'].toLowerCase();
     li+='<tr>';
-      li+='<td>';
+      li+='<td style="min-width:320px;">';
       li+='<span style="display:block;margin-bottom:10px;">'+pageData['theList'][i]['title']+'</span>';
 
       if(typeof pageData['listInstalledByKey'][pageData['theList'][i]['dir']]!='undefined')
       {
         li+='<span class="pointer change-status-plugin deactivate-plugin" style="color:red;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Deactivate</span>';
+
       }
       else
       {
-
-        li+='<span class="pointer change-status-plugin activate-plugin" style="color:blue;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Activate</span>';
+        if(pageData['theList'][i]['install_file']=='yes')
+        {
+          li+='<a href="'+SITE_URL+'admin/plugin_page_url?plugin='+pageData['theList'][i]['dir']+'&page=install" class="pointer " style="color:blue;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Activate</a>';
+        }
+        else
+        {
+          li+='<span class="pointer change-status-plugin activate-plugin" style="color:blue;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Activate</span>';
+        }
+        
       }
+
+      li+='<a href="'+SITE_URL+'admin/plugin_edit/'+pageData['theList'][i]['dir']+'" class="pointer " style="color:blue;font-size: 10pt;margin-left:10px;" data-dir="'+pageData['theList'][i]['dir']+'">Edit</a>';
 
       li+='</td>';
       li+='<td>';
@@ -162,7 +161,8 @@ function prepareShowData()
       postData(API_URL+'plugin_activate', sendData).then(data => {
         console.log(data); // JSON data parsed by `data.json()` call
 
-        location.href=location.href;
+        // location.href=location.href;
+        location.reload();
       });            
         
     });
@@ -177,7 +177,7 @@ function prepareShowData()
       postData(API_URL+'plugin_deactivate', sendData).then(data => {
         // console.log(data); // JSON data parsed by `data.json()` call
 
-        location.href=location.href;
+        location.reload();
       });            
         
     });

@@ -1,4 +1,4 @@
-<?php namespace App\Libraries;
+<?php 
 
 /**
  * Compressing file is a very important technology for sharring

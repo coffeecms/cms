@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>/public/dropzone570/dropzone.css">
   
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/custom.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/custom.css?v=<?php echo date('Hms');?>">
 
   <!-- jQuery -->
 <script src="<?php echo base_url();?>/public/admin_theme/plugins/jquery/jquery.min.js"></script>
@@ -39,6 +39,7 @@
 <script src="<?php echo base_url();?>/public/admin_theme/plugins/chartjs3.1/chart.min.js"></script>
 <!-- <script src="<?php echo base_url();?>/public/admin_theme/plugins/chartjs3.1/chartjs-plugin-datalabels.min.js"></script> -->
 <script src="<?php echo base_url();?>/public/admin_theme/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo base_url();?>/public/admin_theme/plugins/numeraljs/min/numeral.min.js"></script>
 <script src="<?php echo base_url();?>/public/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url();?>/public/toastr/toastr.min.js"></script>
 <style>
@@ -128,7 +129,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalMedia"  style='z-index:99999999;' data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalMedia"  style='z-index:99999;' data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg ">
     <div class="modal-content">
       <div class="modal-header">
@@ -161,7 +162,8 @@ var API_URL='<?php echo SITE_URL;?>api/';
         </div>
       </div>
       <div class="modal-footer">
-      <form action="<?php echo SITE_URL;?>api/upload_media" class="dropzone" id="media-dropzone" style='display:none;'></form>
+     
+      <input type='file' class='fileMedias hide' multiple style='display:hide;' />
         <button type="button" class="btn btn-primary btnShowUploadMedia"><i class="fas fa-file-upload"></i> <?php echo get_text_by_lang('Upload new file','admin');?></button>
         <button type="button" class="btn btn-danger btnCloseAlert" data-dismiss="modal"><i class="fas fa-times"></i> <?php echo get_text_by_lang('Close','admin');?></button>
       </div>
@@ -253,6 +255,11 @@ var API_URL='<?php echo SITE_URL;?>api/';
             </a>
             
             <div class="dropdown-divider"></div>
+              <a href="<?php echo SITE_URL;?>admin/quick_maintain" class="dropdown-item">
+              <?php echo get_text_by_lang('Maintain Caches','admin');?>
+              </a>
+            
+            <div class="dropdown-divider"></div>
             <a href="<?php echo SITE_URL;?>admin/user_logout" class="dropdown-item">
               <?php echo get_text_by_lang('Logout','admin');?>
             </a>
@@ -271,37 +278,22 @@ var API_URL='<?php echo SITE_URL;?>api/';
 pageData['user_data']=<?php echo json_encode(Configs::$_['user_data']);?>;
 pageData['user_permissions']=<?php echo json_encode(Configs::$_['user_permissions']);?>;
 
-Dropzone.autoDiscover = false;
-$(function() {
-  // Now that the DOM is fully loaded, create the dropzone, and setup the
-  // event listeners
-  var myDropzone = new Dropzone("#media-dropzone");
-  myDropzone.on("addedfile", function(file) {
-    /* Maybe display some more file information on your page */
-    // console.log('Upload media success');
-    // console.log(file);
-    // console.log(file.xhr.response);
-
-  });
-  myDropzone.on("success", function(file) {
-    /* Maybe display some more file information on your page */
-    console.log('Upload media success');
-    console.log(file);
-    console.log(file.xhr.response);
-
-  });
-
-
-});
-
 
 // masterDB['media_selected_callback']=function(theMediaUrl){
 //     console.log('Added...'+theMediaUrl);
 // };
 
+
+
 $(document).on("click", ".btnShowUploadMedia", function () {
-    $('.dz-clickable').trigger('click');
+    // $('.dz-clickable').trigger('click');
+
+  $('.fileMedias').trigger('click');
+
 });
+
+
+
 $(document).on("click", ".showModalMediaManagement", function () {
   masterDB['media_list']=[];
 

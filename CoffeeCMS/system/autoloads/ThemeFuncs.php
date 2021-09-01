@@ -34,6 +34,7 @@ class ThemeFuncs
     		$result[$themeNo]['url']="";
     		$result[$themeNo]['author']="";
     		$result[$themeNo]['thumbnail']="public/images/no_screenshot.jpg";
+			$result[$themeNo]['install_file']="no";
     		$result[$themeNo]['path']=THEMES_PATH.$dirs[$i].'/';
 
     		if(file_exists($result[$themeNo]['path'].'/info.txt'))
@@ -50,6 +51,11 @@ class ThemeFuncs
 			if(file_exists($result[$themeNo]['path'].'/thumbnail.jpg'))
 			{
 				$result[$themeNo]['thumbnail']=THEMES_PATH.$dirs[$i].'/thumbnail.jpg';
+			}
+
+			if(file_exists($result[$themeNo]['path'].'/admin/install.php'))
+			{
+				$result[$themeNo]['install_file']="yes";
 			}
 
 			$themeNo+=1;

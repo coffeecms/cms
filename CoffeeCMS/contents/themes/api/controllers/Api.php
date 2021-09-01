@@ -216,7 +216,7 @@ class Api
 
         $db=new Database(); 
 
-        $db->nonquery("delete from activities_data where CAST(ent_dt as date) < '".date('Y-m-',strtotime("-3 months",time()))."01'");
+        $db->nonquery("delete from activities_data where CAST(ent_dt as date) < '".date('Y-m-',strtotime("-1 months",time()))."01'");
         
         // saveActivities('clear_view_data','Clear views data',$username);
 
@@ -502,6 +502,9 @@ class Api
             echo responseData($e->getMessage(),'yes');return false;
         }
 
+        
+        $start_date=addslashes(getPost('start_date',''));
+        $end_date=addslashes(getPost('end_date',''));
         $page_c=addslashes(getPost('page_c',''));
         $status=addslashes(getPost('status',''));
         $page_type=addslashes(getPost('page_type',''));
@@ -549,7 +552,7 @@ class Api
 
         $queryStr.=" a.views,a.user_id as author_id,a.ent_dt,a.upd_dt,b.username as author_username,b.avatar as author_avatar";
         $queryStr.=" from page_data a";
-        $queryStr.=" left join user_mst b ON a.user_id=b.user_id where a.page_c<>'' ";
+        $queryStr.=" left join user_mst b ON a.user_id=b.user_id where a.page_c<>'' AND CAST(a.ent_dt as date) BETWEEN '".$start_date."' AND '".$end_date."' ";
 
 
         if(isset($page_c[5]))
@@ -705,7 +708,8 @@ class Api
         // } catch (\Exception $e) {
         //     echo responseData($e->getMessage(),'yes');return false;
         // }
-
+        $start_date=addslashes(getPost('start_date',''));
+        $end_date=addslashes(getPost('end_date',''));
         $category_c=addslashes(getPost('category_c',''));
         $post_c=addslashes(getPost('post_c',''));
         $tags=addslashes(getPost('tags',''));
@@ -739,7 +743,7 @@ class Api
 
         $queryStr.="SELECT a.comment_id,a.parent_comment_id,a.post_id,a.owner_id,a.content,a.status,a.ent_dt,b.title,b.category_c";
         $queryStr.=" FROM comment_data a left join post_data b ";        
-        $queryStr.=" ON a.post_id=b.post_c where a.comment_id<>'' ";        
+        $queryStr.=" ON a.post_id=b.post_c where a.comment_id<>''  AND CAST(a.ent_dt as date) BETWEEN '".$start_date."' AND '".$end_date."' ";        
 
         if(isset($category_c[5]))
         {
@@ -1220,7 +1224,7 @@ class Api
 
         $tableNumber=rand(1,10);
 
-        $post_c=$tableNumber.newID(12);
+        $post_c=$tableNumber.newID(Configs::$_['system_post_id_len']);
 
         $insertData=array(
             'post_c'=>$post_c,
@@ -1289,7 +1293,8 @@ class Api
         // } catch (\Exception $e) {
         //     echo responseData($e->getMessage(),'yes');return false;
         // }
-
+        $start_date=addslashes(getPost('start_date',''));
+        $end_date=addslashes(getPost('end_date',''));
         $category_c=addslashes(getPost('category_c',''));
         $post_c=addslashes(getPost('post_c',''));
         $tags=addslashes(getPost('tags',''));
@@ -1346,7 +1351,7 @@ class Api
 
         $queryStr.=" a.parent_post_c,a.views,a.category_c,a.user_id as author_id,a.ent_dt,a.upd_dt,b.username as author_username,b.avatar as author_avatar";
         $queryStr.=" from post_data a";
-        $queryStr.=" left join user_mst b ON a.user_id=b.user_id where a.post_c<>'' ";
+        $queryStr.=" left join user_mst b ON a.user_id=b.user_id where a.post_c<>''  AND CAST(a.ent_dt as date) BETWEEN '".$start_date."' AND '".$end_date."' ";
 
         if(isset($category_c[5]))
         {
@@ -2500,7 +2505,7 @@ public static function project_action_apply()
 
     useClass('EmailSystem');
 
-    $user_id=newID(12);
+    $user_id=newID(Configs::$_['system_user_id_len']);
 
     $insertData=array(
         'user_id'=>$user_id ,
@@ -2539,7 +2544,7 @@ public static function project_action_apply()
         echo responseData('ERROR','yes');       
     }
 
-    $user_id=newID(16);
+    $user_id=newID(Configs::$_['system_user_id_len']);
 
     $insertData=array(
         'user_id'=>$user_id ,
@@ -2566,8 +2571,7 @@ public static function project_action_apply()
 
 public static function get_list_user()
 {
-        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
-
+    //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
 
     $cookie_username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
 
@@ -2586,6 +2590,8 @@ public static function get_list_user()
     $level_c=addslashes(getPost('level_c',''));
     $limit=addslashes(getPost('limit','30'));
     $page_no=addslashes(getPost('page_no','1'));
+    $start_date=addslashes(getPost('start_date',''));
+    $end_date=addslashes(getPost('end_date',''));
 
     if((int)$page_no > 0)
     {
@@ -2616,7 +2622,7 @@ public static function get_list_user()
 
     $queryStr=" SELECT a.*,b.title as group_title, c.title as level_title";
     $queryStr.=" FROM user_mst a left join user_group_mst b ON a.group_c=b.group_c";
-    $queryStr.=" left join user_level_mst c ON a.level_c=c.level_id  WHERE a.user_id<>''";
+    $queryStr.=" left join user_level_mst c ON a.level_c=c.level_id  WHERE a.user_id<>''  AND CAST(a.ent_dt as date) BETWEEN '".$start_date."' AND '".$end_date."' ";
 
     if(isset($user_id[5]))
     {
@@ -3366,9 +3372,13 @@ public static function add_new_groupuser()
 
     $permission_list=getPost('permission_list','');
     $menu_list=getPost('menu_list','');
+    $left_str=getPost('left_str','');
+    $right_str=getPost('right_str','');
 
     $insertData=array(
         'group_c'=>$group_c,
+        'left_str'=>$left_str,
+        'right_str'=>$right_str,
         'title'=>addslashes(getPost('title')),
         'status'=>'1',
         'user_id'=>$username
@@ -3433,10 +3443,14 @@ public static function add_new_groupuser()
 
     load_hook('after_insert_groupuser',$insertData);
 
+    // clear_hook();
+
     clear_hook();
+    
 
     saveActivities('usergroup_add','Add new user group '.$insertData['title'],$username);
 
+    // self::system_cache_clear();return;
     echo responseData('OK');
     
 }
@@ -3461,8 +3475,13 @@ public static function edit_groupuser()
     $permission_list=getPost('permission_list','');
     $menu_list=getPost('menu_list','');
 
+    $left_str=getPost('left_str','');
+    $right_str=getPost('right_str','');
+
     $insertData=array(
         'update'=>array(
+            'left_str'=>$left_str,
+            'right_str'=>$right_str,
             'title'=>addslashes(getPost('title','')),
             'user_id'=>$username
         ),
@@ -3534,11 +3553,14 @@ public static function edit_groupuser()
 
     $db->nonquery($queryStr.$queryStrPer);   
 
-    clear_hook();
+    // clear_hook();
+
+    // sleep(2);
 
     saveActivities('usergroup_update','Update user group '.$insertData['update']['title'],$username);
 
 
+    // self::system_cache_clear();return;
     echo responseData('OK');
     
 }
@@ -3587,10 +3609,13 @@ public static function groupuser_action_apply()
     $db=new Database(); 
     $db->nonquery($queryStr);
 
+    // clear_hook();
+
     clear_hook();
 
     saveActivities('usergroup_remove','Remove user group '.$reformat_post_c,$username);
 
+    // self::system_cache_clear();return;
 
     echo responseData('OK','no');
 }
@@ -4056,7 +4081,7 @@ public static function add_new_category()
         echo responseData($e->getMessage(),'yes');return false;
     }
 
-    $category_c=newID(9);
+    $category_c=newID(Configs::$_['system_category_id_len']);
 
     $parent_category_c=addslashes(getPost('parentid',''));
     $insertData=array(
@@ -4292,47 +4317,62 @@ public static function upload_media()
 
     $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
 
-    try {
-        isValidAccessAPI();
-    } catch (\Exception $e) {
+    // try {
+    //     isValidAccessAPI();
+    // } catch (\Exception $e) {
+        
+    // }
+
+    if(!isset($username[2]))
+    {
         echo responseData($e->getMessage(),'yes');return false;
     }
 
-    $uploadPath=dirname(APPPATH).'/public/uploads/medias/';
+    // print_r($_FILES['medias']);
 
-    if (!empty($_FILES)) {
+    $listResult=[];
 
+    $dirPath=trim(getPost('path',''));
+
+    $uploadPath=ROOT_PATH.'public/uploads/medias/'.$dirPath;
+
+    if (!empty($_FILES)) 
+    {
+        $totalFile=count($_FILES['medias']['tmp_name']);
+
+        for ($i=0; $i < $totalFile; $i++) { 
             // print_r($_FILES['file']);die();
-            $tempFile = $_FILES['file']['tmp_name'];          //3 
+            if(isset($_FILES['medias']['tmp_name'][$i]))
+            {
+                $tempFile = $_FILES['medias']['tmp_name'][$i];          //3 
 
-            $onyName=explode('.',$_FILES['file']['name'])[0];
-            
-            $newName=friendlyString($onyName,'_').'_'.newID(9);
+                $onyName=explode('.',$_FILES['medias']['name'][$i])[0];
+                
+                $newName=friendlyString($onyName,'_').'_'.newID(9);
+    
+                $fileID=newID(24);
+                // $newName=newID(3).time();
+    
+                $ext = pathinfo($_FILES['medias']['name'][$i], PATHINFO_EXTENSION);
+    
+                $targetFile =  $uploadPath.$newName.'.'.$ext;  //5
 
-            $fileID=newID(24);
-            // $newName=newID(3).time();
-
-            $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-
-            $targetFile =  $uploadPath.$newName.'.'.$ext;  //5
-            
-            try {
-
+                // if(file_exists($targetFile))
+                // {
+                //     $targetFile =  $uploadPath.$newName.'.'.$ext;  //5
+                // }
+    
                 move_uploaded_file($tempFile,$targetFile); //6
-
-                // 
-
-                // $db->query("insert into media_data(id,name,file_path,user_id) VALUES('".$fileID."','".$newName.'.'.$ext."','".'/public/uploads/medias/'.$newName.'.'.$ext."','Auto')");
-
-                echo $newName;
-
-            } catch (\Throwable $th) {
-                //throw $th;
-                echo 'ERROR';
+    
+                $listResult[]=SITE_URL.'public/uploads/medias/'.$dirPath.$newName.'.'.$ext; 
             }
-            
+
         }
+        
     }
+
+    echo json_encode($listResult);die();
+}
 
     
     public static function download_media()
@@ -4392,6 +4432,7 @@ public static function upload_media()
         }
 
         $fileHash=getPost('hash','');
+        $dirPath=getPost('path','');
 
         if(!isset($fileHash[2]))
         {
@@ -4399,6 +4440,8 @@ public static function upload_media()
         }
 
         $filePath=ROOT_PATH.base64_decode($fileHash);
+
+        // print_r($filePath);die();
 
         $fileName=basename($filePath);
        
@@ -4465,29 +4508,93 @@ public static function upload_media()
         $db->nonquery($queryStr);  
 
         $dbPath=PLUGINS_PATH.$plugin_name.'/sql_install.sql';
+
+        // die($dbPath);
         $requireFile=PLUGINS_PATH.$plugin_name.'/activate.php';
 
-        if(file_exists($dbPath))
-        {
-            $content=file_get_contents($dbPath);
+        // if(file_exists($dbPath))
+        // {
+        //     $content=file_get_contents($dbPath);
 
-            if(isset($content[5]))
-            {
-                 $db->nonquery(trim($content));   
-            }
+        //     if(isset($content[5]))
+        //     {
+        //          $db->nonquery(trim($content));   
+        //     }
            
            
-        }
+        // }
         if(file_exists($requireFile))
         {
             require_once($requireFile);
         }
 
-        before_load_hook();
+        // before_load_hook();
 
-        self::system_cache_clear();
+        // self::system_cache_clear();
 
-        // echo responseData('Done!','no');
+        clear_hook();
+
+        echo responseData('Done!','no');
+
+    }
+
+    public static function save_theme_file_content()
+    {
+        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $path=getPost('path','');
+        $file=getPost('file','');
+        $content=getPost('content','');
+        $theme_name=getPost('theme_name','');
+
+        $savePath=THEMES_PATH.$theme_name.'/'.$path.$file;
+
+        // print_r($savePath);die();
+
+        if(file_exists($savePath))
+        {
+            create_file($savePath,$content);
+        }
+
+        echo responseData('Done!','no');
+
+    }
+
+    public static function save_plugin_file_content()
+    {
+        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $path=getPost('path','');
+        $file=getPost('file','');
+        $content=getPost('content','');
+        $plugin_name=getPost('plugin_name','');
+
+        $savePath=PLUGINS_PATH.$plugin_name.'/'.$path.$file;
+
+        // print_r($savePath);die();
+
+        if(file_exists($savePath))
+        {
+            create_file($savePath,$content);
+        }
+
+        echo responseData('Done!','no');
 
     }
 
@@ -4507,29 +4614,145 @@ public static function upload_media()
         $dbPath=PLUGINS_PATH.$plugin_name.'/sql_uninstall.sql';
         $requireFile=PLUGINS_PATH.$plugin_name.'/deactivate.php';
 
-        if(file_exists($dbPath))
-        {
-            $content=file_get_contents($dbPath);
+        // if(file_exists($dbPath))
+        // {
+        //     $content=file_get_contents($dbPath);
 
-            if(isset($content[5]))
-            {
-                 $db->nonquery(trim($content));   
-            } 
+        //     if(isset($content[5]))
+        //     {
+        //          $db->nonquery(trim($content));   
+        //     } 
            
-        }
+        // }
         if(file_exists($requireFile))
         {
             require_once($requireFile);
         }
 
-        before_load_hook();
+        // before_load_hook();
 
-        self::system_cache_clear();
+        // self::system_cache_clear();
 
-        // saveActivities('plugin_deactivate','Deactivate plugin '.$plugin_name,$username);
+        clear_hook();
+
+        saveActivities('plugin_deactivate','Deactivate plugin '.$plugin_name,$username);
 
 
-        // echo responseData('Done!','no');
+        echo responseData('Done!','no');
+    }
+
+    public static function import_theme()
+    {
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $db=new Database(); 
+        $list_files=getPost('list_files','');
+
+        $splitLine=explode('|||',$list_files);
+
+        $total=count($splitLine);
+
+        $fileExt='';
+
+        $savePath=ROOT_PATH.'public/uploads/';
+
+        $filePath='';
+
+        $fileName='';
+
+        for ($i=0; $i < $total; $i++) { 
+
+            $filePath=ROOT_PATH.str_replace(SITE_URL,'',$splitLine[$i]);
+
+            $fileName=explode('.',basename($splitLine[$i]));
+
+            if(!preg_match('/\.zip$/i',$filePath))
+            {
+                continue;
+            }
+
+            if(file_exists($filePath))
+            {
+                // copy($filePath,$savePath.'file_'.$i.'.zip');
+
+                $zip = new Unzip($filePath);
+
+                $zip->setTargetLocation(ROOT_PATH.'contents/themes/');
+
+                $zip->extract();
+
+                if(is_dir(ROOT_PATH.'contents/themes/'.$fileName[0]))
+                {
+                    rmdir(ROOT_PATH.'contents/themes/'.$fileName[0]);
+                }
+            }
+            
+        }
+
+        echo responseData('Done!','no');
+    }
+
+    public static function import_plugin()
+    {
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+        try {
+            isValidAccessAPI();
+        } catch (\Exception $e) {
+            echo responseData($e->getMessage(),'yes');return false;
+        }
+
+        $db=new Database(); 
+        $list_files=getPost('list_files','');
+
+        $splitLine=explode('|||',$list_files);
+
+        $total=count($splitLine);
+
+        $fileExt='';
+
+        $savePath=ROOT_PATH.'public/uploads/';
+
+        $filePath='';
+
+        $fileName='';
+
+        for ($i=0; $i < $total; $i++) { 
+
+            $filePath=ROOT_PATH.str_replace(SITE_URL,'',$splitLine[$i]);
+
+            $fileName=explode('.',basename($splitLine[$i]));
+
+            if(!preg_match('/\.zip$/i',$filePath))
+            {
+                continue;
+            }
+
+            if(file_exists($filePath))
+            {
+                // copy($filePath,$savePath.'file_'.$i.'.zip');
+
+                $zip = new Unzip($filePath);
+
+                $zip->setTargetLocation(ROOT_PATH.'contents/plugins/');
+
+                $zip->extract();
+
+                if(is_dir(ROOT_PATH.'contents/plugins/'.$fileName[0]))
+                {
+                    rmdir(ROOT_PATH.'contents/plugins/'.$fileName[0]);
+                }
+            }
+            
+        }
+
+        echo responseData('Done!','no');
     }
 
     public static function theme_activate()
@@ -4559,25 +4782,27 @@ public static function upload_media()
         $dbPath=THEMES_PATH.$theme_name.'/sql_install.sql';
         $requireFile=THEMES_PATH.$theme_name.'/activate.php';
 
-        if(file_exists($dbPath))
-        {
-            $content=file_get_contents($dbPath);
+        // if(file_exists($dbPath))
+        // {
+        //     $content=file_get_contents($dbPath);
 
-            if(isset($content[5]))
-            {
-                 $db->nonquery(trim($content));   
-            }
+        //     if(isset($content[5]))
+        //     {
+        //          $db->nonquery(trim($content));   
+        //     }
            
-        }
+        // }
         if(file_exists($requireFile))
         {
             require_once($requireFile);
         }
-        before_load_hook();
+        // before_load_hook();
 
-        self::system_cache_clear();
+        // self::system_cache_clear();
 
-        // saveActivities('theme_activate','Activate theme '.$theme_name,$username);
+        clear_hook();
+
+        saveActivities('theme_activate','Activate theme '.$theme_name,$username);
 
         echo responseData('Done!','no');
 
@@ -4602,26 +4827,28 @@ public static function upload_media()
         $dbPath=THEMES_PATH.$theme_name.'/sql_uninstall.sql';
         $requireFile=THEMES_PATH.$theme_name.'/deactivate.php';
 
-        if(file_exists($dbPath))
-        {
-            $content=file_get_contents($dbPath);
+        // if(file_exists($dbPath))
+        // {
+        //     $content=file_get_contents($dbPath);
 
-            if(isset($content[5]))
-            {
-                 $db->nonquery(trim($content));   
-            } 
+        //     if(isset($content[5]))
+        //     {
+        //          $db->nonquery(trim($content));   
+        //     } 
            
-        }        
+        // }        
         if(file_exists($requireFile))
         {
             require_once($requireFile);
         }
 
-        before_load_hook();
+        // before_load_hook();
 
-        self::system_cache_clear();
+        // self::system_cache_clear();
 
-        // saveActivities('theme_deactivate','Deactivate theme '.$theme_name,$username);
+        clear_hook();
+
+        saveActivities('theme_deactivate','Deactivate theme '.$theme_name,$username);
 
         echo responseData('Done!','no');
     }

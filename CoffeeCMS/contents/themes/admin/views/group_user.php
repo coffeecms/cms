@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalAdd"  style='z-index:99999;' data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title " id="exampleModalLabel"><?php echo get_text_by_lang('Add group','admin');?></h5>
@@ -16,16 +16,24 @@
         <label><strong><?php echo get_text_by_lang('Title','admin');?></strong></label>
         <input type="text" class="form-control add-title input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Title','admin');?>" />
       </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('Left String','admin');?></strong></label>
+        <textarea type="text" class="form-control add-leftstr input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Left String','admin');?>" style='height:90px;'></textarea>
+      </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('Right String','admin');?></strong></label>
+        <textarea type="text" class="form-control add-rightstr input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Right String','admin');?>"  style='height:90px;'></textarea>
+      </p> 
     
       <p>
-        <label><strong><?php echo get_text_by_lang('Permissions','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllPer btn-xs'><?php echo get_text_by_lang('All','admin');?></button>
+        <label><strong><?php echo get_text_by_lang('Permissions','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllPer btn-xs'><?php echo get_text_by_lang('All','admin');?></button><button type='button' class='btn btn-primary btnUnSetAllPer btn-xs' style="margin-left:10px;"><?php echo get_text_by_lang('Unset all','admin');?></button>
           <select class="form-control add-permissions add-select2js" multiple="multiple" name="send[type]">
           
           </select>
       </p> 
     
       <p>
-        <label><strong><?php echo get_text_by_lang('Allow Access Menu','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllMenu btn-xs'><?php echo get_text_by_lang('All','admin');?></button>
+        <label><strong><?php echo get_text_by_lang('Allow Access Menu','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllMenu btn-xs'><?php echo get_text_by_lang('All','admin');?></button><button type='button' class='btn btn-primary btnUnSetAllMenu btn-xs' style="margin-left:10px;"><?php echo get_text_by_lang('Unset all','admin');?></button>
           <select class="form-control add-menu add-select2js" multiple="multiple" name="send[type]">
           
           </select>
@@ -33,7 +41,7 @@
     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info btnAddGroup" ><i class="fas fa-search"></i> <?php echo get_text_by_lang('Add new','admin');?></button>
+        <button type="button" class="btn btn-info btnAddGroup" ><i class="fas fa-save"></i> <?php echo get_text_by_lang('Add new','admin');?></button>
         <button type="button" class="btn btn-danger btnCloseAlert" data-dismiss="modal"><i class="fas fa-times"></i> <?php echo get_text_by_lang('Close','admin');?></button>
       </div>
     </div>
@@ -42,7 +50,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalEdit"  style='z-index:99999;' data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
+  <div class="modal-dialog  modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title " id="exampleModalLabel"><?php echo get_text_by_lang('Edit group','admin');?></h5>
@@ -56,9 +64,19 @@
         <label><strong><?php echo get_text_by_lang('Title','admin');?></strong></label>
         <input type="text" class="form-control edit-title input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Title','admin');?>" />
       </p> 
-    
+
       <p>
-        <label><strong><?php echo get_text_by_lang('Permissions','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllPerEdit btn-xs'><?php echo get_text_by_lang('All','admin');?></button>
+        <label><strong><?php echo get_text_by_lang('Left String','admin');?></strong></label>
+        <textarea type="text" class="form-control edit-leftstr input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Left String','admin');?>" style='height:90px;'></textarea>
+      </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('Right String','admin');?></strong></label>
+        <textarea type="text" class="form-control edit-rightstr input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Right String','admin');?>"  style='height:90px;'></textarea>
+      </p> 
+    
+
+      <p>
+        <label><strong><?php echo get_text_by_lang('Permissions','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllPerEdit btn-xs'><?php echo get_text_by_lang('All','admin');?></button><button type='button' class='btn btn-primary btnUnSetAllPerEdit btn-xs' style="margin-left:10px;"><?php echo get_text_by_lang('Unset all','admin');?></button>
           <select class="form-control edit-permissions edit-select2js" multiple="multiple" name="send[type]">
           
           </select>
@@ -66,15 +84,15 @@
 
           
       <p>
-        <label><strong><?php echo get_text_by_lang('Allow Access Menu','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllMenuEdit btn-xs'><?php echo get_text_by_lang('All','admin');?></button>
-          <select class="form-control edit-menu add-select2js" multiple="multiple" name="send[type]">
+        <label><strong><?php echo get_text_by_lang('Allow Access Menu','admin');?></strong></label> <button type='button' class='btn btn-primary btnSetAllMenuEdit btn-xs'><?php echo get_text_by_lang('Set all','admin');?></button><button type='button' class='btn btn-primary btnUnSetAllMenuEdit btn-xs' style="margin-left:10px;"><?php echo get_text_by_lang('Unset all','admin');?></button>
+          <select class="form-control edit-menu add-select2js"  multiple="multiple" name="send[type]">
           
           </select>
       </p> 
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info btnSaveGroup" ><i class="fas fa-search"></i> <?php echo get_text_by_lang('Save changes','admin');?></button>
+        <button type="button" class="btn btn-info btnSaveGroup" ><i class="fas fa-save"></i> <?php echo get_text_by_lang('Save changes','admin');?></button>
         <button type="button" class="btn btn-danger btnCloseAlert" data-dismiss="modal"><i class="fas fa-times"></i> <?php echo get_text_by_lang('Close','admin');?></button>
       </div>
     </div>
@@ -325,6 +343,8 @@ $(document).on('click','.edit-group',function(){
       {
         pageData['edit_c']=id;
         $('.edit-title').val(pageData['theList'][i]['title']);
+        $('.edit-leftstr').val(pageData['theList'][i]['left_str']);
+        $('.edit-rightstr').val(pageData['theList'][i]['right_str']);
 
         for (var j = 0; j < totalGPer; j++) {
             if(pageData['listGroupPermissions'][j]['group_c']==id)
@@ -370,10 +390,26 @@ $(document).on('click','.btnSetAllPer',function(){
   $('.add-permissions').trigger('change');
 });
 
+$(document).on('click','.btnUnSetAllPer',function(){
+  $('.add-permissions > option:selected').each(function(){
+    $(this).attr('selected',false);
+  });  
+  
+  $('.add-permissions').trigger('change');
+});
+
 
 $(document).on('click','.btnSetAllMenu',function(){
   $('.add-menu > option').each(function(){
     $(this).attr('selected',true);
+  });  
+
+  $('.add-menu').trigger('change');
+});
+
+$(document).on('click','.btnUnSetAllMenu',function(){
+  $('.add-menu > option:selected').each(function(){
+    $(this).attr('selected',false);
   });  
 
   $('.add-menu').trigger('change');
@@ -387,10 +423,26 @@ $(document).on('click','.btnSetAllPerEdit',function(){
   $('.edit-permissions').trigger('change');
 });
 
+$(document).on('click','.btnUnSetAllPerEdit',function(){
+  $('.edit-permissions > option:selected').each(function(){
+    $(this).attr('selected',false);
+  });  
+  
+  $('.edit-permissions').trigger('change');
+});
+
 
 $(document).on('click','.btnSetAllMenuEdit',function(){
   $('.edit-menu > option').each(function(){
     $(this).attr('selected',true);
+  });  
+
+  $('.edit-menu').trigger('change');
+});
+
+$(document).on('click','.btnUnSetAllMenuEdit',function(){
+  $('.edit-menu > option:selected').each(function(){
+    $(this).attr('selected',false);
   });  
 
   $('.edit-menu').trigger('change');
@@ -412,6 +464,8 @@ $(document).on('click','.btnAddGroup',function(){
 
   pageData['add_per']='';
   pageData['add_menu']='';
+  pageData['left_str']=$('.add-leftstr').val().trim();
+  pageData['right_str']=$('.add-rightstr').val().trim();
 
   $('.add-permissions > option:selected').each(function(){
     pageData['add_per']+=$(this).val()+',';
@@ -423,6 +477,8 @@ $(document).on('click','.btnAddGroup',function(){
 
   sendData['permission_list']=pageData['add_per'];
   sendData['menu_list']=pageData['add_menu'];
+  sendData['left_str']=pageData['left_str'];
+  sendData['right_str']=pageData['right_str'];
  
             
   if(sendData['title'].length==0)
@@ -436,17 +492,7 @@ $(document).on('click','.btnAddGroup',function(){
   postData(API_URL+'add_new_groupuser', sendData).then(data => {
     // console.log(data); // JSON data parsed by `data.json()` call
 
-    if(data['error']=='yes')
-    {
-    showAlertOK('',data['data']);
-    }
-    else
-    {
-        $('#modalSearch').modal('hide');
-      $('#modalAdd').modal('hide');
-
-      showAlert('','Done!');
-    }
+    location.reload();
 
   });  
 });
@@ -463,6 +509,10 @@ $(document).on('click','.btnSaveGroup',function(){
   pageData['add_per']='';
   pageData['edit_menu']='';
 
+  pageData['left_str']=$('.edit-leftstr').val().trim();
+  pageData['right_str']=$('.edit-rightstr').val().trim();
+
+
   $('.edit-permissions > option:selected').each(function(){
     pageData['add_per']+=$(this).val()+',';
   });
@@ -473,6 +523,8 @@ $(document).on('click','.btnSaveGroup',function(){
 
   sendData['permission_list']=pageData['add_per'];
   sendData['menu_list']=pageData['edit_menu'];
+  sendData['left_str']=pageData['left_str'];
+  sendData['right_str']=pageData['right_str'];
 
         
   if(sendData['title'].length==0)
@@ -480,22 +532,10 @@ $(document).on('click','.btnSaveGroup',function(){
     showAlert('','Title not allow is blank');return false;
   }
 
-  
   postData(API_URL+'edit_groupuser', sendData).then(data => {
     // console.log(data); // JSON data parsed by `data.json()` call
 
-    if(data['error']=='yes')
-    {
-    showAlertOK('',data['data']);
-    }
-    else
-    {
-        $('#modalSearch').modal('hide');
-      $('#modalAdd').modal('hide');
-      $('#modalEdit').modal('hide');
-
-      showAlert('','Done!');
-    }
+    location.reload();
 
   });  
 });

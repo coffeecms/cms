@@ -41,7 +41,7 @@ class PluginFuncs
 	    		$result[$itemNo]['author']=trim($pluginData[4]);	    		   			
     		}
 
-			if(file_exists($result[$itemNo]['path'].'/install.php'))
+			if(file_exists($result[$itemNo]['path'].'/admin/install.php'))
 			{
 				$result[$itemNo]['install_file']="yes";
 			}

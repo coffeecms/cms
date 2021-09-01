@@ -134,11 +134,11 @@ class Routes
                     
 					if(isset(Configs::$_['controller_variable'][1]))
 					{
-						$controllerName::$methodName(Configs::$_['controller_variable']);
+						$controllerName::$methodName(Configs::$_['controller_variable']);die();
 					}
 					else
 					{
-						$controllerName::$methodName();
+						$controllerName::$methodName();die();
 					}
     				
     			}

@@ -1,7 +1,5 @@
 <?php
 
-useClass('ImageResizeException');
-
 
 /**
  * PHP class to resize and scale images

@@ -15,6 +15,7 @@ define('CONTENTS_URL',SITE_URL.'contents/');
 define('THEMES_URL',CONTENTS_URL.'themes/');
 define('PLUGINS_URL',CONTENTS_URL.'plugins/');
 
+
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', FALSE);
 header('Pragma: no-cache');
@@ -38,6 +39,8 @@ class Configs
         'view_path'=>'',
         'site_title'=>'',
         'view_path'=>'',
+        'system_admin_lang'=>'',
+        'frontend_lang'=>'',
         'hide_admin_menu'=>[],
         'user_data'=>[],
         'admin_head'=>[],

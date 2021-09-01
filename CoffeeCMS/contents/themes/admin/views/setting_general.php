@@ -57,6 +57,7 @@
                   <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"><?php echo get_text_by_lang('Home Page','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab"><?php echo get_text_by_lang('Email','admin');?></a></li>
 				  <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"><?php echo get_text_by_lang('Postback','admin');?></a></li>
+				  <li class="nav-item"><a class="nav-link" href="#tab_9" data-toggle="tab"><?php echo get_text_by_lang('ID Length','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab"><?php echo get_text_by_lang('Updates','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"><?php echo get_text_by_lang('Clean','admin');?></a></li>
                   
@@ -534,7 +535,26 @@
                   </div>
                   <!-- /.tab-pane -->
 
-
+				  <div class="tab-pane" id="tab_9">
+				  	<p><?php echo get_text_by_lang('Category id length','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control system_category_id_len setting-page2" value="16" name="general[title]" id="title" value="" />
+					</p>
+				  	<p><?php echo get_text_by_lang('Post id length','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control system_post_id_len setting-page2" value="16" name="general[title]" id="title" value="" />
+					</p>
+				  	<p><?php echo get_text_by_lang('User id length','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control system_user_id_len setting-page2" value="16" name="general[title]" id="title" value="" />
+					</p>
+				  	
+					<p>
+					<button type="submit" name="btnSave" class="btn btn-info btnSavePage9"><?php echo get_text_by_lang('Save Changes','admin');?></button>
+					</p>
+				
+                  </div>
+                  <!-- /.tab-pane -->
 
                 </div>
                 <!-- /.tab-content -->
@@ -654,6 +674,24 @@ $(document).on('click','.btnSavePage1',function(){
     jsonData['email_change_password_template']=$('.email_change_password_template > option:selected').val();
     jsonData['system_admin_lang']=$('.system_admin_lang').val();
     jsonData['frontend_lang']=$('.frontend_lang').val();
+   
+    sendData['type']='1';
+    sendData['save_data']=JSON.stringify(jsonData);
+
+    postData(API_URL+'system_setting_update', sendData).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      
+      showAlertOK('','Done!');
+    });        
+});
+$(document).on('click','.btnSavePage9',function(){
+    var sendData={};
+
+	var jsonData={};
+    
+    jsonData['system_category_id_len']=$('.system_category_id_len').val();
+    jsonData['system_post_id_len']=$('.system_post_id_len').val();
+    jsonData['system_user_id_len']=$('.system_user_id_len').val();
    
     sendData['type']='1';
     sendData['save_data']=JSON.stringify(jsonData);

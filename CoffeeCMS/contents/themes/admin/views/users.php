@@ -11,7 +11,14 @@
         </button>
       </div>
       <div class="modal-body ">
-      <p >
+      <p>
+        <label><strong><?php echo get_text_by_lang('From date','admin');?></strong></label>
+        <input type="text" class="form-control search-from-date datepicker input-size-medium" name="send[keywords]"  />
+    </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('To date','admin');?></strong></label>
+        <input type="text" class="form-control search-to-date datepicker input-size-medium" name="send[keywords]"  />
+    </p>      
       <p>
         <label><strong><?php echo get_text_by_lang('Username','admin');?></strong></label>
         <input type="text" class="form-control search-username input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Username','admin');?>" />
@@ -312,7 +319,7 @@ function prepareShowCategories()
   var td='';
 
 
-  // li+='<option value="all">All</option>';
+  li+='<option value="all">All</option>';
 
   for (var i = 0; i < total; i++) {
     li+='<option value="'+pageData['listGroup'][i]['group_c']+'">'+pageData['listGroup'][i]['title']+'</option>';
@@ -324,8 +331,8 @@ function prepareShowCategories()
 
   total=pageData['listLevel'].length;
 
-  // li='<option value="all">All</option>';
-  li='';
+  li='<option value="all">All</option>';
+  // li='';
 
   for (var i = 0; i < total; i++) {
     li+='<option value="'+pageData['listLevel'][i]['level_id']+'">'+pageData['listLevel'][i]['title']+'</option>';
@@ -359,6 +366,15 @@ $(document).ready(function(){
   $('.post-action').select2({
     'width':'200px'
   });
+
+  
+  $('.datepicker').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+        });
+
+      $('.search-from-date').val(moment().add('days',-7).format('MM/DD/YYYY'));
+      $('.search-to-date').val(moment().format('MM/DD/YYYY'));
 
 });
 
@@ -611,11 +627,27 @@ $(document).on('click','.btnSearch',function(){
   pageData['level_c']=$('.search-level > option:selected').val().trim();
   pageData['username']=$('.search-username').val().trim();
   pageData['email']=$('.search-email').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
   sendData['group_c']=pageData['group_c'];
   sendData['level_c']=pageData['level_c'];
   sendData['username']=pageData['username'];
   sendData['email']=pageData['email'];
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
 
   postData(API_URL+'get_list_user', sendData).then(data => {
     // console.log(data); // JSON data parsed by `data.json()` call
@@ -663,11 +695,28 @@ $(document).on('click','.btnPrev',function(){
   pageData['level_c']=$('.search-level > option:selected').val().trim();
   pageData['username']=$('.search-username').val().trim();
   pageData['email']=$('.search-email').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
   sendData['group_c']=pageData['group_c'];
   sendData['level_c']=pageData['level_c'];
   sendData['username']=pageData['username'];
   sendData['email']=pageData['email'];
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  
 
   postData(API_URL+'get_list_user', sendData).then(data => {
     // console.log(data); // JSON data parsed by `data.json()` call
@@ -715,11 +764,28 @@ $(document).on('click','.btnNext',function(){
   pageData['level_c']=$('.search-level > option:selected').val().trim();
   pageData['username']=$('.search-username').val().trim();
   pageData['email']=$('.search-email').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
   sendData['group_c']=pageData['group_c'];
   sendData['level_c']=pageData['level_c'];
   sendData['username']=pageData['username'];
   sendData['email']=pageData['email'];
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  
 
 
   postData(API_URL+'get_list_user', sendData).then(data => {

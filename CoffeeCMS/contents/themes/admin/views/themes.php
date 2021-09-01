@@ -90,12 +90,20 @@ function prepareShowData()
         }
         else
         {
-          li+='<button class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</button>';
+          if(pageData['theList'][i]['install_file']=='yes')
+          {
+            li+='<a  href="'+SITE_URL+'admin/theme_page_url?theme='+pageData['theList'][i]['dir']+'&page=install" class="btn btn-primary " data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</a>';
+          }
+          else
+          {
+            li+='<button type="button" class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</button>';
+          }          
+
+          // li+='<button class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</button>';
         }        
 
-
-
         li+='<a  href="'+pageData['theList'][i]['url']+'" target="_blank" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-link"></i></a>';
+        li+='<a  href="'+SITE_URL+'admin/theme_edit/'+pageData['theList'][i]['dir']+'" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-edit"></i></a>';
         li+='</div>';
         li+='</div>';
       li+='</div>';

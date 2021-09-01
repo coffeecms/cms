@@ -72,7 +72,7 @@ function load_hook_admin_panel($hook_zone,$inputData='')
     return $result;
 }
 
-function load_hook($hook_zone,$inputData='')
+function load_hook($hook_zone,$inputData='',$contentData=[])
 {
     $savePath=PUBLIC_PATH.'caches/hooks.php';
 
@@ -83,7 +83,7 @@ function load_hook($hook_zone,$inputData='')
 
     require_once($savePath);
 
-    $result='';
+    $result=$inputData;
     $funcNM='';
 
     if(isset(Configs::$_['hooks'][$hook_zone]))
@@ -95,7 +95,7 @@ function load_hook($hook_zone,$inputData='')
 
             if(function_exists($funcNM))
             {
-                $result=$funcNM($inputData);
+                $result=$funcNM($result,$contentData);
             }
         }
     }
@@ -189,7 +189,7 @@ function before_load_hook()
             
             if(file_exists($hookFile))
             {
-                $contents.=trim(file_get_contents($hookFile));
+                $contents.="\r\n".trim(file_get_contents($hookFile));
                 $contents=preg_replace('/^<\?php(.*?)$/s','$1',$contents);
                 $contents=preg_replace('/\s+<\?php(.*?)$/s','$1',$contents);
             }
@@ -228,6 +228,30 @@ function add_hook($hook_zone,$func_name)
     }
 
     array_push(Configs::$_['hooks'][$hook_zone],$func_name);
+}
+
+function download($filePath = '', $fileName = null)
+{
+    if (file_exists($filePath)) {
+
+        $fileName = is_null($fileName) ? basename($filePath) : $fileName;
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . $fileName);
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filePath));
+        ob_clean();
+        flush();
+        readfile($filePath);
+
+    }
+
+    return false;
+
 }
 
 function load_shortcode($inputData='')
@@ -354,6 +378,7 @@ function parse_shortcode_data($scName='',$inputData='')
 
             }							
         }
+       
     }	
     else
     {
@@ -368,7 +393,7 @@ function parse_shortcode_data($scName='',$inputData='')
 
         $total=count($listReal);
 
-        // print_r($match);die();
+        // print_r($match[2]);
 
         for ($i=0; $i < $total; $i++) { 
 
@@ -378,10 +403,14 @@ function parse_shortcode_data($scName='',$inputData='')
 
             $result[$i]['attr']=array();
 
-            $attr=$listAttr[$i];
+            $attr=trim($listAttr[$i]);
 
             if(isset($attr[1]))
             {
+                if($attr[0]=='=')
+                {
+                    $attr="value='".substr($attr,1,strlen($attr))."'";
+                }
                 // die($attr);
                 if(preg_match_all('/(\w+)\=(\'|\")(.*?)(\'|\")/i', $attr, $matchAttrs))
                 {
@@ -581,6 +610,14 @@ function user_has_permission($permission_c='')
     return $result;
 }
 
+function strtodate($format,$dateStr)
+{
+    // $result=date('d M, Y',strtotime($date_added));
+    $result=date($format,strtotime($dateStr));
+
+    return $result;
+}
+
 function user_load_data_when_logined()
 {
     $db=new Database();
@@ -643,7 +680,6 @@ function load_user_group_permissions_data()
 
         for ($i=0; $i < $total; $i++) { 
             // Configs::$_[$result[$i]['key_c']]=$result[$i]['key_value'];
-
             $contents.="Configs::\$_['user_group_permissions']['".trim($result[$i]['group_c'])."'][]='".$result[$i]['permission_c']."';";
         }
 
@@ -654,6 +690,34 @@ function load_user_group_permissions_data()
 
     require_once($savePath);
 
+}
+
+function has_exists_user($username)
+{
+    $savePath=PUBLIC_PATH.'caches/users/'.$username.'.php';
+
+    $result=false;
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+
+        $queryStr.="SELECT * from user_mst where (username='".$username."' OR email='".$username."') ";
+
+        $result=$db->query($queryStr);
+    
+        $contents.="Configs::\$_['user_'".$username."]='".$result[0]['user_id']."';";
+
+        create_file($savePath,"<?php ".$contents);
+
+        $result=true;
+    }
+
+    require_once($savePath);
+
+    return $result;
 }
 
 function load_shorturl_cache($shortUrlCode='')
@@ -1277,6 +1341,33 @@ function getLastAdminSubMenuSortOrderInParent($parent_menu_id)
     return $result[0]['sort_order'];
 }
 
+function encrypt($pure_string,$secretKey='') 
+{
+
+    $secretKey=isset($secretKey[5])?$secretKey:ENCRYPT_SECRET_KEY;
+        
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, $secretKey, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
+
+    $encrypted_string=base64_encode($encrypted_string);
+
+    return $encrypted_string;   
+}
+
+function decrypt($encrypted_string,$secretKey='') 
+{
+    $secretKey=isset($secretKey[5])?$secretKey:ENCRYPT_SECRET_KEY;
+
+    $encrypted_string=base64_decode($encrypted_string);
+
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $secretKey, $encrypted_string, MCRYPT_MODE_ECB, $iv);
+    return $decrypted_string;
+
+}
+
 function genListNestedCategories($listCategories=array(),$listSubCategories=array())
 {
 
@@ -1385,7 +1476,16 @@ function arrayToInsertStr($tabletName,$insertData)
     {
         for ($i=0; $i < $total; $i++) { 
             $theKeys.=$listKey[$i].',';
-            $theVal.="'".$insertData[$listKey[$i]]."',";
+
+            if(strtoupper($insertData[$listKey[$i]])=='NOW()')
+            {
+                $theVal.=$insertData[$listKey[$i]].",";
+            }
+            else
+            {
+                $theVal.="'".$insertData[$listKey[$i]]."',";
+            }
+            
         }
 
         $theKeys=substr($theKeys,0,strlen($theKeys)-1);
@@ -1425,8 +1525,16 @@ function arrayToUpdateStr($tabletName,$insertData)
 
     if($total > 0)
     {
-        for ($i=0; $i < $total; $i++) { 
-            $updateStr.=$listKey[$i]."='".addslashes($insertData['update'][$listKey[$i]])."',";
+        for ($i=0; $i < $total; $i++) {
+            if(strtoupper($insertData['update'][$listKey[$i]])=='NOW()')
+            {
+                $updateStr.=$listKey[$i]."=NOW(),";
+            }
+            else
+            {
+                $updateStr.=$listKey[$i]."='".addslashes($insertData['update'][$listKey[$i]])."',";
+            }
+            
         }
 
         $updateStr=substr($updateStr,0,strlen($theKeys)-1);
@@ -1557,33 +1665,6 @@ function friendlyString($inputStr='',$type='-')
 }   
 
 
-function encrypt($pure_string,$secretKey='') 
-{
-
-    $secretKey=isset($secretKey[5])?$secretKey:ENCRYPT_SECRET_KEY;
-    
-    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, $secretKey, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
-
-    $encrypted_string=base64_encode($encrypted_string);
-
-    return $encrypted_string;   
-}
-
-function decrypt($encrypted_string,$secretKey='') 
-{
-    $secretKey=isset($secretKey[5])?$secretKey:ENCRYPT_SECRET_KEY;
-
-    $encrypted_string=base64_decode($encrypted_string);
-
-    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $secretKey, $encrypted_string, MCRYPT_MODE_ECB, $iv);
-    return $decrypted_string;
-
-}
-
 
 
 function utf8ToLower($inputData)
@@ -1642,6 +1723,15 @@ function newID($len = 24)
 //     return $str;
 // }
 
+function strip_tags_blacklist($html, $tags) {
+    // print_r($tags);die();
+    foreach ($tags as $tag) {
+        $regex = '#<\s*' . $tag . '[^>]*>.*?<\s*/\s*'. $tag . '>#msi';
+        $html = preg_replace($regex, '', $html);
+    }
+    return $html;
+}
+
 function randNumber($len = 10)
 {
     $str = '012010123456789234560123450123456789234560123456789789345012345601234567892345601234567897893450123456678978934501234567896789';
@@ -1671,31 +1761,31 @@ function randText($len = 10)
     return $str;
 
 }
-function download($filePath,$fileName='')
-{
-    $filePath=trim($filePath);
+// function download($filePath,$fileName='')
+// {
+//     $filePath=trim($filePath);
    
-    if(!preg_match('/([a-zA-Z0-9_\-\s\w]+)\.(\w+)$/i', $filePath,$match))
-    {
-        return false;
-    }
+//     if(!preg_match('/([a-zA-Z0-9_\-\s\w]+)\.(\w+)$/i', $filePath,$match))
+//     {
+//         return false;
+//     }
 
-    $fileName=friendlyString($match[1]).'.'.$match[2];
+//     $fileName=friendlyString($match[1]).'.'.$match[2];
         
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename='.$fileName);
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($filePath));
-    ob_clean();
-    flush();
-    readfile($filePath);
-    exit;
+//     header('Content-Description: File Transfer');
+//     header('Content-Type: application/octet-stream');
+//     header('Content-Disposition: attachment; filename='.$fileName);
+//     header('Content-Transfer-Encoding: binary');
+//     header('Expires: 0');
+//     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+//     header('Pragma: public');
+//     header('Content-Length: ' . filesize($filePath));
+//     ob_clean();
+//     flush();
+//     readfile($filePath);
+//     exit;
     
-}
+// }
 function spinText($inputData='')
 {
     if(preg_match_all('/(\{([a-zA-Z0-9_\-\|\;\:\,\(\)\.\'\"\r\n\_\/\?\&\_\s\^\!\@\#\$\%\*\=\+\<\>\[\]]+)\})/is', $inputData,$match))

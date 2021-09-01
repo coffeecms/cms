@@ -27,19 +27,16 @@ class Admin
 
 	}
 
-	
 	public static function dashboard()
 	{
-
 		if(!isLogined())
 		{
 			redirect_to(SITE_URL.'admin/login');
 		}
-
+		
 		$theData=array(
 
 		);
-
 
 		// useClass('UserAgent');
 
@@ -69,7 +66,6 @@ class Admin
 		$queryStr.=" select 'PostViews',ifnull(sum(views),'0') as Total from post_data ";
 
 		$theData['total_data']=$db->query($queryStr);
-
 		
 		$queryStr=" select CAST(ent_dt as date) as work_date,count(*) as total";
 		$queryStr.=" from post_view_data";
@@ -179,6 +175,16 @@ class Admin
 
 		echo view('header_login');
 		echo view('login');
+		echo view('footer_login');
+	}
+
+	public static function notfound()
+	{
+		// print_r(Configs::$_);die();
+		// var_dump(isLogined());die();
+
+		echo view('header_login');
+		echo view('notfound');
 		echo view('footer_login');
 	}
 
@@ -549,6 +555,48 @@ class Admin
 		view('left');
 		view('projects_task',$theData);
 		view('footer');
+	}
+
+	public static function quick_maintain()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+        $savePath=PUBLIC_PATH.'caches/user_group_permissions.php';
+
+		if(file_exists($savePath))
+		{
+			unlink($savePath);
+		}
+        $savePath=PUBLIC_PATH.'caches/user_group_menu_permissions.php';
+
+		if(file_exists($savePath))
+		{
+			unlink($savePath);
+		}
+        $savePath=PUBLIC_PATH.'caches/system_setting.php';
+
+		if(file_exists($savePath))
+		{
+			unlink($savePath);
+		}
+        $savePath=PUBLIC_PATH.'caches/hooks.php';
+
+		if(file_exists($savePath))
+		{
+			unlink($savePath);
+		}
+        $savePath=PUBLIC_PATH.'caches/frontend_menu.php';
+
+		if(file_exists($savePath))
+		{
+			unlink($savePath);
+		}
+
+		redirect_to(SITE_URL.'admin/dashboard');
+
 	}
 
 	public static function tasks()
@@ -1644,6 +1692,9 @@ class Admin
 		{
 			redirect_to(SITE_URL.'admin');
 		}
+
+		clear_hook();
+   
 		$theData=array(
 			'theList'=>[],
 			'totalPost'=>0,
@@ -1652,7 +1703,8 @@ class Admin
 			'alert'=>'',
 		);
 		$db=new Database();
-		
+
+		$db->nonquery("delete from group_permission_data where permission_c NOT IN (select permission_c from permissions_mst)");
 
 		$queryStr="SELECT a.*,ifnull(b.Total,'0') as Total,ifnull(d.total,'0') as Total_Users ";
 		$queryStr.=" FROM user_group_mst as a left join ";
@@ -1808,6 +1860,8 @@ class Admin
 			redirect_to(SITE_URL.'admin');
 		}
 
+		clear_hook();
+
 		$installPlugin=getGet('install','');
 		$uninstallPlugin=getGet('uninstall','');
 
@@ -1820,91 +1874,174 @@ class Admin
 		);
 		$db=new Database();
 
-		if(isset($installPlugin[1]))
-		{
-			//if go to install plugin page
-			
-			$theData['dir']=$installPlugin;
-			$theData['path']=APPPATH.'Views/themes/'.$theData['dir'].'/';
-			$theData['installpath']=$theData['path'].'install.php';
-			$theData['hasInstallFile']='no';
+		$theData=array(
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
 
-			$pluginData=file($theData['path'].'info.txt');
+		$listPlugins=ThemeFuncs::getList();
 
-			$theData['title']=$pluginData[0];
-			// print_r($theData);
-			// die();
+		$theData['theList']=$listPlugins;
+		$theData['default_theme']=Configs::$_['default_theme'];
 
-			if(file_exists($theData['path'].'install.php'))
-			{
-				$theData['hasInstallFile']='yes';
-			}
+		$result=$db->query('select * from theme_mst');
 
-			if($theData['hasInstallFile']=='no')
-			{
-				return redirect()->to(SITE_URL.'admin/themes');
-			}
-			
-			echo view('header');
-			echo view('left');
-			echo view('installTheme',$theData);
-			echo view('footer');			
-		}
+		$theData['listInstalled']=$result;
 
-		if(isset($uninstallTheme[1]))
-		{
-			$theData['dir']=$installTheme;
-			$theData['path']=APPPATH.'Views/themes/'.$theData['dir'].'/';
-			$theData['installpath']=$theData['path'].'uninstall.php';
-			$theData['hasInstallFile']='no';
+		echo view('header');
+		echo view('left');
+		echo view('themes',$theData);
+		echo view('footer');
+	}	
 
-			$pluginData=file($theData['path'].'info.txt');
-
-			$theData['title']=$pluginData[0];
-			// print_r($theData);
-			// die();
-
-			if(file_exists($theData['path'].'uninstall.php'))
-			{
-				$theData['hasInstallFile']='yes';
-			}
-
-			if($theData['hasInstallFile']=='no')
-			{
-				return redirect()->to(SITE_URL.'admin/themes');
-			}
-			
-			echo view('header');
-			echo view('left');
-			echo view('uninstallPlugin',$theData);
-			echo view('footer');				
-		}
+	public static function theme_edit()
+	{
+		// print_r(Configs::$_);die();
 		
-		if(!isset($installPlugin[1]) && !isset($uninstallPlugin[1]))
+		if(!isLogined())
 		{
-			$theData=array(
-				'theList'=>[],
-				'totalPost'=>0,
-				'totalPage'=>0,
-				'pages'=>'',
-				'alert'=>'',
-			);
-	
-			$listPlugins=ThemeFuncs::getList();
-	
-			$theData['theList']=$listPlugins;
-			$theData['default_theme']=Configs::$_['default_theme'];
-	
-			$result=$db->query('select * from theme_mst');
-	
-			$theData['listInstalled']=$result;
-	
-			echo view('header');
-			echo view('left');
-			echo view('themes',$theData);
-			echo view('footer');
+			redirect_to(SITE_URL.'admin/login');
 		}
 
+		$themeName='';
+		if(!preg_match('/theme_edit\/(\w+)/i',Configs::$_['uri'],$match))
+		{
+			// redirect to 404 page
+			redirect_to(SITE_URL.'admin/notfound');
+		}
+
+		// print_r(getGet('path'));die();
+
+		$path=getGet('path','');
+		$file=getGet('file','');
+
+		$themeName=$match[1];
+
+		$theData=array(
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+
+
+		$db=new Database();
+
+		$theData=array(
+			'listFiles'=>[],
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'path'=>'',
+			'file'=>'',
+			'alert'=>'',
+			'file_content'=>'',
+		);
+
+		$theData['path']=$path;
+
+		$theData['theme_name']=$themeName;
+		
+		$path=str_replace("../..",'',$path);
+		$path=str_replace("..\..",'',$path);
+		$path=str_replace("..\/..",'',$path);
+
+		$theData['path']=$path;
+		$theData['file']=$file;
+
+		$theData['listFiles']=scandir(THEMES_PATH.$themeName.'/'.$path);
+
+		if(isset($theData['file'][2]) && strpos($file,'.')>0)
+		{
+			$theData['file_content']=file_get_contents(THEMES_PATH.$themeName.'/'.$path.'/'.$file);
+		}
+
+		// print_r($theData['file_content']);die();
+
+
+		echo view('header');
+		echo view('left');
+		echo view('theme_edit',$theData);
+		echo view('footer');
+	}	
+
+	public static function plugin_edit()
+	{
+		// print_r(Configs::$_);die();
+		
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+		$pluginName='';
+		if(!preg_match('/plugin_edit\/(\w+)/i',Configs::$_['uri'],$match))
+		{
+			// redirect to 404 page
+			redirect_to(SITE_URL.'admin/notfound');
+		}
+
+		// print_r(getGet('path'));die();
+
+		$path=getGet('path','');
+		$file=getGet('file','');
+
+		$pluginName=$match[1];
+
+		$theData=array(
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+		$db=new Database();
+
+		$theData=array(
+			'listFiles'=>[],
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'path'=>'',
+			'file'=>'',
+			'alert'=>'',
+			'file_content'=>'',
+		);
+
+		$theData['path']=$path;
+
+		$theData['plugin_name']=$pluginName;
+		
+		$path=str_replace("../..",'',$path);
+		$path=str_replace("..\..",'',$path);
+		$path=str_replace("..\/..",'',$path);
+
+		$theData['path']=$path;
+		$theData['file']=$file;
+
+		$theData['listFiles']=scandir(PLUGINS_PATH.$pluginName.'/'.$path);
+
+		// print_r(PLUGINS_PATH.$pluginName.'/'.$path);die();
+
+		if(isset($theData['file'][2]) && strpos($file,'.')>0)
+		{
+			$theData['file_content']=file_get_contents(PLUGINS_PATH.$pluginName.'/'.$path.'/'.$file);
+		}
+
+		// print_r($theData['file_content']);die();
+
+		echo view('header');
+		echo view('left');
+		echo view('plugin_edit',$theData);
+		echo view('footer');
 	}	
 
 	public static function import_theme()
@@ -1931,6 +2068,9 @@ class Admin
 		{
 			redirect_to(SITE_URL.'admin');
 		}
+
+		clear_hook();
+
 		$installPlugin=getGet('install','');
 		$uninstallPlugin=getGet('uninstall','');
 
@@ -1942,90 +2082,103 @@ class Admin
 			'alert'=>'',
 		);
 		$db=new Database();
-		if(isset($installPlugin[1]))
-		{
-			//if go to install plugin page
-			
-			$theData['dir']=$installPlugin;
-			$theData['path']=APPPATH.'Libraries/plugins/'.$theData['dir'].'/';
-			$theData['installpath']=$theData['path'].'install.php';
-			$theData['hasInstallFile']='no';
 
-			$pluginData=file($theData['path'].'info.txt');
+		// echo $db->addPrefix(file_get_contents(ROOT_PATH.'test.txt'));
 
-			$theData['title']=$pluginData[0];
-			// print_r($theData);
-			// die();
-
-			if(file_exists($theData['path'].'install.php'))
-			{
-				$theData['hasInstallFile']='yes';
-			}
-
-			if($theData['hasInstallFile']=='no')
-			{
-				return redirect()->to(SITE_URL.'admin/plugins');
-			}
-			
-			echo view('header');
-			echo view('left');
-			echo view('installPlugin',$theData);
-			echo view('footer');			
-		}
-
-		if(isset($uninstallPlugin[1]))
-		{
-			$theData['dir']=$installPlugin;
-			$theData['path']=APPPATH.'Libraries/plugins/'.$theData['dir'].'/';
-			$theData['installpath']=$theData['path'].'uninstall.php';
-			$theData['hasInstallFile']='no';
-
-			$pluginData=file($theData['path'].'info.txt');
-
-			$theData['title']=$pluginData[0];
-			// print_r($theData);
-			// die();
-
-			if(file_exists($theData['path'].'uninstall.php'))
-			{
-				$theData['hasInstallFile']='yes';
-			}
-
-			if($theData['hasInstallFile']=='no')
-			{
-				return redirect()->to(SITE_URL.'admin/plugins');
-			}
-			
-			echo view('header');
-			echo view('left');
-			echo view('uninstallPlugin',$theData);
-			echo view('footer');				
-		}
 		
-		if(!isset($installPlugin[1]) && !isset($uninstallPlugin[1]))
-		{
-			$theData=array(
-				'theList'=>[],
-				'totalPost'=>0,
-				'totalPage'=>0,
-				'pages'=>'',
-				'alert'=>'',
-			);
-	
-			$listPlugins=PluginFuncs::getList();
-	
-			$theData['theList']=$listPlugins;
-
+		// if(isset($installPlugin[1]))
+		// {
+		// 	//if go to install plugin page
 			
-			$result=$db->query('select * from plugin_mst');
-	
-			$theData['listInstalled']=$result;
-	
-			echo view('header');
-			echo view('left');
-			echo view('plugins',$theData);
-			echo view('footer');
-		}
+		// 	$theData['dir']=$installPlugin;
+		// 	$theData['path']=APPPATH.'Libraries/plugins/'.$theData['dir'].'/';
+		// 	$theData['installpath']=$theData['path'].'admin/install.php';
+		// 	$theData['hasInstallFile']='no';
+
+		// 	$pluginData=file($theData['path'].'info.txt');
+
+		// 	$theData['title']=$pluginData[0];
+		// 	// print_r($theData);
+		// 	// die();
+
+		// 	if(file_exists($theData['path'].'install.php'))
+		// 	{
+		// 		$theData['hasInstallFile']='yes';
+		// 	}
+
+		// 	if($theData['hasInstallFile']=='no')
+		// 	{
+		// 		return redirect()->to(SITE_URL.'admin/plugins');
+		// 	}
+			
+		// 	echo view('header');
+		// 	echo view('left');
+		// 	echo view('installPlugin',$theData);
+		// 	echo view('footer');			
+		// }
+
+		// if(isset($uninstallPlugin[1]))
+		// {
+		// 	$theData['dir']=$installPlugin;
+		// 	$theData['path']=APPPATH.'Libraries/plugins/'.$theData['dir'].'/';
+		// 	$theData['installpath']=$theData['path'].'uninstall.php';
+		// 	$theData['hasInstallFile']='no';
+
+		// 	$pluginData=file($theData['path'].'info.txt');
+
+		// 	$theData['title']=$pluginData[0];
+		// 	// print_r($theData);
+		// 	// die();
+
+		// 	if(file_exists($theData['path'].'uninstall.php'))
+		// 	{
+		// 		$theData['hasInstallFile']='yes';
+		// 	}
+
+		// 	if($theData['hasInstallFile']=='no')
+		// 	{
+		// 		return redirect()->to(SITE_URL.'admin/plugins');
+		// 	}
+			
+		// 	echo view('header');
+		// 	echo view('left');
+		// 	echo view('uninstallPlugin',$theData);
+		// 	echo view('footer');				
+		// }
+		
+		$theData=array(
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+		$listPlugins=PluginFuncs::getList();
+
+		$theData['theList']=$listPlugins;
+
+		// $total=count($theData['theList']);
+
+		// // for ($i=0; $i < $total; $i++) { 
+		// // 	$theData['theList'][$i]['install_file']='no';
+		// // 	if(file_exists($theData['theList'][$i]['path'].'admin/install.php'))
+		// // 	{
+		// // 		$theData['theList'][$i]['install_file']='yes';
+		// // 	}
+		// // }
+
+		// print_r($theData['theList']);die();
+
+		
+		$result=$db->query('select * from plugin_mst');
+
+		$theData['listInstalled']=$result;
+
+		echo view('header');
+		echo view('left');
+		echo view('plugins',$theData);
+		echo view('footer');
 
 
 
@@ -2058,6 +2211,8 @@ class Admin
 		{
 			redirect_to(SITE_URL.'admin');
 		}
+
+		
 		$theData=array(
 			'listCat'=>[],
 			'theList'=>[],

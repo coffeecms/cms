@@ -1,5 +1,0 @@
-Basic BBCode
-Support some BBCode default: [audio][/audio],[youtube][/youtube],[youtube_playlist][/youtube_playlist]
-1.0
-https://github.com/coffeecms
-CoffeeCMS Team

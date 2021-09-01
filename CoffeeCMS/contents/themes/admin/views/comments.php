@@ -10,7 +10,15 @@
         </button>
       </div>
       <div class="modal-body ">
-      <p >
+      <p>
+        <label><strong><?php echo get_text_by_lang('From date','admin');?></strong></label>
+        <input type="text" class="form-control search-from-date datepicker input-size-medium" name="send[keywords]"  />
+    </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('To date','admin');?></strong></label>
+        <input type="text" class="form-control search-to-date datepicker input-size-medium" name="send[keywords]"  />
+    </p> 
+  
       <p>
         <label><strong><?php echo get_text_by_lang('Keywords','admin');?></strong></label>
         <input type="text" class="form-control search-keywords input-size-medium" name="send[keywords]" placeholder="Keywords" />
@@ -221,6 +229,17 @@ function prepareShowCategories()
     dropdownParent: $("#modalSearch")
   });
 
+  $('.post-action').select2({
+    'width':'200px'
+  });
+
+  $('.datepicker').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+        });
+
+      $('.search-from-date').val(moment().add('days',-7).format('MM/DD/YYYY'));
+      $('.search-to-date').val(moment().format('MM/DD/YYYY'));
     });
 
 
@@ -324,7 +343,23 @@ $(document).on('click','.btnSearch',function(){
   pageData['content']=$('.search-keywords').val().trim();
   pageData['post_title']=$('.search-post-title').val().trim();
   pageData['tags']=$('.search-tags').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['content']=pageData['content'];
@@ -370,7 +405,23 @@ $(document).on('click','.btnPrev',function(){
   pageData['content']=$('.search-keywords').val().trim();
   pageData['post_title']=$('.search-post-title').val().trim();
   pageData['tags']=$('.search-tags').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['content']=pageData['content'];
@@ -416,7 +467,23 @@ $(document).on('click','.btnNext',function(){
   pageData['content']=$('.search-keywords').val().trim();
   pageData['post_title']=$('.search-post-title').val().trim();
   pageData['tags']=$('.search-tags').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['content']=pageData['content'];

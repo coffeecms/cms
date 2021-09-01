@@ -11,7 +11,14 @@
         </button>
       </div>
       <div class="modal-body ">
-      <p >
+      <p>
+        <label><strong><?php echo get_text_by_lang('From date','admin');?></strong></label>
+        <input type="text" class="form-control search-from-date datepicker input-size-medium" name="send[keywords]"  />
+    </p> 
+      <p>
+        <label><strong><?php echo get_text_by_lang('To date','admin');?></strong></label>
+        <input type="text" class="form-control search-to-date datepicker input-size-medium" name="send[keywords]"  />
+    </p> 
       <p>
         <label><strong><?php echo get_text_by_lang('Keywords','admin');?></strong></label>
         <input type="text" class="form-control search-keywords input-size-medium" name="send[keywords]" placeholder="Keywords" />
@@ -220,7 +227,7 @@ function prepareShowPost()
 
     li+='<tr class="tr-id-'+pageData['listPost'][i]['post_c']+'">';
     li+='<td><button type="button" class="btn btn-default btn-xs btn-checkbox" data-checked="no" data-id="'+pageData['listPost'][i]['post_c']+'"><i class="fas fa-square"></i></button></td>';
-    li+='<td><a style="color:#000;" href="'+SITE_URL+'admin/edit_post?post_c='+pageData['listPost'][i]['post_c']+'" target="_blank" title="'+pageData['listPost'][i]['title']+'">'+pageData['listPost'][i]['title']+'</td>';
+    li+='<td><a style="color:#000;" href="'+SITE_URL+'admin/edit_post?post_c='+pageData['listPost'][i]['post_c']+'" target="_blank" title="'+pageData['listPost'][i]['title']+'">'+pageData['listPost'][i]['title']+'</a></td>';
     li+='<td>'+pageData['listPost'][i]['author_username']+'</td>';
     li+='<td>'+pageData['listCatDetails'][pageData['listPost'][i]['category_c']]['title']+'</td>';
     li+='<td>'+postStatus+'</td>';
@@ -274,7 +281,13 @@ $(document).ready(function(){
   $('.post-action').select2({
     'width':'200px'
   });
+  $('.datepicker').datepicker({
+          autoclose: true,
+          format: 'mm/dd/yyyy',
+        });
 
+      $('.search-from-date').val(moment().add('days',-7).format('MM/DD/YYYY'));
+      $('.search-to-date').val(moment().format('MM/DD/YYYY'));
 });
 
 //btn-modal-search
@@ -379,7 +392,23 @@ $(document).on('click','.btnSearch',function(){
   pageData['title']=$('.search-keywords').val().trim();
   pageData['tags']=$('.search-tags').val().trim();
   pageData['username']=$('.search-author').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['post_type']=pageData['post_type'];
@@ -430,7 +459,23 @@ $(document).on('click','.btnPrev',function(){
   pageData['tags']=$('.search-tags').val().trim();
   pageData['order_by']=$('.search-order-by > option:selected').val().trim();
   pageData['order_type']=$('.search-order-type > option:selected').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['post_type']=pageData['post_type'];
@@ -481,7 +526,23 @@ $(document).on('click','.btnNext',function(){
   pageData['tags']=$('.search-tags').val().trim();
   pageData['order_by']=$('.search-order-by > option:selected').val().trim();
   pageData['order_type']=$('.search-order-type > option:selected').val().trim();
+  pageData['start_date']=$('.search-from-date').val().trim();
+  pageData['end_date']=$('.search-to-date').val().trim();
 
+  if(pageData['start_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  if(pageData['end_date'].length==0)
+  {
+    showAlert('','From date not valid!');
+    return false;
+  }
+
+  sendData['start_date']=moment(pageData['start_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
+  sendData['end_date']=moment(pageData['end_date'],'MM/DD/YYYY').format('YYYY-MM-DD');
   sendData['category_c']=pageData['category_c'];
   sendData['status']=pageData['status'];
   sendData['post_type']=pageData['post_type'];
