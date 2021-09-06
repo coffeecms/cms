@@ -1,11 +1,18 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require ROOT_PATH.'system/autoloads_class/PHPMailer/src/Exception.php';
+require ROOT_PATH.'system/autoloads_class/PHPMailer/src/PHPMailer.php';
+require ROOT_PATH.'system/autoloads_class/PHPMailer/src/SMTP.php';
 
 class EmailSystem
 {
     // Support variables: {{username}},{{fullname}},{{password}}
     public static function prepare_send_forgot_password($username,$toEmailList='')
     {
-        useClass('PHPMailer');
+        // useClass('PHPMailer');
 
         $template_id=Configs::$_['email_forgotpassword_template'];
 
@@ -44,8 +51,6 @@ class EmailSystem
             '{{verify_forgotpassword_url}}'=>SITE_URL.'api/verify_forgotpassword?verify_c='.$forgotPassword_Key,
             '{{site_title}}'=>Configs::$_['site_title'],
             '{{site_url}}'=>SITE_URL,
-            '{{site_description}}'=>Configs::$_['site_description'],
-            '{{site_keywords}}'=>Configs::$_['site_keywords'],
         );
 
         $subject=$templateData[0]['subject'];
@@ -65,13 +70,20 @@ class EmailSystem
             'to'=>$toEmailList,
         );
 
-        self::send($sendData);
+        try {
+            self::send($sendData);
+            echo '{"error":"no","data":"OK"}';
+        } catch (\Throwable $ex) {
+            echo '{"error":"yes","message":"'.$ex->getMessage().'","data":""}';
+        }
+        
+        die();
 
     }
     
     public static function prepare_send_change_password($username,$newpassword)
     {
-        useClass('PHPMailer');
+        // useClass('PHPMailer');
 
         $template_id=Configs::$_['email_change_password_template'];
 
@@ -108,8 +120,6 @@ class EmailSystem
             '{{password}}'=>$newpassword,
             '{{site_title}}'=>Configs::$_['site_title'],
             '{{site_url}}'=>SITE_URL,
-            '{{site_description}}'=>Configs::$_['site_description'],
-            '{{site_keywords}}'=>Configs::$_['site_keywords'],
         );
 
         $subject=$templateData[0]['subject'];
@@ -129,12 +139,19 @@ class EmailSystem
             'to'=>$toEmailList,
         );
 
-        self::send($sendData);
+        try {
+            self::send($sendData);
+            echo '{"error":"no","data":"OK"}';
+        } catch (\Throwable $ex) {
+            echo '{"error":"yes","message":"'.$ex->getMessage().'","data":""}';
+        }
+        
+        die();
     }
 
     public static function prepare_send_newuser($userData=[])
     {
-        useClass('PHPMailer');
+        // useClass('PHPMailer');
 
         $template_id=Configs::$_['email_new_user_template'];
 
@@ -154,8 +171,6 @@ class EmailSystem
         $replaces=array(
             '{{site_title}}'=>Configs::$_['site_title'],
             '{{site_url}}'=>SITE_URL,
-            '{{site_description}}'=>Configs::$_['site_description'],
-            '{{site_keywords}}'=>Configs::$_['site_keywords'],
             '{{username}}'=>$userData['username'],
             '{{email}}'=>$userData['email'],
             '{{fullname}}'=>$userData['fullname']
@@ -178,7 +193,14 @@ class EmailSystem
             'to'=>$toEmailList,
         );
 
-        self::send($sendData);        
+        try {
+            self::send($sendData);
+            echo '{"error":"no","data":"OK"}';
+        } catch (\Throwable $ex) {
+            echo '{"error":"yes","message":"'.$ex->getMessage().'","data":""}';
+        }
+        
+        die();      
     }
 
     public static function send($sendData=[])
@@ -241,11 +263,9 @@ class EmailSystem
             $replaces=array(
                 '{{site_title}}'=>Configs::$_['site_title'],
                 '{{site_url}}'=>SITE_URL,
-                '{{site_description}}'=>Configs::$_['site_description'],
-                '{{site_keywords}}'=>Configs::$_['site_keywords'],
-                '{{username}}'=>$userData['username'],
-                '{{email}}'=>$userData['email'],
-                '{{fullname}}'=>$userData['fullname']
+                //'{{username}}'=>$userData['username'],
+                //'{{email}}'=>$userData['email'],
+                //'{{fullname}}'=>$userData['fullname']
             );
 
             $sendData['subject']=str_replace(array_keys($replaces),array_values($replaces),$sendData['subject']);
