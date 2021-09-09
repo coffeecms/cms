@@ -547,6 +547,14 @@ function isLogined()
 
     $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';    
 
+    if(isset(Configs::$_['user_data']['user_id']) && Configs::$_['user_data']['user_id']=='GUEST')
+    {
+        if(file_exists($savePath))
+        {
+            unlink($savePath);
+        }
+    }
+    
     if(file_exists($savePath))
     {
         $result=true;
