@@ -14,7 +14,15 @@ if(!file_exists('db.sql'))
   die('db.sql not found!');
 }
 
+// print_r($_SERVER);
+// die();
+
 $db=new Database();
+
+$site_scheme=($_SERVER['REQUEST_SCHEME']=='http')?'http':$_SERVER['REQUEST_SCHEME'];
+$site_url=$site_scheme.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$site_url=str_replace("install.php","",$site_url);
+$site_dir=str_replace($site_scheme.'://'.$_SERVER['HTTP_HOST'],"",$site_url);
 
 $db->db[$db->dbGroup]['DBPrefix']='';
 
@@ -41,6 +49,36 @@ if(isset($add['dbhost']))
     if(isset($add['password'][1]) && $add['password']==$add['repassword'])
     {
         $step=3;
+
+        $dbFileContent=file_get_contents('system/configs.php');
+
+        $replaces=array(
+          '/define\(\'SITE_URL.*?\;/i'=> "define('SITE_URL','".$site_url."');",
+        );
+
+        $dbFileContent=preg_replace(array_keys($replaces), array_values($replaces), $dbFileContent);
+
+        create_file('system/configs.php',$dbFileContent);
+
+        $dbFileContent=file_get_contents('.htaccess');
+
+        if(isset($site_dir[0]) && $site_dir[0]=='/')
+        {
+          $replaces=array(
+            '/RewriteRule.*?$/i'=> "RewriteRule ^(.*)$ ".substr($site_dir,1,strlen($site_dir)-1)."index.php?u=$1 [L]",
+          );
+  
+        }
+        else
+        {
+          $replaces=array(
+            '/RewriteRule.*?$/i'=> "RewriteRule ^(.*)$ index.php?u=$1 [L]",
+          );
+        }
+
+        $dbFileContent=preg_replace(array_keys($replaces), array_values($replaces), $dbFileContent);
+
+        create_file('.htaccess',$dbFileContent);
 
         $dbFileContent=file_get_contents('system/Database.php');
 
@@ -99,34 +137,34 @@ if(isset($add['dbhost']))
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="public/admin_theme/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="public/admin_theme/dist/css/icons/bootstrap-icons.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/toastr/toastr.min.css">
+  <link rel="stylesheet" href="public/admin_theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="public/admin_theme/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="public/admin_theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="public/toastr/toastr.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/dropzone570/dropzone.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>/public/admin_theme/dist/css/custom.css">
+  <link rel="stylesheet" href="public/admin_theme/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="public/dropzone570/dropzone.css">
+  <link rel="stylesheet" href="public/admin_theme/dist/css/custom.css">
 
   <!-- jQuery -->
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/jquery/jquery.min.js"></script>
-<script src="<?php echo base_url();?>/public/js/system.js?v=<?php echo date('Hms');?>"></script>
+<script src="public/admin_theme/plugins/jquery/jquery.min.js"></script>
+<script src="public/js/system.js?v=<?php echo date('Hms');?>"></script>
 <!-- Bootstrap -->
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="public/admin_theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="public/admin_theme/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?php echo base_url();?>/public/admin_theme/dist/js/adminlte.js"></script>
-<script src="<?php echo base_url();?>/public/dropzone570/dropzone.js"></script>
+<script src="public/admin_theme/dist/js/adminlte.js"></script>
+<script src="public/dropzone570/dropzone.js"></script>
 
 <!-- ChartJS -->
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/moment/moment.min.js"></script>
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/chart.js/Chart.min.js"></script>
-<script src="<?php echo base_url();?>/public/admin_theme/plugins/select2/js/select2.full.min.js"></script>
-<script src="<?php echo base_url();?>/public/toastr/toastr.min.js"></script>
+<script src="public/admin_theme/plugins/moment/moment.min.js"></script>
+<script src="public/admin_theme/plugins/chart.js/Chart.min.js"></script>
+<script src="public/admin_theme/plugins/select2/js/select2.full.min.js"></script>
+<script src="public/toastr/toastr.min.js"></script>
 <style>
 
 </style>
@@ -183,12 +221,12 @@ var API_URL='<?php echo SITE_URL;?>api/';
 <form action="" method="post">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Install CoffeeCMS <?php echo Configs::$_['version'];?></a>
+    <a href="#"><b>Install CoffeeCMS <?php echo Configs::$_['version'];?></a>
   </div>
 
   <div class="card card-step1 <?php if((int)$step!=1){echo 'hide';};?> ">
     <div class="card-body register-card-body">
-      <p class="login-box-msg">Step 1</p>
+      <p class="login-box-msg">Step 1 - Database information</p>
       <?php echo $alert;?>
       
         <div class="input-group mb-3">
@@ -236,7 +274,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
   
           <!-- /.col -->
           <div class="col-12">
-            <button type="button" class="btn btn-primary btnStep1 btn-block"><i class='fas fa-coffee'></i> Next step</button>
+            <button type="button" class="btn btn-primary btnStep1 btn-block"><i class='fas fa-paper-plane'></i> Next step</button>
           </div>
           <!-- /.col -->
         </div>
@@ -247,7 +285,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
 
   <div class="card card-step2 <?php if((int)$step!=2){echo 'hide';};?>">
     <div class="card-body register-card-body">
-      <p class="login-box-msg">Step 2</p>
+      <p class="login-box-msg">Step 2 - Website information</p>
 
         <div class="input-group mb-3">
           <input type="text" class="form-control add-title" name="add[title]" value="Coffee Site" placeholder="Site title">
@@ -257,6 +295,15 @@ var API_URL='<?php echo SITE_URL;?>api/';
             </div>
           </div>
         </div>        
+        <div class="input-group mb-3">
+          <input type="text" class="form-control add-title" name="add[url]" value="<?php echo $site_url;?>" placeholder="Site url">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-file"></span>
+            </div>
+          </div>
+        </div>        
+       
         <div class="input-group mb-3">
           <input type="text" class="form-control add-fullname" name="add[fullname]" placeholder="Full name">
           <div class="input-group-append">
@@ -306,7 +353,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
             <button type="button" class="btn btn-primary btn-back-step1 btn-block"><i class='fas fa-backward'></i> Back</button>
           </div>
           <div class="col-6">
-            <button type="submit" class="btn btn-primary btnStep2 btn-block"><i class='fas fa-coffee'></i> Apply</button>
+            <button type="submit" class="btn btn-primary btnStep2 btn-block"><i class='fas fa-paper-plane'></i> Apply</button>
           </div>
           <!-- /.col -->
         </div>
@@ -344,7 +391,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
             <button type="button" class="btn btn-primary btn-back-step2 btn-block"><i class='fas fa-backward'></i> Back</button>
           </div> -->
           <div class="col-12">
-            <a href="admin/login" class="btn btn-primary btnStep3 btn-block"><i class='fas fa-coffee'></i> Login to admin</a>
+            <a href="admin/login" class="btn btn-primary btnStep3 btn-block"><i class='fas fa-paper-plane'></i> Login to admin</a>
           </div>
           <!-- /.col -->
         </div>
