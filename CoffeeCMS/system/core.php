@@ -1626,7 +1626,6 @@ function isValidAccessAPI()
                 throw new \Exception('Error 02: Data not valid!');
             }
 
-
             if(isset($username[2]))
             {
                 $db=new Database(); 
