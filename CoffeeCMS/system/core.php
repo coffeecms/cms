@@ -405,6 +405,7 @@ function parse_shortcode_data($scName='',$inputData='')
 
             $attr=trim($listAttr[$i]);
 
+       
             if(isset($attr[1]))
             {
                 if($attr[0]=='=')
@@ -964,6 +965,8 @@ function loadSystemSetting()
 
             $contents.="Configs::\$_['".$result[$i]['key_c']."']='".$result[$i]['key_value']."';";
         }
+
+        // print_r($contents);die();
 
         create_file($savePath,"<?php ".$contents);
     }
