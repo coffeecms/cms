@@ -1617,13 +1617,29 @@ function isValidAccessAPI()
         }
         if((int)$type==2)
         {
-        // $username=isset(Configs::$_['cf_u'])?Configs::$_['cf_u']:'';
+        $username=isset(getPost('username',''))?getPost('username',''):'';
         // $password=isset(Configs::$_['password'])?Configs::$_['password']:'';
 
-            if(!isset($username[2]) && !isset($password[2]))
+
+            if(!isset($username[2]))
             {
                 throw new \Exception('Error 02: Data not valid!');
             }
+
+
+            if(isset($username[2]))
+            {
+                $db=new Database(); 
+
+                $loadData=$db->query("select user_id from user_mst where (username='".$username."' OR email='".$username."') AND group_c IN (select group_c from group_permission_data where permission_c='remote01')");
+
+                if(count($loadData)==0)
+                {
+                    throw new \Exception('Error 03: Not have permission!');
+                }
+            }
+
+
         }
 
     }
