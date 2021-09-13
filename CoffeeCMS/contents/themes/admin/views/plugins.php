@@ -111,6 +111,11 @@ function prepareShowData()
 
       if(typeof pageData['listInstalledByKey'][pageData['theList'][i]['dir']]!='undefined')
       {
+        if(pageData['theList'][i]['setting_file']=='yes')
+        {
+          li+='<a href="'+SITE_URL+'admin/plugin_page_url?plugin='+pageData['theList'][i]['dir']+'&page=setting" class="pointer " style="color:blue;font-size: 10pt;margin-right:10px;" data-dir="'+pageData['theList'][i]['dir']+'">Setting</a>';
+        }
+
         li+='<span class="pointer change-status-plugin deactivate-plugin" style="color:red;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Deactivate</span>';
 
       }
@@ -124,6 +129,8 @@ function prepareShowData()
         {
           li+='<span class="pointer change-status-plugin activate-plugin" style="color:blue;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Activate</span>';
         }
+
+        li+='<span class="pointer change-status-plugin deactivate-plugin" style="margin-left:10px;color:red;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Force Deactivate</span>';
         
       }
 

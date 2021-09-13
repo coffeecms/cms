@@ -307,6 +307,7 @@ $(document).on("click", ".btn-select-media", function () {
   $(this).removeClass('btn-default').removeClass('btn-success').addClass('btn-success').html('<i class="fas fa-check"></i>');
 
   masterDB['media_list'].push($(this).attr('data-url'));
+  masterDB['media_upload_status']=2;
 
   
 });

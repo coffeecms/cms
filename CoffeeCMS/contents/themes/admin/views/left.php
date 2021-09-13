@@ -75,6 +75,9 @@ load_menu_data();
             <?php } ?>
           <?php } ?>
         <?php } ?>
+        <!-- <li class="nav-header">Website:<br> <a href="http://coffeecms.net/">CoffeeCMS.Net</a></li>
+        <li class="nav-header">Contact email:<br> CoffeeCMSTeam@gmail.com</li>
+         -->
         <?php coffee_content_hook('admin_panel_bottom_menu_left');?>
         </ul>
       </nav>

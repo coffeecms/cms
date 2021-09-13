@@ -23,7 +23,7 @@
           </div>
           <!-- /.col -->
           <div class="col-6">
-            <button type="submit" class="btn btn-primary btnSubmit btn-block"><i class='fas fa-coffee'></i> Send email</button>
+            <button type="submit" class="btn btn-primary btnSubmit btn-block"><i class='fas fa-paper-plane'></i> Send email</button>
           </div>
           <!-- /.col -->
         </div>
@@ -62,17 +62,22 @@ function KeyCheck(e) {
       var sendData={};
 
       sendData['username']=$('.txtUsername').val().trim();
-      sendData['password']=$('.txtPassword').val().trim();
 
-      postData(API_URL+'user_login', sendData).then(data => {
+      if(sendData['username'].length < 3)
+      {
+        $('.txtalert').html('Check your username again,pls!').addClass('text-danger');
+        return false;
+      }
+
+      postData(API_URL+'request_forgot_password', sendData).then(data => {
         // console.log(data); // JSON data parsed by `data.json()` call
         if(data['error']=='yes')
         {
-          $('.txtalert').html('Check your username/password again,pls!').addClass('text-danger');
+          $('.txtalert').html('Check your username again,pls!').addClass('text-danger');
         }
         else
         {
-          location.href=SITE_URL+'admin';
+          $('.txtalert').html('Check your email then click to verify url').addClass('text-success');
         }
       }); 
        
@@ -84,17 +89,22 @@ $(document).on('click','.btnLogin',function(){
   var sendData={};
 
   sendData['username']=$('.txtUsername').val().trim();
-  sendData['password']=$('.txtPassword').val().trim();
 
-  postData(API_URL+'user_login', sendData).then(data => {
+  if(sendData['username'].length < 3)
+  {
+    $('.txtalert').html('Check your username again,pls!').addClass('text-danger');
+    return false;
+  }
+  
+  postData(API_URL+'request_forgot_password', sendData).then(data => {
     // console.log(data); // JSON data parsed by `data.json()` call
     if(data['error']=='yes')
     {
-      $('.txtalert').html('Check your username/password again,pls!').addClass('text-danger');
+      $('.txtalert').html('Check your username again,pls!').addClass('text-danger');
     }
     else
     {
-      location.href=SITE_URL+'admin';
+      $('.txtalert').html('Check your email then click to verify url').addClass('text-success');
     }
   }); 
 

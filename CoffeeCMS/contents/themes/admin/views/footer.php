@@ -3,9 +3,9 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong>Powered by CoffeeCMS</strong>
+    <a href="https://github.com/coffeecms/cms" target="_blank"><span>Powered by CoffeeCMS</span></a>
     <div class="float-right d-none d-sm-inline-block">
-  <b>Version <?php echo Configs::$_['version'];?></b>
+  <span>Version <?php echo Configs::$_['version'];?></span>
     </div>
   </footer>
 </div>
