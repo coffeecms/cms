@@ -1617,7 +1617,8 @@ function isValidAccessAPI()
         }
         if((int)$type==2)
         {
-        $username=isset(getPost('username',''))?getPost('username',''):'';
+
+            $username=getPost('username','');
         // $password=isset(Configs::$_['password'])?Configs::$_['password']:'';
 
 
