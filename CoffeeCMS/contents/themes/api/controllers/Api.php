@@ -1207,6 +1207,8 @@ class Api
     //$type=2 Insert bằng username và mật khẩu
     //$type=3 Insert bằng api_key
 
+    
+
     public static function insert_new_post()
     {
         //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
@@ -2568,6 +2570,28 @@ public static function project_action_apply()
 
     echo responseData('OK');
 }
+ public static function request_forgot_password()
+ {
+        //Kiểm tra Cookie, nếu ko đăng nhập thì trả về false
+
+    useClass('EmailSystem');
+
+    if(Configs::$_['register_user_status']=='no')
+    {
+        echo responseData('ERROR','yes');       
+    }
+
+    $user_id=newID(Configs::$_['system_user_id_len']);
+
+    $username=addslashes(getPost('username'));
+
+    $db=new Database(); 
+    $loadData=$db->query("select user_id,username,group_c,level_c from user_mst where (username='".$username."' OR email='".$username."')");   
+
+    EmailSystem::prepare_send_forgot_password($username,$loadData[0]['email']);
+
+    echo responseData('OK');
+}
 
 public static function get_list_user()
 {
@@ -2688,7 +2712,8 @@ public static function user_action_apply()
     if($action=='delete')
     {
         $queryStr="delete from user_mst where user_id IN (".$reformat_post_c.")";
-    }        
+    }  
+          
     $db=new Database(); 
     $db->nonquery($queryStr);
 
