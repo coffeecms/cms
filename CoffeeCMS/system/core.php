@@ -555,16 +555,28 @@ function isLogined()
             unlink($savePath);
         }
     }
+
+
     
     if(file_exists($savePath))
     {
         $result=true;
         require_once($savePath);
 
-        $_COOKIE['cf_u']=Configs::$_['cf_u'];
-        $_COOKIE['cf_p']=Configs::$_['cf_p'];
+        $last3Day=strtotime('-7 day', time());
 
-        user_load_data_when_logined();
+        if(!isset(Configs::$_['cf_dt']) || (float)Configs::$_['cf_dt'] < (float)$last3Day)
+        {
+            unlink($savePath);
+            $result=false;
+        }
+        else
+        {
+            $_COOKIE['cf_u']=Configs::$_['cf_u'];
+            $_COOKIE['cf_p']=Configs::$_['cf_p'];
+
+            user_load_data_when_logined();            
+        }
     }
 
     return $result;
@@ -603,6 +615,7 @@ function createLoginSession($user,$pass)
     $content='';
     $content.="Configs::\$_['cf_u']='".$user."';";
     $content.="Configs::\$_['cf_p']='".$pass."';";
+    $content.="Configs::\$_['cf_dt']=".time().";";
 
     create_file($savePath,"<?php ".$content);
 }
