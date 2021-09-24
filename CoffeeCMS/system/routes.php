@@ -16,7 +16,7 @@ class Routes
             return false;
         }
 
-        if(Configs::$_['uri'][0]=='/' || Configs::$_['uri'][0]=='\/')
+        if(isset(Configs::$_['uri'][0]) && (Configs::$_['uri'][0]=='/' || Configs::$_['uri'][0]=='\/'))
         {
         	Configs::$_['uri']=substr(Configs::$_['uri'],1,strlen(Configs::$_['uri'])-1);
         }     
