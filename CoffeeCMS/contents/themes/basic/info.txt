@@ -1,0 +1,5 @@
+Basic Theme
+Basic theme for blog
+1.0
+https://github.com
+CoffeeCMS Team

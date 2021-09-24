@@ -1,0 +1,219 @@
+.btn-none
+{
+    background-color: #cbcbcb;border: 1px;
+}
+.btn-checked
+{
+    background-color: #198754;border: 1px;
+}
+
+.hide
+{
+    display: none;
+}
+
+img
+{
+    width: 100%;
+}
+
+a
+{
+    color: #000;
+    text-decoration: none;
+}
+h6
+{
+    font-size: 14px;
+}
+
+.block
+{
+    display: block;
+}
+
+.margin-top-10
+{
+    margin-top: 10px;
+}
+
+.margin-top-20
+{
+    margin-top: 10px;
+}
+
+.margin-top-30
+{
+    margin-top: 10px;
+}
+
+.margin-top-50
+{
+    margin-top: 10px;
+}
+
+.margin-top-70
+{
+    margin-top: 10px;
+}
+
+.margin-top-100
+{
+    margin-top: 10px;
+}
+
+.margin-bottom-10
+{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-20
+{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-30
+{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-50
+{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-70
+{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-100
+{
+    margin-bottom: 10px;
+}
+
+.margin-left-10
+{
+    margin-left: 10px;
+}
+
+.margin-left-20
+{
+    margin-left: 10px;
+}
+
+.margin-left-30
+{
+    margin-left: 10px;
+}
+
+.margin-left-50
+{
+    margin-left: 10px;
+}
+
+.margin-left-70
+{
+    margin-left: 10px;
+}
+
+.margin-left-100
+{
+    margin-left: 10px;
+}
+
+.margin-right-10
+{
+    margin-right: 10px;
+}
+
+.margin-right-20
+{
+    margin-right: 10px;
+}
+
+.margin-right-30
+{
+    margin-right: 10px;
+}
+
+.margin-right-50
+{
+    margin-right: 10px;
+}
+
+.margin-right-70
+{
+    margin-right: 10px;
+}
+
+.margin-right-100
+{
+    margin-right: 10px;
+}
+
+.navbar-bg
+{
+    background-color: #579DDF;
+   
+}
+
+.navbar-bg .navbar-nav .nav-link
+{
+    color: #fff;
+}
+
+body
+{
+    background-color: #c0c0c0;
+}
+
+.pull-right
+{
+    float: right;
+}
+
+.pull-left
+{
+    float: left;
+}
+
+.ul-nostyle
+{
+    list-style: none;
+}
+
+.ul-nostyle.no-padding
+{
+    padding: 0px;
+}
+
+.ul-nostyle.break-point > li
+{
+    border-bottom: 1px solid #cbcbcb;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.btn-none
+{
+    background-color: #cbcbcb;
+}
+
+.text-black
+{
+    color: #000;
+}
+
+.bg-black
+{
+    background-color: #000;
+    color: #fff;
+}
+
+.card-header
+{
+    border-bottom: 0px;
+    background-color: #dfdfdf;
+
+}
