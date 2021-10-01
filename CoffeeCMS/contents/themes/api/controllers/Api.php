@@ -5051,6 +5051,11 @@ public static function upload_media()
 
         $result='ERROR';
 
+        if(file_exists(THEMES_PATH.$themeName.'/core.php'))
+        {
+            require_once(THEMES_PATH.$themeName.'/core.php');
+        }
+
         if(file_exists($postBackPath))
         {
             require_once($postBackPath);
@@ -5071,6 +5076,12 @@ public static function upload_media()
         $postBackPath=PLUGINS_PATH.$pluginName.'/api.php';
 
         $result='ERROR';
+
+        if(file_exists(PLUGINS_PATH.$pluginName.'/core.php'))
+        {
+            require_once(PLUGINS_PATH.$pluginName.'/core.php');
+
+        }
 
         if(file_exists($postBackPath))
         {
