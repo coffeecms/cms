@@ -3,6 +3,7 @@ var masterDB={
   'plugin_shortcode':[],
   'media_list':[],
   'media_selected_callback':'',
+  'media_upload_status':0,
   'media_path':'',
   'last_dir':'',
 };
@@ -36,6 +37,19 @@ return Math.min.apply(null, this);
 };
 
 
+function bytesToSize(bytes) {
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return '0 Byte';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+
+function getFileName(pathNM)
+{
+  pathNM=pathNM.split('\\').pop().split('/').pop();
+
+  return pathNM;
+}
 function genNumber(total)
 {
   var text='12345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678956789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789';
@@ -144,7 +158,8 @@ function showAlert(title,message)
 
   $('.btnCloseAlert').removeClass('btn-success').removeClass('btn-danger').addClass('btn-danger');
   
-  $('#modalAlert').modal({backdrop:'static',keyboard:false});
+  // $('#modalAlert').modal({backdrop:'static',keyboard:false});
+  $('#modalAlert').modal('show');
 
 //  setTimeout(function(){ $('#modalAlert').modal('hide'); },2000);
 }
@@ -161,7 +176,8 @@ function showAlertOK(title,message)
 
   $('.btnCloseAlert').removeClass('btn-success').removeClass('btn-danger').addClass('btn-success');
   
-  $('#modalAlert').modal({backdrop:'static',keyboard:false});
+  // $('#modalAlert').modal({backdrop:'static',keyboard:false});
+  $('#modalAlert').modal('show');
 
 //  setTimeout(function(){ $('#modalAlert').modal('hide'); },2000);
 }
@@ -184,7 +200,8 @@ setInterval(function(){
 
   if(masterDB['is_ready']=='no')
   {
-    $('#modalLoading').modal({backdrop:'static',keyboard:false});
+    // $('#modalLoading').modal({backdrop:'static',keyboard:false});
+    $('#modalLoading').modal('show');
   }
   if(masterDB['is_ready']=='yes')
   {
@@ -192,6 +209,8 @@ setInterval(function(){
   }
 
 },200);
+
+const isValidIp = value => (/^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$/.test(value) ? true : false);
 
 function genSendVar(inputList) {
 
@@ -315,7 +334,7 @@ function get_list_media(callback)
 
       url=SITE_URL+'public/uploads/medias/'+data['data'][i];
 
-      fileHash=base64_encode('public/uploads/medias/'+data['data'][i]);
+      fileHash=base64_encode('public/uploads/medias/'+masterDB['media_path']+data['data'][i]);
 
       if(data['data'][i].length < 2)
       {
@@ -386,11 +405,13 @@ $(document).on('click','.btn-delete-media',function(){
 
   sendData['hash']=theHash;
   sendData['type']='1';
+  sendData['path']=masterDB['media_path'];
 
   masterDB['delete_hash']=md5(theHash);
 
   postData(API_URL+'delete_media', sendData).then(data => {
       $('.'+masterDB['delete_hash']).remove();
+      get_list_media(function(){});
   });  
 });
 
@@ -400,8 +421,8 @@ setInterval(function(){
   selectedMediaEvent(masterDB['media_list'],function(){
     console.log('Media selected...');
 
-    var total=masterDB['media_list'].length;
-    masterDB['media_selected_callback'](masterDB['media_list'][total-1]);
+    // var total=masterDB['media_list'].length;
+    // masterDB['media_selected_callback'](masterDB['media_list'][total-1]);
   });
 }, 100);
 
@@ -492,6 +513,82 @@ function strip_utf8(alias) {
   return str;
 }
 
+
+
+
+function prepareMediaUpload()
+{
+  // var fileUpload = $(".fileMedias").get(0);  
+  var fileUpload = '';  
+  var total=$(".fileMedias").length;
+
+  for (let i = 0; i < total; i++) {
+    if($(".fileMedias").get(i).files.length > 0)
+    {
+      fileUpload=$(".fileMedias").get(i);
+      break;
+    }
+    
+  }
+  
+  var files = fileUpload.files;  
+      
+  // Create FormData object  
+  var fileData = new FormData();  
+
+  // Looping over all files and add it to FormData object  
+  for (var i = 0; i < files.length; i++) {  
+    // console.log(files[i]);
+      fileData.append('medias[]', files[i]);  
+  }  
+
+  fileData.append('type', 1); 
+  fileData.append('path', masterDB['media_path']); 
+
+  masterDB['media_upload_status']=0;
+
+  // console.log(fileData);
+
+  $.ajax({  
+    url: SITE_URL+'api/upload_media',  
+    // url: site_url+'api.aspx/uploadFileAnh',  
+    type: "POST",  
+    contentType: false, // Not to set any content header  
+    processData: false, // Not to process data  
+    data: fileData,  cache:false,
+    success: function (result) {  
+        hideLoading();
+
+        // console.log(JSON.parse(result));
+        masterDB['media_upload_status']=1;
+
+        var dataJSON=JSON.parse(result);
+
+        var total=dataJSON.length;
+
+        for (var i = 0; i < total; i++) {
+          masterDB['media_list'].push(dataJSON[i]);
+        }
+
+
+        get_list_media(function(){
+
+          masterDB['media_upload_status']=2;
+        });
+
+        // console.log(result);
+
+    },  
+    error: function (err) {  
+        hideLoading();
+        // showAlert('',err.statusText);
+        
+        // alert(err.statusText);  
+    }  
+  });    
+  // return response.json();  
+}
+
 $(document).ready(function() {
 
   $('.system_count_char').each(function(index, el) {
@@ -508,3 +605,32 @@ $(document).ready(function() {
 
 });
     
+$(document).on("change", ".fileMedias", function () {
+  prepareMediaUpload();
+
+});
+
+
+// $(document).on("click", ".btn-select-media", function () {
+//   var isFile=$(this).attr('data-is-file');
+
+//   masterDB['media_upload_status']=0;
+
+//   if(isFile=='file')
+//   {
+//     var theUrl=$(this).attr('data-url');
+
+//     if(theUrl.length > 10)
+//     {
+//       console.log(theUrl);
+//       masterDB['media_upload_status']=2;
+
+//       masterDB['media_list']=[];
+
+//       masterDB['media_list'].push(theUrl);
+
+//       // masterDB['media_upload_status']=0;
+//     }
+//   }
+
+// });
