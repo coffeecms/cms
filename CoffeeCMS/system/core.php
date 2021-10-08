@@ -1,5 +1,12 @@
 <?php
 
+function current_url()
+{
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+    return $actual_link;
+}
+
 function get_text_by_lang($inputStr='',$method='frontend')
 {
     $langDir='en';
