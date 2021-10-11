@@ -15,8 +15,6 @@ define('CONTENTS_URL', SITE_URL . 'contents/');
 define('THEMES_URL', CONTENTS_URL . 'themes/');
 define('PLUGINS_URL', CONTENTS_URL . 'plugins/');
 
-define('API_URL', 'https://demoapi.dalivn.com/');
-
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', FALSE);
 header('Pragma: no-cache');
