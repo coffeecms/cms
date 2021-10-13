@@ -4795,6 +4795,9 @@ public static function upload_media()
         $db=new Database(); 
         $theme_name=getPost('theme_name','');
 
+        $parse=parse_url(SITE_URL);
+        setcookie('cf_theme', '', time()- 360000,'/', $parse['host']);
+
         $queryStr="";
         $queryStr.="delete from theme_mst;";
         $queryStr.="delete from theme_hook_data;";
