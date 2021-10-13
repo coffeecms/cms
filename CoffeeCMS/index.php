@@ -4,6 +4,7 @@ ob_start();
 // error_reporting(-1);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+
 error_reporting(E_ALL);
 
 // echo date('Y-m-',strtotime("-3 months",time()))."01";die();
@@ -18,7 +19,6 @@ Configs::$_['visitor_data']['user_agent']=isset($_SERVER['HTTP_USER_AGENT'])?$_S
 Configs::$_['visitor_data']['session_id']=md5($_SERVER['REMOTE_ADDR'].Configs::$_['visitor_data']['user_agent']);
 
 load_hook('before_load_system');
-
 
 loadSystemSetting();
 
@@ -41,8 +41,6 @@ if(isset(Configs::$_['default_adminpage_url'][2]) && (Configs::$_['uri']=='admin
 }
 
 Routes::get('^admin/(:word)','admin/Admin@$1');
-
-
 
 Routes::get('^admin','admin/Admin@index');
 

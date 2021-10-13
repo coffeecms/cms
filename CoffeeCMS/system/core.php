@@ -1,5 +1,23 @@
 <?php
 
+// Set cookie if visitor select theme
+$vars=parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+
+parse_str($vars, $output);
+
+$custom_theme=isset($output['theme'])?$output['theme']:'';
+
+if(isset($custom_theme[2]))
+{
+  // print_r(THEMES_PATH.$custom_theme);die();
+    if(is_dir(THEMES_PATH.$custom_theme))
+    {  
+        $parse=parse_url(SITE_URL);
+        setcookie('cf_theme', $custom_theme, time()+ 360000,'/', $parse['host']);
+        redirect_to(SITE_URL);
+    }
+}
+
 function current_url()
 {
     $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -992,6 +1010,11 @@ function loadSystemSetting()
     }
 
     require_once($savePath);
+
+    if(isset($_COOKIE['cf_theme']) && isset($_COOKIE['cf_theme'][2]))
+    {
+        Configs::$_['default_theme']=$_COOKIE['cf_theme'];
+    }
 
     load_hook('after_load_system_setting');
 
