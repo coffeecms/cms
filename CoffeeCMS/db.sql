@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 01, 2021 at 07:25 AM
+-- Generation Time: Oct 14, 2021 at 01:09 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -447,7 +447,6 @@ INSERT INTO `group_permission_data` (`group_c`, `permission_c`, `user_id`, `ent_
 ('11016011', 'post11', '11015035', '2021-09-01 13:56:09'),
 ('11016011', 'per1101105', '11015035', '2021-09-01 13:56:09'),
 ('11016011', 'post06', '11015035', '2021-09-01 13:56:09'),
-('11016011', 'remote01', '11015035', '2021-09-01 13:56:09'),
 ('11016011', 'post01', '11015035', '2021-09-01 13:56:09'),
 ('11016011', 'menu05', '11015035', '2021-09-01 13:56:09'),
 ('11016011', 'menu09', '11015035', '2021-09-01 13:56:09'),
@@ -844,7 +843,6 @@ INSERT INTO `permissions_mst` (`permission_c`, `title`, `status`, `user_id`, `en
 ('per1101102', 'Can view all task ?', 1, '', '2021-03-28 10:05:49'),
 ('per1101103', 'Can delete all task ?', 1, '', '2021-03-28 10:05:49'),
 ('per1101105', 'Can add new task ?', 1, '', '2021-03-28 10:05:49'),
-('remote01', 'Can use remote api', 1, '', '2021-03-28 10:04:52'),
 ('post01', 'Can change post status ?', 1, '', '2021-03-28 10:04:52'),
 ('post02', 'Can delete post ?', 1, '', '2021-03-28 10:05:03'),
 ('post04', 'Can view post ?', 1, '', '2021-03-28 10:05:49'),
@@ -1076,7 +1074,7 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('default_member_groupid', 'Default Member Group', '11016013', 1),
 ('default_member_levelid', 'Default Member Level', '11017013', 1),
 ('default_page', 'Default Page', '', 1),
-('default_theme', 'Default Theme', 'bb_simple', 1),
+('default_theme', 'Default Theme', 'bb_taurus', 1),
 ('email_change_password_template', 'Change password template', '143664', 1),
 ('email_forgotpassword_template', 'Email forgot password template', '137454', 1),
 ('email_new_user_template', 'Email new user template', '124231', 1),
@@ -1115,7 +1113,8 @@ INSERT INTO `setting_data` (`key_c`, `title`, `key_value`, `status`) VALUES
 ('tablet_website_url', 'Website url for tablet device', '', 1),
 ('theme_layout', 'Theme layout', 'default', 1),
 ('timezone', 'Timezone', 'America/Los_Angeles', 1),
-('website_view_cache', 'Website View Cache', 'no', 1);
+('website_view_cache', 'Website View Cache', 'no', 1),
+('site_keywords', 'site_keywords', 'Test', 1);
 
 -- --------------------------------------------------------
 
@@ -1184,7 +1183,7 @@ CREATE TABLE `theme_mst` (
 --
 
 INSERT INTO `theme_mst` (`theme_dir`, `status`, `user_id`, `ent_dt`, `upd_dt`) VALUES
-('bb_simple', 1, '11015035', '2021-08-27 14:55:33', '2021-08-27 14:55:33');
+('bb_taurus', 1, '11015035', '2021-10-13 08:23:40', '2021-10-13 08:23:40');
 
 -- --------------------------------------------------------
 
@@ -1410,43 +1409,6 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016013', 'admin', '11015424'),
 ('11016013', 'admin', '11011016'),
 ('11016013', 'admin', '11017121'),
-('11016011', 'admin', '11011011'),
-('11016011', 'admin', '11011012'),
-('11016011', 'admin', '11015014'),
-('11016011', 'admin', '11015011'),
-('11016011', 'admin', '11015022'),
-('11016011', 'admin', '11015018'),
-('11016011', 'admin', '11011013'),
-('11016011', 'admin', '11015016'),
-('11016011', 'admin', '11015013'),
-('11016011', 'admin', '11011014'),
-('11016011', 'admin', '11015024'),
-('11016011', 'admin', '11015424'),
-('11016011', 'admin', '11011015'),
-('11016011', 'admin', '11015017'),
-('11016011', 'admin', '11015020'),
-('11016011', 'admin', '11016117'),
-('11016011', 'admin', '11011016'),
-('11016011', 'admin', '11015015'),
-('11016011', 'admin', '11015026'),
-('11016011', 'admin', '11015025'),
-('11016011', 'admin', '11015019'),
-('11016011', 'admin', '11011017'),
-('11016011', 'admin', '11015023'),
-('11016011', 'admin', '11015123'),
-('11016011', 'admin', '11011018'),
-('11016011', 'admin', '11015012'),
-('11016011', 'admin', '11015021'),
-('11016011', 'admin', '11017021'),
-('11016011', 'admin', '11017121'),
-('11016011', 'admin', '11015027'),
-('11016011', 'admin', '11015034'),
-('11016011', 'admin', '11015030'),
-('11016011', 'admin', '11015035'),
-('11016011', 'admin', '11015028'),
-('11016011', 'admin', '11015029'),
-('11016011', 'admin', '11015031'),
-('11016011', 'admin', '11015032'),
 ('11016012', 'admin', '11011011'),
 ('11016012', 'admin', '11011012'),
 ('11016012', 'admin', '11015014'),
@@ -1480,7 +1442,44 @@ INSERT INTO `user_permission_menu_data` (`group_c`, `menu_type`, `menu_id`) VALU
 ('11016012', 'admin', '11015028'),
 ('11016012', 'admin', '11015029'),
 ('11016012', 'admin', '11015031'),
-('11016012', 'admin', '11015032');
+('11016012', 'admin', '11015032'),
+('11016011', 'admin', '11011011'),
+('11016011', 'admin', '11011012'),
+('11016011', 'admin', '11011013'),
+('11016011', 'admin', '11011014'),
+('11016011', 'admin', '11011015'),
+('11016011', 'admin', '11011016'),
+('11016011', 'admin', '11011017'),
+('11016011', 'admin', '11011018'),
+('11016011', 'admin', '11015011'),
+('11016011', 'admin', '11015012'),
+('11016011', 'admin', '11015013'),
+('11016011', 'admin', '11015014'),
+('11016011', 'admin', '11015015'),
+('11016011', 'admin', '11015016'),
+('11016011', 'admin', '11015017'),
+('11016011', 'admin', '11015018'),
+('11016011', 'admin', '11015019'),
+('11016011', 'admin', '11015020'),
+('11016011', 'admin', '11015021'),
+('11016011', 'admin', '11015022'),
+('11016011', 'admin', '11015023'),
+('11016011', 'admin', '11015024'),
+('11016011', 'admin', '11015025'),
+('11016011', 'admin', '11015026'),
+('11016011', 'admin', '11015027'),
+('11016011', 'admin', '11015028'),
+('11016011', 'admin', '11015029'),
+('11016011', 'admin', '11015030'),
+('11016011', 'admin', '11015031'),
+('11016011', 'admin', '11015032'),
+('11016011', 'admin', '11015034'),
+('11016011', 'admin', '11015035'),
+('11016011', 'admin', '11015123'),
+('11016011', 'admin', '11015424'),
+('11016011', 'admin', '11016117'),
+('11016011', 'admin', '11017021'),
+('11016011', 'admin', '11017121');
 
 -- --------------------------------------------------------
 
@@ -1938,413 +1937,6 @@ ALTER TABLE `post_view_data`
   ADD KEY `ix3` (`user_agent`),
   ADD KEY `ix4` (`ip_add`),
   ADD KEY `ix5` (`ent_dt`);
-
---
--- Indexes for table `ppv_fb_survey_data`
---
-ALTER TABLE `ppv_fb_survey_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`);
-
---
--- Indexes for table `ppv_payment_data`
---
-ALTER TABLE `ppv_payment_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `receiver_user_id` (`receiver_user_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `ent_dt` (`ent_dt`),
-  ADD KEY `status` (`status`),
-  ADD KEY `is_verify` (`is_verify`);
-
---
--- Indexes for table `ppv_payment_method`
---
-ALTER TABLE `ppv_payment_method`
-  ADD KEY `payment_method` (`payment_method`),
-  ADD KEY `status` (`status`);
-
---
--- Indexes for table `ppv_post_views_summaries_daily_data`
---
-ALTER TABLE `ppv_post_views_summaries_daily_data`
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `view_dt` (`view_dt`),
-  ADD KEY `country_code` (`country_code`),
-  ADD KEY `author_id` (`author_id`),
-  ADD KEY `author_username` (`author_username`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- Indexes for table `ppv_ref_link_data`
---
-ALTER TABLE `ppv_ref_link_data`
-  ADD PRIMARY KEY (`link_id`),
-  ADD KEY `link_id` (`link_id`),
-  ADD KEY `link_c` (`link_c`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `ent_dt` (`ent_dt`);
-
---
--- Indexes for table `ppv_survey_answer_data`
---
-ALTER TABLE `ppv_survey_answer_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `exam_id` (`exam_id`),
-  ADD KEY `question_id` (`question_id`);
-
---
--- Indexes for table `ppv_survey_question_data`
---
-ALTER TABLE `ppv_survey_question_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`),
-  ADD KEY `exam_id` (`exam_id`),
-  ADD KEY `ent_dt` (`ent_dt`);
-
---
--- Indexes for table `ppv_task_data`
---
-ALTER TABLE `ppv_task_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`);
-
---
--- Indexes for table `ppv_task_result_data`
---
-ALTER TABLE `ppv_task_result_data`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ppv_user_data`
---
-ALTER TABLE `ppv_user_data`
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `ppv_user_earning_data`
---
-ALTER TABLE `ppv_user_earning_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `publisher_user_id` (`publisher_user_id`),
-  ADD KEY `action_type` (`action_type`),
-  ADD KEY `id` (`id`);
-
---
--- Indexes for table `ppv_user_earn_estimate_daily_data`
---
-ALTER TABLE `ppv_user_earn_estimate_daily_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `publisher_user_id` (`publisher_user_id`),
-  ADD KEY `work_dt` (`work_dt`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `ppv_user_ref_friend_summaries_data`
---
-ALTER TABLE `ppv_user_ref_friend_summaries_data`
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `work_dt` (`work_dt`);
-
---
--- Indexes for table `ppv_user_views_summaries_daily_data`
---
-ALTER TABLE `ppv_user_views_summaries_daily_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `view_dt` (`view_dt`),
-  ADD KEY `country_code` (`country_code`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `id` (`id`);
-
---
--- Indexes for table `ppv_visitor_answer_data`
---
-ALTER TABLE `ppv_visitor_answer_data`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `session_id` (`session_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `answer_id` (`answer_id`);
-
---
--- Indexes for table `ppv_visitor_views_data`
---
-ALTER TABLE `ppv_visitor_views_data`
-  ADD KEY `session_id` (`session_id`),
-  ADD KEY `username` (`username`),
-  ADD KEY `ip_address` (`ip_address`),
-  ADD KEY `country_name` (`country_name`),
-  ADD KEY `referrer_site` (`referrer_site`),
-  ADD KEY `refer_user_id` (`refer_user_id`);
-
---
--- Indexes for table `setting_data`
---
-ALTER TABLE `setting_data`
-  ADD PRIMARY KEY (`key_c`),
-  ADD KEY `ix1` (`key_c`),
-  ADD KEY `ix2` (`title`);
-
---
--- Indexes for table `shortcode_data`
---
-ALTER TABLE `shortcode_data`
-  ADD KEY `ix1` (`name`),
-  ADD KEY `ix2` (`type`),
-  ADD KEY `ix3` (`dirname`);
-
---
--- Indexes for table `short_url_data`
---
-ALTER TABLE `short_url_data`
-  ADD PRIMARY KEY (`code`),
-  ADD KEY `code` (`code`),
-  ADD KEY `status` (`status`),
-  ADD KEY `ent_dt` (`ent_dt`);
-
---
--- Indexes for table `theme_hook_data`
---
-ALTER TABLE `theme_hook_data`
-  ADD KEY `ix1` (`theme_dir`),
-  ADD KEY `ix2` (`hook_key`),
-  ADD KEY `ix3` (`status`);
-
---
--- Indexes for table `theme_mst`
---
-ALTER TABLE `theme_mst`
-  ADD PRIMARY KEY (`theme_dir`),
-  ADD KEY `ix1` (`theme_dir`),
-  ADD KEY `ix2` (`status`);
-
---
--- Indexes for table `user_api_key_data`
---
-ALTER TABLE `user_api_key_data`
-  ADD PRIMARY KEY (`api_key`),
-  ADD KEY `ix1` (`user_id`),
-  ADD KEY `ix2` (`status`),
-  ADD KEY `ix3` (`start_date`),
-  ADD KEY `ix4` (`end_date`),
-  ADD KEY `ix5` (`ent_dt`),
-  ADD KEY `ix6` (`upd_dt`),
-  ADD KEY `ix7` (`insert_id`),
-  ADD KEY `api_key` (`api_key`);
-
---
--- Indexes for table `user_api_key_permission_data`
---
-ALTER TABLE `user_api_key_permission_data`
-  ADD KEY `ix1` (`api_key`),
-  ADD KEY `ix2` (`permission_c`),
-  ADD KEY `ix3` (`insert_id`);
-
---
--- Indexes for table `user_api_key_permission_mst`
---
-ALTER TABLE `user_api_key_permission_mst`
-  ADD PRIMARY KEY (`permission_c`),
-  ADD KEY `ix1` (`permission_nm`),
-  ADD KEY `ix2` (`insert_id`),
-  ADD KEY `ix4` (`ent_dt`),
-  ADD KEY `permission_c` (`permission_c`);
-
---
--- Indexes for table `user_group_mst`
---
-ALTER TABLE `user_group_mst`
-  ADD PRIMARY KEY (`group_c`),
-  ADD KEY `group_c` (`group_c`),
-  ADD KEY `title` (`title`),
-  ADD KEY `status` (`status`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `user_info_data`
---
-ALTER TABLE `user_info_data`
-  ADD PRIMARY KEY (`user_c`),
-  ADD KEY `user_c` (`user_c`),
-  ADD KEY `country` (`country`),
-  ADD KEY `city` (`city`),
-  ADD KEY `zip_code` (`zip_code`),
-  ADD KEY `town` (`town`),
-  ADD KEY `phone_1` (`phone_1`),
-  ADD KEY `phone_1_2` (`phone_1`),
-  ADD KEY `gender` (`gender`),
-  ADD KEY `passport` (`passport`),
-  ADD KEY `business_type` (`business_type`),
-  ADD KEY `is_verify_id_card` (`is_verify_id_card`);
-
---
--- Indexes for table `user_level_mst`
---
-ALTER TABLE `user_level_mst`
-  ADD PRIMARY KEY (`level_id`),
-  ADD KEY `title` (`title`),
-  ADD KEY `status` (`status`),
-  ADD KEY `level_id` (`level_id`),
-  ADD KEY `ent_dt` (`ent_dt`),
-  ADD KEY `upd_dt` (`upd_dt`);
-
---
--- Indexes for table `user_mst`
---
-ALTER TABLE `user_mst`
-  ADD PRIMARY KEY (`user_id`),
-  ADD KEY `ix1` (`user_id`),
-  ADD KEY `ix2` (`username`),
-  ADD KEY `ix3` (`email`),
-  ADD KEY `ix4` (`group_c`),
-  ADD KEY `ix5` (`ent_dt`),
-  ADD KEY `status` (`status`),
-  ADD KEY `verify_c` (`verify_c`),
-  ADD KEY `upd_dt` (`upd_dt`),
-  ADD KEY `password` (`password`),
-  ADD KEY `level_c` (`level_c`),
-  ADD KEY `last_logined` (`last_logined`),
-  ADD KEY `fullname` (`fullname`);
-
---
--- Indexes for table `user_online_data`
---
-ALTER TABLE `user_online_data`
-  ADD KEY `ix1` (`ent_dt`),
-  ADD KEY `ix2` (`username`),
-  ADD KEY `ix3` (`user_id`);
-
---
--- Indexes for table `user_permission_menu_data`
---
-ALTER TABLE `user_permission_menu_data`
-  ADD KEY `group_c` (`group_c`),
-  ADD KEY `menu_type` (`menu_type`),
-  ADD KEY `menu_id` (`menu_id`);
-
---
--- Indexes for table `user_prefix_data`
---
-ALTER TABLE `user_prefix_data`
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `prefix` (`prefix`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `cronjob_data`
---
-ALTER TABLE `cronjob_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cronjob_log_data`
---
-ALTER TABLE `cronjob_log_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `emailmarketing_email_data`
---
-ALTER TABLE `emailmarketing_email_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `emailmarketing_sent_data`
---
-ALTER TABLE `emailmarketing_sent_data`
-  MODIFY `send_id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `emailmarketing_unsubscrible_data`
---
-ALTER TABLE `emailmarketing_unsubscrible_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `email_sent_data`
---
-ALTER TABLE `email_sent_data`
-  MODIFY `send_id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `kanban_board_comment_data`
---
-ALTER TABLE `kanban_board_comment_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `newsletter_data`
---
-ALTER TABLE `newsletter_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_fb_survey_data`
---
-ALTER TABLE `ppv_fb_survey_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_payment_data`
---
-ALTER TABLE `ppv_payment_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_ref_link_data`
---
-ALTER TABLE `ppv_ref_link_data`
-  MODIFY `link_id` bigint(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_survey_answer_data`
---
-ALTER TABLE `ppv_survey_answer_data`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_survey_question_data`
---
-ALTER TABLE `ppv_survey_question_data`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_task_data`
---
-ALTER TABLE `ppv_task_data`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_task_result_data`
---
-ALTER TABLE `ppv_task_result_data`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_user_earning_data`
---
-ALTER TABLE `ppv_user_earning_data`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_user_earn_estimate_daily_data`
---
-ALTER TABLE `ppv_user_earn_estimate_daily_data`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_user_views_summaries_daily_data`
---
-ALTER TABLE `ppv_user_views_summaries_daily_data`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ppv_visitor_answer_data`
---
-ALTER TABLE `ppv_visitor_answer_data`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
