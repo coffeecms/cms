@@ -5,7 +5,7 @@ $vars=parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
 parse_str($vars, $output);
 
-$custom_theme=isset($output['theme'])?$output['theme']:'';
+$custom_theme=isset($output['select_theme'])?$output['select_theme']:'';
 
 if(isset($custom_theme[2]))
 {
