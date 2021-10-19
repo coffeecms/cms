@@ -113,10 +113,10 @@ function prepareShowData()
       {
         if(pageData['theList'][i]['setting_file']=='yes')
         {
-          li+='<a href="'+SITE_URL+'admin/plugin_page_url?plugin='+pageData['theList'][i]['dir']+'&page=setting" class="pointer " style="color:blue;font-size: 10pt;margin-right:10px;" data-dir="'+pageData['theList'][i]['dir']+'">Setting</a>';
+          li+='<a title="Setting" href="'+SITE_URL+'admin/plugin_page_url?plugin='+pageData['theList'][i]['dir']+'&page=setting" class="pointer " style="color:blue;font-size: 10pt;margin-right:10px;" data-dir="'+pageData['theList'][i]['dir']+'">Setting</a>';
         }
 
-        li+='<span class="pointer change-status-plugin deactivate-plugin" style="color:red;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Deactivate</span>';
+        li+='<span title="Deactivate" class="pointer change-status-plugin deactivate-plugin" style="color:red;font-size: 10pt;" data-dir="'+pageData['theList'][i]['dir']+'">Deactivate</span>';
 
       }
       else

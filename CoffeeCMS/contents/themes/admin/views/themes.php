@@ -74,7 +74,7 @@ function prepareShowData()
 //.toLowerCase();
       pageData['theList'][i]['dir']=pageData['theList'][i]['dir'].toLowerCase();
 
-      li+='<div class="col-lg-3">';
+      li+='<div class="col-lg-3 col-md-4 col-sm-6 col-6 ">';
         li+='<div class="card" style="width: 18rem;">';
 
         li+='<img src="'+SITE_URL+pageData['theList'][i]['thumbnail']+'" class="card-img-top theme-thumbnail" alt="'+pageData['theList'][i]['title']+'">';
@@ -86,24 +86,31 @@ function prepareShowData()
 
         if(typeof pageData['listInstalledByKey'][pageData['theList'][i]['dir']]!='undefined' || pageData['default_theme']==pageData['theList'][i]['dir'])
         {
-          li+='<button class="btn btn-danger btnUninstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-trash-alt"></i> Uninstall</button>';
+
+          li+='<button class="btn btn-danger btnUninstall" title="Uninstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-trash-alt"></i></button>';
+
+          if(pageData['theList'][i]['setting_file']=='yes')
+          {
+
+            li+='<a  href="'+SITE_URL+'admin/theme_page_url?theme='+pageData['theList'][i]['dir']+'&page=setting" class="btn btn-info " title="Setting" style="margin-left:10px;" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-cogs"></i></a>';
+          }
         }
         else
         {
           if(pageData['theList'][i]['install_file']=='yes')
           {
-            li+='<a  href="'+SITE_URL+'admin/theme_page_url?theme='+pageData['theList'][i]['dir']+'&page=install" class="btn btn-primary " data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</a>';
+            li+='<a  href="'+SITE_URL+'admin/theme_page_url?theme='+pageData['theList'][i]['dir']+'&page=install" class="btn btn-primary " title="Install" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</a>';
           }
           else
           {
-            li+='<button type="button" class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</button>';
+            li+='<button type="button" title="Install" class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i></button>';
           }          
 
           // li+='<button class="btn btn-primary btnInstall" data-dir="'+pageData['theList'][i]['dir']+'"><i class="fas fa-plus-square"></i> Install</button>';
         }        
 
-        li+='<a  href="'+pageData['theList'][i]['url']+'" target="_blank" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-link"></i></a>';
-        li+='<a  href="'+SITE_URL+'admin/theme_edit/'+pageData['theList'][i]['dir']+'" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-edit"></i></a>';
+        li+='<a title="Go to author website" href="'+pageData['theList'][i]['url']+'" target="_blank" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-link"></i></a>';
+        li+='<a title="Edit" href="'+SITE_URL+'admin/theme_edit/'+pageData['theList'][i]['dir']+'" class="btn btn-info" style="margin-left:10px;"><i class="fas fa-edit"></i></a>';
         li+='</div>';
         li+='</div>';
       li+='</div>';
