@@ -47,6 +47,12 @@ Routes::get('^admin','admin/Admin@index');
 // Configs::$_['uri']=$_SERVER['REQUEST_URI'];
 Configs::$_['uri']=str_replace('/'.Configs::$_['dirname'].'/', '', $_SERVER['REQUEST_URI']);
 
+
+if(isset(Configs::$_['default_page'][2]) && !isset(Configs::$_['uri'][2]))
+{
+	Configs::$_['uri']=Configs::$_['default_page'];
+}
+
 if(is_dir(THEMES_PATH.Configs::$_['default_theme']))
 {
 	load_hook('before_view_frontend');

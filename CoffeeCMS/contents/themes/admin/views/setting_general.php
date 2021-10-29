@@ -332,7 +332,7 @@
 						<span><?php echo get_text_by_lang('Default page','admin');?>:</span>
 					</p>
 
-					<p class="default_page" style="display:block;">
+					<p class="" style="display:block;">
 						<input type="text" class="form-control default_adminpage_url  setting-page3" name="general[default_page_url]" id="default_page_url" value="" placeholder="post/test_post.html" />
 					</p>
 
@@ -346,12 +346,12 @@
 							<span><?php echo get_text_by_lang('Default page','admin');?>:</span>
 						</p>
 
-						<p class="default_page" style="display:block;">
-							<input type="text" class="form-control default_page setting-page4" name="general[default_page_url]" id="default_page_url" value="" placeholder="post/test_post.html" />
+						<p class="" style="display:block;">
+							<input type="text" class="form-control default_page setting-page4" name="general[default_page]" id="default_page" value="" placeholder="post/test_post.html" />
 						</p>
 
 						<p>
-						<button type="button" name="btnSave" class="btn btn-info btnSavePage4"><?php echo get_text_by_lang('Save Changes','admin');?></button>
+						<button type="button" name="btnSave" class="btn btn-info btnSavePage40"><?php echo get_text_by_lang('Save Changes','admin');?></button>
 						</p>
                   </div>
                   <!-- /.tab-pane -->
@@ -761,7 +761,6 @@ $(document).on('click','.btnSavePage4',function(){
     var sendData={};
 
 	var jsonData={};
-    jsonData['default_page']=$('.default_page').val();
     jsonData['email_smtp']=$('.email_smtp > option:selected').val();
     jsonData['smtp_host']=$('.smtp_host').val();
     jsonData['smtp_username']=$('.smtp_username').val();
@@ -769,6 +768,22 @@ $(document).on('click','.btnSavePage4',function(){
     jsonData['smtp_port']=$('.smtp_port').val();
     jsonData['email_sender_name']=$('.email_sender_name').val();
     jsonData['email_sender']=$('.email_sender').val();
+    
+    sendData['type']='1';
+    sendData['save_data']=JSON.stringify(jsonData);
+
+    postData(API_URL+'system_setting_update', sendData).then(data => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      
+      showAlertOK('','Done!');
+    });        
+});
+
+$(document).on('click','.btnSavePage40',function(){
+    var sendData={};
+
+	var jsonData={};
+    jsonData['default_page']=$('.default_page').val();
     
     sendData['type']='1';
     sendData['save_data']=JSON.stringify(jsonData);
