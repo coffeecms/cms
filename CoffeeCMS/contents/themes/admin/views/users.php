@@ -582,7 +582,7 @@ $(document).on('click','.btnEdit',function(){
     return;
   }
 
-  if(sendData['password'].length==0)
+  if(sendData['password'].length==0 && sendData['newpassword'].length>0)
   {
     showAlert('','Set a password!');
 
@@ -610,6 +610,8 @@ $(document).on('click','.btnEdit',function(){
       $('#modalEdit').modal('hide');
 
       showAlertOK('','Done!');
+
+      $('.btnSearch').trigger('click');
     }
 
   });  

@@ -57,6 +57,11 @@ class ThemeFuncs
 			{
 				$result[$themeNo]['install_file']="yes";
 			}
+			
+			if(file_exists($result[$themeNo]['path'].'/admin/setting.php'))
+			{
+				$result[$themeNo]['setting_file']="yes";
+			}
 
 			$themeNo+=1;
     	}
