@@ -2467,13 +2467,23 @@ public static function project_action_apply()
             echo responseData('ERROR 02','yes');return false;
         }  
 
+        $db=new Database(); 
+
+        $canUpdate=compareGroupPriorityByUserId(Configs::$_['user_data']['user_id'],$user_c);
+
+        if($canUpdate==false)
+        {
+            echo responseData('You not have permission to do this action','yes');return false;
+        }
+
+
         if(isset($newpassword[1]) && $newpassword==$newrepassword)
         {
             $insertData['update']['password']=md5(addslashes(getPost('newpassword','')));
         }
 
         $queryStr=arrayToUpdateStr('user_mst',$insertData);
-        $db=new Database(); 
+        
         $db->nonquery($queryStr);   
 
         load_hook('after_update_user',$updateData);
@@ -2699,7 +2709,21 @@ public static function user_action_apply()
 
     $total=count($split_post_c);
 
+    $canUpdate=false;
+    
     for ($i=0; $i < $total; $i++) { 
+        if(strlen($split_post_c[$i]) < 2)
+        {
+            continue;
+        }
+
+        $canUpdate=compareGroupPriorityByUserId(Configs::$_['user_data']['user_id'],$split_post_c[$i]);
+
+        if($canUpdate==false)
+        {
+            continue;
+        }
+
         $reformat_post_c.="'".$split_post_c[$i]."',";
     }
 
@@ -3399,11 +3423,13 @@ public static function add_new_groupuser()
     $menu_list=getPost('menu_list','');
     $left_str=getPost('left_str','');
     $right_str=getPost('right_str','');
+    $priority=getPost('priority','0');
 
     $insertData=array(
         'group_c'=>$group_c,
         'left_str'=>$left_str,
         'right_str'=>$right_str,
+        'priority'=>$priority,
         'title'=>addslashes(getPost('title')),
         'status'=>'1',
         'user_id'=>$username
@@ -3502,11 +3528,13 @@ public static function edit_groupuser()
 
     $left_str=getPost('left_str','');
     $right_str=getPost('right_str','');
+    $priority=getPost('priority','0');
 
     $insertData=array(
         'update'=>array(
             'left_str'=>$left_str,
             'right_str'=>$right_str,
+            'priority'=>$priority,
             'title'=>addslashes(getPost('title','')),
             'user_id'=>$username
         ),

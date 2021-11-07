@@ -38,6 +38,11 @@
           
           </select>
       </p> 
+
+      <p>
+        <label><strong><?php echo get_text_by_lang('Priority','admin');?></strong></label>
+        <input type="text" class="form-control add-priority input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Priority','admin');?>" value="0" />
+      </p>       
     
       </div>
       <div class="modal-footer">
@@ -90,6 +95,12 @@
           </select>
       </p> 
 
+      <p>
+        <label><strong><?php echo get_text_by_lang('Priority','admin');?></strong></label>
+        <input type="text" class="form-control edit-priority input-size-medium" name="send[keywords]" placeholder="<?php echo get_text_by_lang('Priority','admin');?>" value="0" />
+      </p>       
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-info btnSaveGroup" ><i class="fas fa-save"></i> <?php echo get_text_by_lang('Save changes','admin');?></button>
@@ -129,6 +140,7 @@
                   <th><button type="button" class="btn btn-default btn-xs btn-checkall" data-checked="no"><i class="fas fa-square"></i></button></th>
                     <th><?php echo get_text_by_lang('Code','admin');?></th>
                     <th><?php echo get_text_by_lang('Title','admin');?></th>
+                    <th class="text-right"><?php echo get_text_by_lang('Priority','admin');?></th>
                     <th class="text-right"><?php echo get_text_by_lang('Total Permissions','admin');?></th>
                     <th class="text-right"><?php echo get_text_by_lang('Total Users','admin');?></th>
                     <th class='text-right'><?php echo get_text_by_lang('Actions','admin');?></th>
@@ -229,6 +241,7 @@ function prepareShowData()
     li+='<td><button type="button" class="btn btn-default btn-xs btn-checkbox" data-checked="no" data-id="'+pageData['theList'][i]['group_c']+'"><i class="fas fa-square"></i></button></td>';
     li+='<td>'+pageData['theList'][i]['group_c']+'</td>';
     li+='<td>'+pageData['theList'][i]['title']+'</td>';
+    li+='<td class="text-right">'+pageData['theList'][i]['priority']+'</td>';
     li+='<td class="text-right">'+pageData['theList'][i]['Total']+'</td>';
     li+='<td class="text-right">'+pageData['theList'][i]['Total_Users']+'</td>';
     li+='<td class="text-right">';
@@ -345,6 +358,7 @@ $(document).on('click','.edit-group',function(){
         $('.edit-title').val(pageData['theList'][i]['title']);
         $('.edit-leftstr').val(pageData['theList'][i]['left_str']);
         $('.edit-rightstr').val(pageData['theList'][i]['right_str']);
+        $('.edit-priority').val(pageData['theList'][i]['priority']);
 
         for (var j = 0; j < totalGPer; j++) {
             if(pageData['listGroupPermissions'][j]['group_c']==id)
@@ -461,6 +475,7 @@ $(document).on('click','.btnAddGroup',function(){
   sendData['type']='1';
  
   sendData['title']=$('.add-title').val().trim();
+  sendData['priority']=$('.add-priority').val().trim();
 
   pageData['add_per']='';
   pageData['add_menu']='';
@@ -511,6 +526,7 @@ $(document).on('click','.btnSaveGroup',function(){
 
   pageData['left_str']=$('.edit-leftstr').val().trim();
   pageData['right_str']=$('.edit-rightstr').val().trim();
+  pageData['priority']=$('.edit-priority').val().trim();
 
 
   $('.edit-permissions > option:selected').each(function(){
@@ -525,6 +541,7 @@ $(document).on('click','.btnSaveGroup',function(){
   sendData['menu_list']=pageData['edit_menu'];
   sendData['left_str']=pageData['left_str'];
   sendData['right_str']=pageData['right_str'];
+  sendData['priority']=pageData['priority'];
 
         
   if(sendData['title'].length==0)
