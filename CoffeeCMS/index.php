@@ -25,7 +25,7 @@ loadSystemSetting();
 date_default_timezone_set(Configs::$_['timezone']);
 
 Configs::$_['dirname']=basename(dirname(__FILE__));
-Configs::$_['uri']=str_replace('/'.Configs::$_['dirname'].'/', '', $_SERVER['REQUEST_URI']);
+Configs::$_['uri']=str_replace(SITE_URL, '', current_url());
 
 Routes::get('api/(:word)/(:word)','api/Api/$1@$2');
 Routes::get('api/(:word)','api/Api/$1');
@@ -43,6 +43,7 @@ if(isset(Configs::$_['default_adminpage_url'][2]) && (Configs::$_['uri']=='admin
 Routes::get('^admin/(:word)','admin/Admin@$1');
 
 Routes::get('^admin','admin/Admin@index');
+
 
 // Configs::$_['uri']=$_SERVER['REQUEST_URI'];
 Configs::$_['uri']=str_replace('/'.Configs::$_['dirname'].'/', '', $_SERVER['REQUEST_URI']);

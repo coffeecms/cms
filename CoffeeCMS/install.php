@@ -1,7 +1,10 @@
 <?php
 ob_start();
 //session_start();
-error_reporting(0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+error_reporting(E_ALL);
 
 require_once('system/configs.php');
 require_once('system/Database.php');
@@ -26,12 +29,12 @@ $site_dir=str_replace($site_scheme.'://'.$_SERVER['HTTP_HOST'],"",$site_url);
 
 $db->db[$db->dbGroup]['DBPrefix']='';
 
-$conn = new mysqli($db->db[$db->dbGroup]['hostname'], $db->db[$db->dbGroup]['username'], $db->db[$db->dbGroup]['password'], $db->db[$db->dbGroup]['database'], $db->db[$db->dbGroup]['port']);
+// $conn = new mysqli($db->db[$db->dbGroup]['hostname'], $db->db[$db->dbGroup]['username'], $db->db[$db->dbGroup]['password'], $db->db[$db->dbGroup]['database'], $db->db[$db->dbGroup]['port']);
 
-if(!$conn->connect_error)
-{
-    // die("Your site working!");
-}
+// if(!$conn->connect_error)
+// {
+//     // die("Your site working!");
+// }
 
 $add=isset($_POST['add'])?$_POST['add']:'';
 
@@ -110,9 +113,27 @@ if(isset($add['dbhost']))
         $db->db[$db->dbGroup]['database']=$add['dbname'];
         $db->db[$db->dbGroup]['DBPrefix']=$add['dbprefix'];
 
+        $conn = new mysqli($db->db[$db->dbGroup]['hostname'], $db->db[$db->dbGroup]['username'], $db->db[$db->dbGroup]['password'], $db->db[$db->dbGroup]['database'], $db->db[$db->dbGroup]['port']);
+
+        if(!$conn->connect_error || $conn->connect_error==null)
+        {
+            $db->nonquery($dbContent);
+            $db->db[$db->dbGroup]['DBPrefix']='';    
+  
+            sleep(10);
+  
+            if(file_exists('sub_install.php'))
+            {
+              header("Location: " . $site_url.'sub_install.php');die();
+            }               
+        }
+        else
+        {
+          $step=2;
+          $alert='<p><span class="text-danger">Can not connect to your database!</span></p>';   
+        }
         // die($dbContent);
-        $db->nonquery($dbContent);
-        $db->db[$db->dbGroup]['DBPrefix']='';
+
 
     }
     else
@@ -140,13 +161,8 @@ if(isset($add['dbhost']))
   <link rel="stylesheet" href="public/admin_theme/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="public/admin_theme/dist/css/icons/bootstrap-icons.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="public/admin_theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <link rel="stylesheet" href="public/admin_theme/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="public/admin_theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <link rel="stylesheet" href="public/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="public/admin_theme/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="public/dropzone570/dropzone.css">
   <link rel="stylesheet" href="public/admin_theme/dist/css/custom.css">
 
   <!-- jQuery -->
@@ -158,13 +174,9 @@ if(isset($add['dbhost']))
 <script src="public/admin_theme/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="public/admin_theme/dist/js/adminlte.js"></script>
-<script src="public/dropzone570/dropzone.js"></script>
 
 <!-- ChartJS -->
 <script src="public/admin_theme/plugins/moment/moment.min.js"></script>
-<script src="public/admin_theme/plugins/chart.js/Chart.min.js"></script>
-<script src="public/admin_theme/plugins/select2/js/select2.full.min.js"></script>
-<script src="public/toastr/toastr.min.js"></script>
 <style>
 
 </style>
@@ -286,7 +298,7 @@ var API_URL='<?php echo SITE_URL;?>api/';
   <div class="card card-step2 <?php if((int)$step!=2){echo 'hide';};?>">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Step 2 - Website information</p>
-
+      <?php echo $alert;?>
         <div class="input-group mb-3">
           <input type="text" class="form-control add-title" name="add[title]" value="Coffee Site" placeholder="Site title">
           <div class="input-group-append">
@@ -366,6 +378,8 @@ var API_URL='<?php echo SITE_URL;?>api/';
     <div class="card-body register-card-body">
       <p class="login-box-msg">Done!</p>
 
+
+
         <div class="input-group mb-3">
           <input type="text" class="form-control done-title" value="<?php echo $add['username'];?>" placeholder="Username">
           <div class="input-group-append">
@@ -406,7 +420,13 @@ var API_URL='<?php echo SITE_URL;?>api/';
 </div>
 <!-- /.register-box -->
 </form>
-
+<?php if((int)$step==3){
+  echo '<script>setIsLoading();
+setTimeout(() => {
+    hideLoading();
+}, 15000);</script>';
+}
+;?>
 <script>
   $(document).on('click','.btn-back-step1',function(){
       $('.card-step2').removeClass('hide').addClass('hide');
@@ -423,12 +443,15 @@ var API_URL='<?php echo SITE_URL;?>api/';
   $(document).on('click','.btnStep1',function(){
       $('.card-step1').addClass('hide');
       $('.card-step2').removeClass('hide');
+
+
         
     });
   $(document).on('click','.btnStep2',function(){
       $('.card-step2').addClass('hide');
       $('.card-step3').removeClass('hide');
-        
+      
+
     });
     
   $(document).on('click','.btnStep3',function(){
