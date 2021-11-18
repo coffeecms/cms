@@ -2,6 +2,7 @@
 
 class CoffeeMinifier
 {
+	public static $isDelete=false;
 	public static function load($listFiles=[],$ouputName='')
 	{
         $result='';
@@ -47,8 +48,23 @@ class CoffeeMinifier
 				
 			}
 
+			if(self::$isDelete==false)
+			{
+				$listOldFiles=glob(PUBLIC_PATH.'caches/minifier_*');
+
+				$total=count($listOldFiles);
+
+				for ($i=0; $i < $total; $i++) { 
+					unlink($listOldFiles[$i]);
+				}
+
+				self::$isDelete=true;				
+			}
+
+
 			create_file($oldFile,'');
 			create_file(ROOT_PATH.'public/caches/minifier_'.$ouputName,$content);
+
 		}
 
 		return $result;
