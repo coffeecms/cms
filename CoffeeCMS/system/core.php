@@ -121,6 +121,7 @@ function load_hook($hook_zone,$inputData='',$contentData=[])
             if(function_exists($funcNM))
             {
                 $result=$funcNM($result,$contentData);
+                // print_r($result);
             }
         }
     }
@@ -255,6 +256,41 @@ function add_hook($hook_zone,$func_name)
     array_push(Configs::$_['hooks'][$hook_zone],$func_name);
 }
 
+function fetch_file($fileUrl,$savePath='',$fileOutputName='')
+{
+  $output_filename = newID().'_'.basename($fileUrl);
+
+  if(isset($fileOutputName[2]))
+  {
+    $output_filename=$fileOutputName;
+  }
+
+  if(!isset($savePath[3]))
+  {
+    $savePath=PUBLIC_PATH.'uploads/images/'.$output_filename;
+  }
+
+  try {
+          $host = $fileUrl;
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $host);
+          curl_setopt($ch, CURLOPT_VERBOSE, 1);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+          curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+          curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+          curl_setopt($ch, CURLOPT_HEADER, 0);
+          $result = curl_exec($ch);
+          curl_close($ch);
+
+          $fp = fopen($savePath, 'w');
+          fwrite($fp, $result);
+          fclose($fp);      
+      } catch (Exception $e) {
+          throw new Exception($e->getMessage(), 1);
+      }
+
+  return $savePath;
+}
 function download($filePath = '', $fileName = null)
 {
     if (file_exists($filePath)) {
@@ -366,49 +402,8 @@ function parse_shortcode_data($scName='',$inputData='')
 {
     $result=array();
     // Check if it is openclose
-    if(!preg_match_all('/(\['.$scName.'(.*?)\](.*?)\[\/'.$scName.'\])/is', $inputData,$match))
+    if(preg_match_all('/(\['.$scName.'\s+(.*?)\](.*?)\[\/'.$scName.'\])/is', $inputData,$match))
     {
-        // Alone parse process
-        if(preg_match_all('/(\['.$scName.'(.*?)\])/i', $inputData,$match))
-        {
-            $listReal=$match[1];
-
-            $listAttr=$match[2];	
-            
-            $total=count($listReal);
-
-            for ($i=0; $i < $total; $i++) { 
-
-                $result[$i]['source']=$listReal[$i];
-
-                $result[$i]['attr']=array();
-
-                $attr=$listAttr[$i];
-
-                if(isset($attr[1]))
-                {
-                    // die($attr);
-                    if(preg_match_all('/(\w+)\=(\'|\")(.*?)(\'|\")/i', $attr, $matchAttrs))
-                    {
-
-                        $totalAttr=count($matchAttrs[1]);
-
-                        for ($j=0; $j < $totalAttr; $j++) { 
-                            $theKey=$matchAttrs[1][$j];
-
-                            $result[$i]['attr'][$theKey]=$matchAttrs[3][$j];
-                        }
-                    }
-                }
-
-            }							
-        }
-       
-    }	
-    else
-    {
-        // Openclose parse process
-
 
         $listReal=$match[1];
 
@@ -452,8 +447,78 @@ function parse_shortcode_data($scName='',$inputData='')
                 }
             }
 
-        }
+        } 
+       
+    }	    
+    elseif(preg_match_all('/(\['.$scName.'\](.*?)\[\/'.$scName.'\])/is', $inputData,$match))
+    {
 
+        $listReal=$match[1];
+
+
+        $listVal=$match[2];
+
+        $total=count($listReal);
+
+        // print_r($match[2]);
+
+        for ($i=0; $i < $total; $i++) { 
+
+            $result[$i]['source']=$listReal[$i];
+
+            $result[$i]['value']=trim($listVal[$i]);
+
+            $result[$i]['attr']=array();
+        } 
+       
+    }   
+    elseif(preg_match_all('/(\['.$scName.'\s+(.*?)\])/i', $inputData,$match))
+    {
+        $listReal=$match[1];
+
+        $listAttr=$match[2];    
+        
+        $total=count($listReal);
+
+        for ($i=0; $i < $total; $i++) { 
+
+            $result[$i]['source']=$listReal[$i];
+
+            $result[$i]['attr']=array();
+
+            $attr=$listAttr[$i];
+
+            if(isset($attr[1]))
+            {
+                // die($attr);
+                if(preg_match_all('/(\w+)\=(\'|\")(.*?)(\'|\")/i', $attr, $matchAttrs))
+                {
+
+                    $totalAttr=count($matchAttrs[1]);
+
+                    for ($j=0; $j < $totalAttr; $j++) { 
+                        $theKey=$matchAttrs[1][$j];
+
+                        $result[$i]['attr'][$theKey]=$matchAttrs[3][$j];
+                    }
+                }
+            }
+
+        }                           
+    }    
+    elseif(preg_match_all('/(\['.$scName.'\])/i', $inputData,$match))
+    {
+        $listReal=$match[1];
+
+        
+        $total=count($listReal);
+
+        for ($i=0; $i < $total; $i++) { 
+
+            $result[$i]['source']=$listReal[$i];
+
+            $result[$i]['attr']=array();
+        }                           
     }
 
     return $result;
@@ -799,6 +864,75 @@ function load_shorturl_cache($shortUrlCode='')
     }
 
     require_once($savePath);
+}
+
+function compareGroupPriorityByUserId($fromUserID,$toUserId)
+{
+
+    $db=new Database(); 
+
+    $result=false;
+
+
+    $thisUserPriorityData=$db->query("select * from user_group_mst where group_c IN (select group_c from user_mst where user_id='".$fromUserID."')");
+
+    $targetUserPriorityData=$db->query("select * from user_group_mst where group_c IN (select group_c from user_mst where user_id='".$toUserId."')");
+
+    if(count($thisUserPriorityData)>0 && count($targetUserPriorityData)>0)
+    {
+        if((int)$thisUserPriorityData[0]['priority'] <= (int)$targetUserPriorityData[0]['priority'])
+        {
+            $result=true;
+        }
+    }
+
+    return $result;
+}
+
+function compareGroupPriorityByUserName($fromUserID,$toUserName)
+{
+
+    $db=new Database(); 
+
+    $result=false;
+
+
+    $thisUserPriorityData=$db->query("select * from user_group_mst where group_c IN (select group_c from user_mst where user_id='".$fromUserID."')");
+
+    $targetUserPriorityData=$db->query("select * from user_group_mst where group_c IN (select group_c from user_mst where username='".$toUserName."')");
+
+    if(count($thisUserPriorityData)>0 && count($targetUserPriorityData)>0)
+    {
+        if((int)$thisUserPriorityData[0]['priority'] <= (int)$targetUserPriorityData[0]['priority'])
+        {
+            $result=true;
+        }
+    }
+
+    return $result;
+}
+
+function compareGroupPriorityByGroupId($fromGroupId,$toGroupId)
+{
+
+    $db=new Database(); 
+
+    $result=false;
+
+
+    $thisUserPriorityData=$db->query("select * from user_group_mst where group_c='".$fromGroupId."'");
+
+    $targetUserPriorityData=$db->query("select * from user_group_mst where group_c='".$toGroupId."'");
+
+    if(count($thisUserPriorityData)>0 && count($targetUserPriorityData)>0)
+    {
+        if((int)$thisUserPriorityData[0]['priority'] <= (int)$targetUserPriorityData[0]['priority'])
+        {
+            $result=true;
+        }
+    }
+
+    return $result;
 }
 
 function post_exists($friendlyUrl)

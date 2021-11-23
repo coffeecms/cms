@@ -32,7 +32,8 @@
                             </p>
                         <p>
                             <button type="button" class="btn btn-primary btn-select-thumbnail" ><i class='fas fa-images'></i> <?php echo get_text_by_lang('Choose a thumbnail','admin');?>...</button>
-                            <input type="hidden" class="form-control input-size-medium txtThumbnail"  />
+                            <input type="hidden" class="form-control input-size-medium addtxtThumbnail"  />
+                            <div><img src="" class='img-thumbnail addtxtThumbnailSrc' /></div>
                         </p>     
                         <p>
                             <label><strong><?php echo get_text_by_lang('Descriptions','admin');?></strong> </label>
@@ -92,6 +93,7 @@
                         <p>
                             <button type="button" class="btn btn-primary edit-btn-select-thumbnail" ><i class='fas fa-images'></i> <?php echo get_text_by_lang('Choose a thumbnail','admin');?>...</button>
                             <input type="hidden" class="form-control input-size-medium edit-txtThumbnail"  />
+                            <div><img src="" class='img-thumbnail edittxtThumbnailSrc' /></div>
                         </p>     
                         <p>
                             <label><strong><?php echo get_text_by_lang('Descriptions','admin');?></strong> </label>
@@ -144,6 +146,7 @@
                     <tr >
                                               <th><button type="button" class="btn btn-default btn-xs btn-checkall" data-checked="no"><i class="fas fa-square"></i></button></th>
                                               <th><?php echo get_text_by_lang('Title','admin');?></th>
+                                              <th class="text-right"><?php echo get_text_by_lang('Url','admin');?></th>
                                               <th style="width:110px;text-align: right;"><?php echo get_text_by_lang('Sort order','admin');?></th>
                                           </tr>
                   </thead>
@@ -198,6 +201,50 @@
   //  console.log(data['error']);
   // });
 
+  
+pageData['listImages']=[];
+pageData['is_show_list_images']=0;
+pageData['image_method']='add';
+
+setInterval(() => {
+
+if(masterDB['media_upload_status']==2)
+  {
+    masterDB['media_upload_status']=0;
+    pageData['is_show_list_images']=1;
+    pageData['listImages']=masterDB['media_list'];
+   
+    // $('.modal-backdrop').remove();
+
+      var li='';
+      var total=pageData['listImages'].length;
+
+      var textRe='';
+
+      if(pageData['image_method']=='edit')
+      {
+        $('.edit-txtThumbnail').val(pageData['listImages'][0]);
+      $('.edittxtThumbnailSrc').attr('src',pageData['listImages'][0]+'?v='+moment().format('HHmm'));
+      }
+
+      if(pageData['image_method']=='add')
+      {
+
+      $('.addtxtThumbnail').val(pageData['listImages'][0]);
+      $('.addtxtThumbnailSrc').attr('src',pageData['listImages'][0]+'?v='+moment().format('HHmm'));
+
+      }
+
+
+
+    // pageData['listImages']=[];
+
+    $('#modalMedia').modal('hide');
+
+  }
+
+}, 300);
+
 function prepareShowCategories()
 {
   var total=pageData['listCat'].length;
@@ -217,6 +264,8 @@ function prepareShowCategories()
     td+='<button type="button" class="btn btn-default btn-xs btn-checkbox" data-checked="no" data-id="'+pageData['listCat'][i]['category_c']+'"><i class="fas fa-square"></i></button>';
     td+='</td>';
     td+='<td class="td-category" data-id="'+pageData['listCat'][i]['category_c']+'">'+pageData['listCat'][i]['title'];
+    td+='</td>';
+    td+='<td class="text-right" data-id="'+pageData['listCat'][i]['category_c']+'"><a target="_blank" href="'+SITE_URL+'cat-'+pageData['listCat'][i]['friendly_url']+'_'+pageData['listCat'][i]['category_c']+'.html" class="btn btn-info btn-sm"><i class="fa fa-link"></i></a>';
     td+='</td>';
     td+='<td style="width:110px;text-align: right;">';
     td+='<button class="btn btn-info btn-sm btn-sort-up" data-id="'+pageData['listCat'][i]['category_c']+'"  type="button"><i class="fas fa-chevron-up"></i></button>&nbsp;';
@@ -251,7 +300,7 @@ masterDB['media_selected_callback']=function(theMediaUrl){
       sendData['parentid']=$('.parentid > option:selected').val().trim();
       sendData['descriptions']=$('.descriptions').val().trim();
       sendData['keywords']=$('.keywords').val().trim();
-      sendData['thumbnail']=$('.txtThumbnail').val();
+      sendData['thumbnail']=$('.addtxtThumbnail').val();
       sendData['type']='1';
 
         
@@ -262,9 +311,9 @@ masterDB['media_selected_callback']=function(theMediaUrl){
 
 
       postData(API_URL+'add_new_category', sendData).then(data => {
-        console.log(data); // JSON data parsed by `data.json()` call
+        // console.log(data); // JSON data parsed by `data.json()` call
         // console.log(data['error']);
-        $('.txtThumbnail').val('');
+        $('.addtxtThumbnail').val('');
         showAlertOK('','Add new category successfull!');
         $('#modalAddnew').modal('hide');
       });      
@@ -278,7 +327,7 @@ masterDB['media_selected_callback']=function(theMediaUrl){
       sendData['parentid']=$('.edit-parentid > option:selected').val().trim();
       sendData['descriptions']=$('.edit-descriptions').val().trim();
       sendData['keywords']=$('.edit-keywords').val().trim();
-      sendData['thumbnail']=$('.txtThumbnail').val();
+      sendData['thumbnail']=$('.edit-txtThumbnail').val();
       sendData['type']='1';
 
               
@@ -286,12 +335,11 @@ masterDB['media_selected_callback']=function(theMediaUrl){
       {
         showAlert('','Title not allow is blank');return false;
       }
-
       
       postData(API_URL+'update_category', sendData).then(data => {
-        console.log(data); // JSON data parsed by `data.json()` call
-        console.log(data['error']);
-        $('.txtThumbnail').val('');
+        // console.log(data); // JSON data parsed by `data.json()` call
+        // console.log(data['error']);
+        $('.edit-txtThumbnail').val('');
         showAlertOK('','Save changes successfull!');
         $('#modalEdit').modal('hide');
       });      
@@ -339,6 +387,9 @@ masterDB['media_selected_callback']=function(theMediaUrl){
 
       $('.edit-category_c').val(sendData['category_c']);
 
+      $('.edit-txtThumbnail').val();
+        $('.edittxtThumbnailSrc').attr('src','');      
+
       postData(API_URL+'load_category_data', sendData).then(data => {
         console.log(data); // JSON data parsed by `data.json()` call
 
@@ -348,6 +399,12 @@ masterDB['media_selected_callback']=function(theMediaUrl){
         $('.edit-descriptions').val(data['data']['descriptions']);
         $('.edit-parentid').val(data['data']['parent_category_c']).trigger('change');
         
+        if(typeof data['data']['thumbnail']!=null && data['data']['thumbnail'].length > 5)
+        {
+          $('.edit-txtThumbnail').val(data['data']['thumbnail']);
+        $('.edittxtThumbnailSrc').attr('src',SITE_URL+data['data']['thumbnail']+'?v='+moment().format('HHmm'));
+        }
+
         //modalEdit
         $('#modalEdit').modal({backdrop:'static',keyboard:false});
       });            
@@ -441,5 +498,19 @@ $(document).on('click','.btn-checkall',function(){
   }
 });
 
+$(document).on('click','.edit-btn-select-thumbnail',function(){
+  pageData['image_method']='edit';
+
+      showListMedia();  
+        
+});
+    
+$(document).on('click','.btn-select-thumbnail',function(){
+  pageData['image_method']='add';
+
+      showListMedia();  
+        
+});
+    
        
 </script>

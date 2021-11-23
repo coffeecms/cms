@@ -147,7 +147,7 @@
                 
                 </div>
                                         <p>
-                            <button type="button" class="btn btn-primary btn-addnew" <?php if(!isset(Configs::$_['user_permissions']['post05'])){ echo 'disabled';};?> ><i class='fas fa-thumbs-up'></i> <?php echo get_text_by_lang('Add new','admin');?></button>
+                            <button type="button" class="btn btn-primary btn-addnew" <?php if(!isset(Configs::$_['user_permissions']['post05'])){ echo 'disabled';};?> ><i class='fas fa-paper-plane'></i> <?php echo get_text_by_lang('Add new','admin');?></button>
                         </p>  
               </div>
             </div>            
@@ -180,12 +180,43 @@ CKEDITOR.replace( 'editor' ,{
 // CKEDITOR.instances.editor.insertHtml('<p><strong>sdfsdfsdf</strong></p>')
 // CKEDITOR.instances.editor.insertHtml('<strong>asdsadsadsd</strong>')
 
-masterDB['media_selected_callback']=function(theMediaUrl){
-    console.log('Added...'+theMediaUrl);
-    $('.txtThumbnail').val(theMediaUrl);
+// masterDB['media_selected_callback']=function(theMediaUrl){
+//     console.log('Added...'+theMediaUrl);
+//     $('.txtThumbnail').val(theMediaUrl);
 
-    $('.txtThumbnailSrc').attr('src',theMediaUrl+'?v='+moment().format('HHmm'));
-};
+//     $('.txtThumbnailSrc').attr('src',theMediaUrl+'?v='+moment().format('HHmm'));
+// };
+
+pageData['listImages']=[];
+pageData['is_show_list_images']=0;
+
+setInterval(() => {
+
+if(masterDB['media_upload_status']==2)
+  {
+    masterDB['media_upload_status']=0;
+    pageData['is_show_list_images']=1;
+    pageData['listImages']=masterDB['media_list'];
+   
+    // $('.modal-backdrop').remove();
+
+      var li='';
+      var total=pageData['listImages'].length;
+
+      var textRe='';
+
+      $('.txtThumbnail').val(pageData['listImages'][0]);
+      $('.txtThumbnailSrc').attr('src',pageData['listImages'][0]+'?v='+moment().format('HHmm'));
+
+
+    // pageData['listImages']=[];
+
+    $('#modalMedia').modal('hide');
+
+  }
+
+}, 300);
+
 
 function prepareShowCategories()
 {
@@ -205,6 +236,12 @@ function prepareShowCategories()
 
   $('.category_c').html(li).trigger('change');
 
+  if(total > 0)
+  {
+   $('.category_c').val($('.category_c > option:eq(1)').val()).trigger('change');
+  }
+
+
 
   //post-type
   total=pageData['listPostType'].length;
@@ -218,6 +255,8 @@ function prepareShowCategories()
   }
 
   $('.post-type').html(li).trigger('change');
+  $('.post-type').val('normal').trigger('change');
+
 
 }
 </script>
@@ -235,6 +274,8 @@ function prepareShowCategories()
     $('.pushmenu').trigger('click');
     prepareShowCategories();
     $('.select2js').select2();
+
+
 
   });
 
@@ -286,8 +327,7 @@ function prepareShowCategories()
       }
       else
       {
-        $('.txtThumbnail').val('');
-      showAlertOK('','Done!');
+        location.href=SITE_URL+'admin/edit_post?post_c='+data['data'];
       }
 
     });  

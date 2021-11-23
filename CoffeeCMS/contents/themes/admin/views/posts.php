@@ -109,6 +109,9 @@
               <div class="card-header border-0">
                 <h3 class="card-title"><?php echo get_text_by_lang('Posts','admin');?></h3>
                 <div class="card-tools">
+                  <a href="<?php echo SITE_URL;?>admin/new_post" class="btn btn-tool btn-sm ">
+                    <i class="fas fa-plus-square"></i>
+                  </a>                  
                   <a href="#" class="btn btn-tool btn-sm btn-modal-search">
                     <i class="fas fa-search"></i>
                   </a>
@@ -121,8 +124,10 @@
                   <tr>
                     <th><button type="button" class="btn btn-default btn-xs btn-checkall" data-checked="no"><i class="fas fa-square"></i></button></th>
                     <th><?php echo get_text_by_lang('Title','admin');?></th>
+                    <th class='text-right'><?php echo get_text_by_lang('Url','admin');?></th>
                     <th><?php echo get_text_by_lang('Author','admin');?></th>
                     <th><?php echo get_text_by_lang('Category','admin');?></th>
+                    
                     <th><?php echo get_text_by_lang('Status','admin');?></th>
                     <th class='text-right'><?php echo get_text_by_lang('Views','admin');?></th>
                     <th class='text-right'><?php echo get_text_by_lang('Update Time','admin');?></th>
@@ -228,8 +233,10 @@ function prepareShowPost()
     li+='<tr class="tr-id-'+pageData['listPost'][i]['post_c']+'">';
     li+='<td><button type="button" class="btn btn-default btn-xs btn-checkbox" data-checked="no" data-id="'+pageData['listPost'][i]['post_c']+'"><i class="fas fa-square"></i></button></td>';
     li+='<td><a style="color:#000;" href="'+SITE_URL+'admin/edit_post?post_c='+pageData['listPost'][i]['post_c']+'" target="_blank" title="'+pageData['listPost'][i]['title']+'">'+pageData['listPost'][i]['title']+'</a></td>';
+    li+='<td class="text-right"><a target="_blank" href="'+SITE_URL+'p-'+pageData['listPost'][i]['friendly_url']+'.html" class="btn btn-info btn-sm"><i class="fa fa-link"></i></td>';
     li+='<td>'+pageData['listPost'][i]['author_username']+'</td>';
     li+='<td>'+pageData['listCatDetails'][pageData['listPost'][i]['category_c']]['title']+'</td>';
+   
     li+='<td>'+postStatus+'</td>';
     li+='<td class="text-right">'+pageData['listPost'][i]['views']+'</td>';
     li+='<td class="text-right">'+pageData['listPost'][i]['upd_dt']+'</td>';

@@ -1235,7 +1235,7 @@ class Api
             'content'=>addslashes(getPost('content')),
             'descriptions'=>addslashes(getPost('descriptions')),
             'keywords'=>addslashes(getPost('keywords')),
-            'thumbnail'=>addslashes(getPost('thumbnail')),
+            'thumbnail'=>addslashes(str_replace(SITE_URL,'',getPost('thumbnail',''))),
             'tags'=>addslashes(getPost('tags')),
             'status'=>addslashes(getPost('status')),
             'post_type'=>addslashes(getPost('post_type')),
@@ -1560,7 +1560,7 @@ class Api
             'content'=>addslashes(getPost('content','')),
             'descriptions'=>addslashes(getPost('descriptions','')),
             'keywords'=>addslashes(getPost('keywords','')),
-            'thumbnail'=>addslashes(getPost('thumbnail','')),
+            'thumbnail'=>addslashes(str_replace(SITE_URL,'',getPost('thumbnail',''))),
             'tags'=>addslashes(getPost('tags','')),
             'status'=>addslashes(getPost('status','')),
             'post_type'=>addslashes(getPost('post_type','')),
@@ -3958,7 +3958,7 @@ public static function menu_sort_down()
     $db=new Database(); 
     $query=$db->query("select * from menu_data where menu_id='".$menu_id."'");   
 
-    $loadData=$query->getResult('array');
+    // $loadData=$query->getResult('array');
 
         // return json_encode($loadData[0]);
 
@@ -4144,7 +4144,7 @@ public static function add_new_category()
         'friendly_url'=>friendlyString(getPost('title')),
         'descriptions'=>addslashes(getPost('descriptions','')),
         'keywords'=>addslashes(getPost('keywords','')),
-        'thumbnail'=>addslashes(getPost('thumbnail','')),
+        'thumbnail'=>addslashes(str_replace(SITE_URL,'',getPost('thumbnail',''))),
         'status'=>'1',
         'user_id'=>$username
     );
@@ -4169,8 +4169,6 @@ public static function add_new_category()
     {
         $query=$db->query("select sort_order from category_mst order by sort_order desc limit 0,1");  
     }
-
-    $loadData=$query->getResult('array');
 
     if(isset($loadData[0]))
     {
@@ -4214,13 +4212,13 @@ public static function load_category_data()
 
     if(isset($loadData[0]))
     {
-        echo responseData($loadData[0]);
+        echo responseData($loadData[0]);die();
 
     }
 
     // clear_frontend_cache();
 
-    echo responseData('Not found','yes');
+    echo responseData('Not found','yes');die();
 
 }
 
@@ -4244,7 +4242,7 @@ public static function update_category()
             'friendly_url'=>friendlyString(getPost('title')),
             'descriptions'=>addslashes(getPost('descriptions','')),
             'keywords'=>addslashes(getPost('keywords','')),
-            'thumbnail'=>addslashes(getPost('thumbnail','')),
+            'thumbnail'=>addslashes(str_replace(SITE_URL,'',getPost('thumbnail',''))),
             'status'=>'1',
             'upd_dt'=>date("Y-m-d H:i:s"),
             'user_id'=>$username
@@ -4263,11 +4261,12 @@ public static function update_category()
     
     clear_frontend_cache();
 
-    saveActivities('category_update','Update category '.$insertData['title']['title'],$username);
+    saveActivities('category_update','Update category '.$insertData['update']['title'],$username);
 
     echo responseData('Done!');
     
 }
+
 
 public static function category_sort_down()
 {
@@ -4287,7 +4286,6 @@ public static function category_sort_down()
 
     $query=$db->query("select * from category_mst where category_c='".$category_c."'");   
 
-    $loadData=$query->getResult('array');
 
         // return json_encode($loadData[0]);
 
