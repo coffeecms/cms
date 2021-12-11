@@ -166,6 +166,13 @@ function clear_hook()
         unlink($savePath);
     }
 
+    $savePath=PUBLIC_PATH.'caches/user_group.php';
+    
+    if(file_exists($savePath))
+    {
+        unlink($savePath);
+    }
+
     $savePath=PUBLIC_PATH.'caches/system_setting.php';
     
     if(file_exists($savePath))
@@ -1154,6 +1161,38 @@ function loadSystemSetting()
 
 }
 
+function save_user_group_mst()
+{
+    $savePath=PUBLIC_PATH.'caches/user_group.php';
+
+    if(file_exists($savePath))
+    {
+        unlink($savePath);
+    }    
+
+    $db=new Database();
+
+    $loadData=$db->query("select * from user_group_mst");
+
+    create_file($savePath,json_encode($loadData));
+}
+
+function load_user_group_mst()
+{
+    $savePath=PUBLIC_PATH.'caches/user_group.php';
+
+    $result=false;
+
+    if(!file_exists($savePath))
+    {
+        save_user_group_mst();
+    }    
+
+    $result=json_decode(file_get_contents($savePath),true); 
+
+    return $result;    
+}
+
 function useClass($className)
 {
     //Only load from system/autoloads folder
@@ -1769,6 +1808,28 @@ function tagsToInsertStr($post_c,$tags='')
 
             array_push($result,$queryStr);
         }
+    }
+
+    return $result;
+}
+
+function split_limit_words($str,$limit=10)
+{
+    $listWords=explode(" ", $str);
+
+    $total=count($listWords);
+
+    $result='';
+
+    if($total > $limit)
+    {
+        for ($i=0; $i < $limit; $i++) { 
+            $result.=$listWords[$i].' ';
+        }        
+    }
+    else
+    {
+        $result=$str;
     }
 
     return $result;

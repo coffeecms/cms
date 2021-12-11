@@ -3494,6 +3494,8 @@ public static function add_new_groupuser()
 
     load_hook('after_insert_groupuser',$insertData);
 
+    save_user_group_mst();  
+
     // clear_hook();
 
     clear_hook();
@@ -3606,6 +3608,8 @@ public static function edit_groupuser()
 
     $db->nonquery($queryStr.$queryStrPer);   
 
+    save_user_group_mst();
+
     // clear_hook();
 
     // sleep(2);
@@ -3663,6 +3667,8 @@ public static function groupuser_action_apply()
     $db->nonquery($queryStr);
 
     // clear_hook();
+
+    save_user_group_mst();
 
     clear_hook();
 
