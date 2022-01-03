@@ -653,31 +653,46 @@ function isLogined()
         }
     }
 
-
-    
     if(file_exists($savePath))
     {
         $result=true;
         require_once($savePath);
 
-        $last3Day=strtotime('-7 day', time());
+        $db=new Database(); 
 
-        if(!isset(Configs::$_['cf_dt']) || (float)Configs::$_['cf_dt'] < (float)$last3Day)
+        $result=$db->query("select user_id,username,group_c,level_c from user_mst where (username='".Configs::$_['cf_u']."' OR email='".Configs::$_['cf_u']."') AND password='".Configs::$_['cf_p']."'");
+
+        if(count($result) > 0)
         {
-            unlink($savePath);
-            $result=false;
+            // right user info
+            $last3Day=strtotime('-7 day', time());
+
+            if(!isset(Configs::$_['cf_dt']) || (float)Configs::$_['cf_dt'] < (float)$last3Day)
+            {
+                unlink($savePath);
+                $result=false;
+            }
+            else
+            {
+                $_COOKIE['cf_u']=Configs::$_['cf_u'];
+                $_COOKIE['cf_p']=Configs::$_['cf_p'];
+    
+                user_load_data_when_logined();            
+            }
         }
         else
         {
-            $_COOKIE['cf_u']=Configs::$_['cf_u'];
-            $_COOKIE['cf_p']=Configs::$_['cf_p'];
-
-            user_load_data_when_logined();            
+            // wrong user info
+            unlink($savePath);
+            $result=false;            
         }
+
+
     }
 
     return $result;
 }
+
 
 
 function removeLoginSession()

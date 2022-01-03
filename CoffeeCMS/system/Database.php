@@ -5,6 +5,8 @@ class Database {
 	public $dbConnect = '';
 	public $error = '';
 	public $is_cache = false;
+	public $is_prefix = true;
+	public $insert_id = '';
 
 	// Seconds
 	public $cache_time = 60;
@@ -15,7 +17,7 @@ class Database {
 			'hostname' => 'localhost',
 			'username' => 'root',
 			'password' => '',
-			'database' => 'coffeecms',
+			'database' => 'ktdt',
 			'port' => 3306,
 			'DBDriver' => 'MySQLi',
 			'DBPrefix' => 'cup_',
@@ -32,6 +34,9 @@ class Database {
 		),
 	);
 
+	public function setPrefix($isPrefix=true) {
+		$this->is_prefix = $isPrefix;
+	}
 	public function setCache($time) {
 		$this->is_cache = true;
 		$this->cache_time = $time;
@@ -225,6 +230,8 @@ class Database {
 
 			die($this->dbConnect->error . " - Query: " . $queryStr);
 		}
+
+		$this->insert_id=$this->dbConnect->insert_id;
 
 		mysqli_close($this->dbConnect);
 
