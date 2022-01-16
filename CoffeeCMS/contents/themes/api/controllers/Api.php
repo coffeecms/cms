@@ -104,6 +104,10 @@ class Api
             echo responseData('ERROR','yes');
             return false;
         }
+        if(CoffeeProtectLogin::is_blocked()==true)
+        {
+            echo responseData('Attack detected!','yes');return false;
+        }
 
         $rePassword=md5($password);
         $db=new Database(); 
@@ -111,6 +115,8 @@ class Api
 
         if(!isset($result[0]))
         {
+            CoffeeProtectLogin::auto_detect_attack_login($username,0);
+
             saveActivities('user_login','Login failed',$username);
             echo responseData('ERROR','yes');
             return false;            
@@ -122,6 +128,8 @@ class Api
         setcookie('cf_p', $rePassword, time()+ 360000,'/', $parse['host']);
 
         $db->nonquery("update user_mst set last_logined=now() where (username='".$username."' OR email='".$username."') AND password='".$rePassword."'");
+
+        CoffeeProtectLogin::auto_detect_attack_login($username,1);
 
         createLoginSession($username,$rePassword);
         
