@@ -27,6 +27,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `activities_data`
 --
 
+DROP TABLE IF EXISTS `user_login_data`;
+CREATE TABLE `user_login_data` (
+  `id` bigint(11) NOT NULL,
+  `username` varchar(100) COLLATE utf8_bin NOT NULL,
+  `ip_add` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  `user_agent` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `ent_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
 DROP TABLE IF EXISTS `activities_data`;
 CREATE TABLE `activities_data` (
   `activity_c` varchar(100) COLLATE utf8_bin NOT NULL,
@@ -1962,6 +1973,26 @@ ALTER TABLE `user_group_mst`
   ADD KEY `group_c` (`group_c`),
   ADD KEY `status` (`status`);
 
+  
+--
+-- Indexes for table `user_login_data`
+--
+ALTER TABLE `user_login_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ip_add` (`ip_add`),
+  ADD KEY `username` (`username`),
+  ADD KEY `ent_dt` (`ent_dt`),
+  ADD KEY `status` (`status`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user_login_data`
+--
+ALTER TABLE `user_login_data`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
 --
 -- Indexes for table `user_mst`
 --
