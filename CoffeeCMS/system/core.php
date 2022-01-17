@@ -641,7 +641,9 @@ function isLogined()
 
     $user_agent=isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
 
-    $sessionid=md5($ip_add.$user_agent);
+    $cf_id=isset($_COOKIE['cf_id'])?$_COOKIE['cf_id']:randNumber(28);
+  
+    $sessionid=md5($cf_id.$ip_add.$user_agent);
 
     $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';    
 
@@ -720,7 +722,15 @@ function createLoginSession($user,$pass)
 
     $user_agent=isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
 
-    $sessionid=md5($ip_add.$user_agent);
+    $cf_id=isset($_COOKIE['cf_id'])?$_COOKIE['cf_id']:randNumber(28);
+    
+    if(!isset($_COOKIE['cf_id']))
+    {
+        $parse=parse_url(SITE_URL);
+        setcookie('cf_id', $cf_id, time()+ 360000,'/', $parse['host']);
+    }
+
+    $sessionid=md5($cf_id.$ip_add.$user_agent);
 
     $savePath=ROOT_PATH.'public/login/'.$sessionid.'.php';
 
