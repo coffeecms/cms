@@ -15,6 +15,7 @@
 - Free & Friendly: It's free and theme design very friendly
 - Fast: It's Fast: x5 speed more than Wordpress and others CMS 
 - Easy & Full customize system: You can build your custom system with Coffee CMS + Plugins + Themes
+- Integrade with Opencart - The best FREE and open-source eCommerce platform
 - Build in many premium functions: 
 - Kanban boards for small/private project management
 - Project tasks management
