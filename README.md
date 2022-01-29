@@ -10,6 +10,7 @@
 ## Benchmark
 <img src="https://raw.githubusercontent.com/coffeecms/cms/main/benchmark.JPG">
 
+## Require PHP 7.3+
 
 ## Features of Coffee CMS
 - Free & Friendly: It's free and theme design very friendly
