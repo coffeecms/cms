@@ -316,6 +316,13 @@ masterDB['media_selected_callback']=function(theMediaUrl){
         $('.addtxtThumbnail').val('');
         showAlertOK('','Add new category successfull!');
         $('#modalAddnew').modal('hide');
+
+        setTimeout(function(){ 
+
+        location.reload();
+
+        },1000);
+        
       });      
         
     });
@@ -342,6 +349,12 @@ masterDB['media_selected_callback']=function(theMediaUrl){
         $('.edit-txtThumbnail').val('');
         showAlertOK('','Save changes successfull!');
         $('#modalEdit').modal('hide');
+
+        setTimeout(function(){ 
+
+        location.reload();
+
+        },1000);
       });      
         
     });

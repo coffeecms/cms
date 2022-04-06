@@ -263,6 +263,65 @@ function add_hook($hook_zone,$func_name)
     array_push(Configs::$_['hooks'][$hook_zone],$func_name);
 }
 
+
+function send_post_by_curl($url,$inputData=[],$user_agent='',$curl_options=[])
+{
+    $curl = curl_init();
+
+    $curl_data=array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $url,
+        CURLOPT_POST => 1,
+        CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_POSTFIELDS => http_build_query($inputData)
+    );
+
+    if(isset($user_agent[2]))
+    {
+        $curl_data['CURLOPT_USERAGENT']=$user_agent;
+    }
+
+    $total_keys=array_keys($curl_options);
+
+    // $proxyauth = 'user:pass';
+    // $proxy = '200.111.182.6';
+    // $proxyPort = '443';    
+    //  proxy support
+    // curl_setopt($ch, CURLOPT_PROXY, $proxy);
+    // curl_setopt($ch, CURLOPT_PROXYPORT, $proxyPort);
+    //  curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+    // curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
+    // curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
+    // curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+
+    for ($i=0; $i < $total_keys; $i++) { 
+        $curl_data[$curl_options[$i]]=$curl_options[$curl_options[$i]];
+    }
+    
+    curl_setopt_array($curl, $curl_data);
+
+    $resp = curl_exec($curl);
+
+    $result=[];
+
+    $result['error']='no';
+    $result['data']='no';
+
+    if($resp===false)
+    {
+        $result['error']='yes';
+        $result['data']=curl_error($curl);
+    }
+    
+    curl_close($curl);  
+    
+    $result['data']=$resp;   
+
+    return $result;
+}
+
+
 function fetch_file($fileUrl,$savePath='',$fileOutputName='')
 {
   $output_filename = newID().'_'.basename($fileUrl);
@@ -898,6 +957,40 @@ function load_shorturl_cache($shortUrlCode='')
     require_once($savePath);
 }
 
+function load_shorturl($shortUrlCode='')
+{
+    if(!isset($shortUrlCode[2]))
+    {
+        return false;
+    }
+
+    $savePath=PUBLIC_PATH.'caches/short_urls/'.$shortUrlCode.'.php';
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+
+        $queryStr.="SELECT * from short_url_data where code='".$shortUrlCode."' AND status='1' ";
+
+        $result=$db->query($queryStr);
+
+        if(is_array($result) && count($result) > 0)
+        {
+            $contents='';
+    
+            $contents.="Configs::\$_['short_url_code']='".$shortUrlCode."';";
+            $contents.="Configs::\$_['short_url_target']='".$result[0]['target_url']."';";
+
+            create_file($savePath,"<?php ".$contents);
+        }
+
+    }
+
+    require_once($savePath);
+}
+
 function compareGroupPriorityByUserId($fromUserID,$toUserId)
 {
 
@@ -1106,8 +1199,68 @@ function load_category_data_from_cache()
     Configs::$_['sub_category_data']=json_decode(Configs::$_['sub_category_data_json'],true);
 }
 
+function load_categories()
+{
+    $savePath=PUBLIC_PATH.'caches/categories.php';
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+
+        $listCategories=$db->query("select * from category_mst where ifnull(parent_category_c,'')='' order by sort_order asc");
+
+        $listSubCategories=$db->query("select * from category_mst where ifnull(parent_category_c,'')<>'' order by parent_category_c,sort_order asc");
+
+        $contents='';
+    
+        $contents.="Configs::\$_['category_data']=[];";
+        $contents.="Configs::\$_['sub_category_data']=[];";
+        $contents.="Configs::\$_['category_data_json']='".json_encode($listCategories)."';";
+        $contents.="Configs::\$_['sub_category_data_json']='".json_encode($listSubCategories)."';";
+
+        create_file($savePath,"<?php ".$contents);
+    }
+
+    require_once($savePath);
+
+    Configs::$_['category_data']=json_decode(Configs::$_['category_data_json'],true);
+    Configs::$_['sub_category_data']=json_decode(Configs::$_['sub_category_data_json'],true);
+}
+
 
 function load_menu_data_from_cache()
+{
+    $savePath=PUBLIC_PATH.'caches/frontend_menu.php';
+
+    if(!file_exists($savePath))
+    {
+        $queryStr="";
+
+        $db=new Database();
+        
+        $listCategories=$db->query("select * from menu_data where ifnull(parent_menu_id,'')='' order by sort_order asc");
+        
+        $listSubCategories=$db->query("select * from menu_data where ifnull(parent_menu_id,'')<>'' order by parent_menu_id,sort_order asc");
+
+        $contents='';
+    
+        $contents.="Configs::\$_['menu_data']=[];";
+        $contents.="Configs::\$_['sub_menu_data']=[];";
+        $contents.="Configs::\$_['menu_data_json']='".json_encode($listCategories)."';";
+        $contents.="Configs::\$_['sub_menu_data_json']='".json_encode($listSubCategories)."';";
+
+        create_file($savePath,"<?php ".$contents);
+    }
+
+    require_once($savePath);
+
+    Configs::$_['menu_data']=json_decode(Configs::$_['menu_data_json'],true);
+    Configs::$_['sub_menu_data']=json_decode(Configs::$_['sub_menu_data_json'],true);
+}
+
+function load_menu()
 {
     $savePath=PUBLIC_PATH.'caches/frontend_menu.php';
 
@@ -1855,6 +2008,22 @@ function split_limit_words($str,$limit=10)
     else
     {
         $result=$str;
+    }
+
+    return $result;
+}
+
+function isValidApiKey($key,$user_id,$permission_c)
+{
+    $db=new Database(); 
+
+    $result=false;
+
+    $loadData=$db->query("select count(*) as total from user_api_key_permission_data where api_key='".$key."' AND permission_c='".$permission_c."' AND api_key IN (select  api_key  from user_api_key_data where status='1' AND CAST(start_date as date) <= '".date('Y-m-d')."' AND CAST(end_date as date) >= '".date('Y-m-d')."' AND user_id='".$user_id."')");
+
+    if(count($loadData) > 0)
+    {
+        $result=true;
     }
 
     return $result;

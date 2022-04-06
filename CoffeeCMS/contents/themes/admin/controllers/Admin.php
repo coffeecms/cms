@@ -98,6 +98,7 @@ class Admin
 		$theData['top_50_writers']=$db->query($queryStr);
 
 	
+		Configs::$_['site_title']='Dashboard';
 		echo view('header');
 		echo view('left');
 		echo view('dashboard',$theData);
@@ -162,6 +163,7 @@ class Admin
 		$theData['top_50_writers']=$db->query($queryStr);
 
 	
+		Configs::$_['site_title']='Task Report';
 		echo view('header');
 		echo view('left');
 		echo view('project_task_report',$theData);
@@ -173,6 +175,7 @@ class Admin
 		// print_r(Configs::$_);die();
 		// var_dump(isLogined());die();
 
+		Configs::$_['site_title']='Login';
 		echo view('header_login');
 		echo view('login');
 		echo view('footer_login');
@@ -183,6 +186,7 @@ class Admin
 		// print_r(Configs::$_);die();
 		// var_dump(isLogined());die();
 
+		Configs::$_['site_title']='404 - NOT FOUND';
 		echo view('header_login');
 		echo view('notfound');
 		echo view('footer_login');
@@ -190,6 +194,7 @@ class Admin
 
 	public static function forgot_password()
 	{
+		Configs::$_['site_title']='Forgot Password ?';
 		echo view('header_login');
 		echo view('forgot_password');
 		echo view('footer_login');
@@ -213,6 +218,7 @@ class Admin
 		$theData['password']=getGet('password','');
 		$theData['username']=getGet('username','');
 
+		Configs::$_['site_title']='Reset Password';
 		echo view('header_login');
 		echo view('reset_password',$theData);
 		echo view('footer_login');
@@ -233,6 +239,7 @@ class Admin
 
 	public static function register()
 	{
+		Configs::$_['site_title']='Register';
 		echo view('header_login');
 		echo view('register');
 		echo view('footer_login');
@@ -264,7 +271,7 @@ class Admin
 			require_once($libsPath);
 		}		
 
-
+		Configs::$_['site_title']='Plugin Setting';
 		view('header');
 		view('left');
 		require_once($pagePath);
@@ -301,6 +308,7 @@ class Admin
 			require_once($libsPath);
 		}
 
+		Configs::$_['site_title']='Theme Setting';
 		view('header');
 		view('left');
 		require_once($pagePath);
@@ -382,6 +390,7 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+		Configs::$_['site_title']='Email Templates';
 		view('header');
 		view('left');
 		view('email_templates',$theData);
@@ -429,6 +438,7 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='News Letter';
 		view('header');
 		view('left');
 		view('newsletter',$theData);
@@ -474,6 +484,7 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='New Email';
 		view('header');
 		view('left');
 		view('new_email',$theData);
@@ -519,6 +530,7 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='Projects';
 		view('header');
 		view('left');
 		view('projects',$theData);
@@ -564,6 +576,7 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='Task';
 		view('header');
 		view('left');
 		view('projects_task',$theData);
@@ -656,6 +669,7 @@ class Admin
         $theData['project_c']=$project_c;
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='Tasks';
 		view('header');
 		view('left');
 		view('tasks',$theData);
@@ -713,6 +727,7 @@ class Admin
 
         // print_r($queryStr);die();
 
+        Configs::$_['site_title']='Kanban Board';
 		view('header');
 		view('left');
 		view('kanban_board',$theData);
@@ -742,6 +757,7 @@ class Admin
 			'alert'=>'',
 		);
 
+		Configs::$_['site_title']='Add new email template';
 		echo view('header');
 		echo view('left');
 		echo view('add_email_template',$theData);
@@ -792,6 +808,7 @@ class Admin
         $theData['thePost']=json_encode($result[0]);
         $theData['template_id']=$template_id;
  
+ 		Configs::$_['site_title']='Edit email template';
 		echo view('header');
 		echo view('left');
 		echo view('edit_email_template',$theData);
@@ -858,11 +875,80 @@ class Admin
 
         // $theData['totalPost']=count($result);
 
+        Configs::$_['site_title']='Posts';
 		view('header');
 		view('left');
 		view('posts',$theData);
 		view('footer');
 	}
+
+	public static function list_payments()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+        $username=isset(Configs::$_['user_data']['user_id'])?Configs::$_['user_data']['user_id']:'';
+
+
+		$theData=array(
+			'listCat'=>[],
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+		);
+
+		$queryStr="";
+		$addqueryStr="";
+
+		if(!isset(Configs::$_['user_permissions']['menu06']))
+		{
+			redirect_to(SITE_URL.'admin');
+		}		
+
+		if(!isset(Configs::$_['user_permissions']['menu08']))
+		{
+			$addqueryStr.=" AND a.user_id='".$username."' ";
+		}
+
+
+        $db=new Database();    
+        $listCategories=$db->query("select * from category_mst where ifnull(parent_category_c,'')='' order by sort_order asc");
+
+        $listSubCategories=$db->query("select * from category_mst where ifnull(parent_category_c,'')<>'' order by parent_category_c,sort_order asc");
+
+		$result=genListNestedCategories($listCategories,$listSubCategories);
+
+        $theData['listCat']=json_encode($result);
+
+		$postFrom=getPost('from','0');
+
+		$queryStr="";
+
+		$queryStr=" select a.post_c,a.title,a.friendly_url,a.thumbnail,a.tags,a.status,a.post_type,";
+		$queryStr.=" a.parent_post_c,a.views,a.category_c,a.user_id as author_id,a.ent_dt,a.upd_dt,b.username as author_username,b.avatar as author_avatar";
+		// $queryStr.=" from (".genUnionTables('post_data',1,10).") a";
+		$queryStr.=" from post_data a";
+		$queryStr.=" left join user_mst b ON a.user_id=b.user_id where a.post_c<>'' ";
+		$queryStr.=$addqueryStr;
+		$queryStr.=" order by a.upd_dt desc  limit ".$postFrom.",30";
+
+        $result=$db->query($queryStr);
+
+        $theData['listPost']=json_encode($result);
+
+        // $theData['totalPost']=count($result);
+
+        Configs::$_['site_title']='Payments Histories';
+		view('header');
+		view('left');
+		view('list_payments',$theData);
+		view('footer');
+	}
+
 
 	public static function new_post()
 	{
@@ -900,6 +986,7 @@ class Admin
         $theData['listCat']=json_encode($result);
         $theData['listPostType']=$listPostType;
 
+        Configs::$_['site_title']='New Post';
 		echo view('header');
 		echo view('left');
 		echo view('new_post',$theData);
@@ -967,6 +1054,7 @@ class Admin
         $theData['thePost']=json_encode($result[0]);
      	$theData['listPostType']=$listPostType;
 
+     	Configs::$_['site_title']='Edit Post';
 		echo view('header');
 		echo view('left');
 		echo view('edit_post',$theData);
@@ -1020,6 +1108,7 @@ class Admin
 
         $theData['listPost']=json_encode($result);
 
+        Configs::$_['site_title']='Pages';
 		echo view('header');
 		echo view('left');
 		echo view('pages',$theData);
@@ -1057,6 +1146,7 @@ class Admin
         $listPostType=$db->query("select * from post_type_data order by title asc");
 		$theData['listPostType']=$listPostType;
 
+		Configs::$_['site_title']='New Page';
 		echo view('header');
 		echo view('left');
 		echo view('new_page',$theData);
@@ -1109,6 +1199,7 @@ class Admin
 
      	$theData['listPostType']=$listPostType;
 
+     	Configs::$_['site_title']='Edit Page';
 		echo view('header');
 		echo view('left');
 		echo view('edit_page',$theData);
@@ -1145,6 +1236,7 @@ class Admin
 
         $theData['listCat']=json_encode($result);
 
+        Configs::$_['site_title']='Categories';
 		echo view('header');
 		echo view('left');
 		echo view('categories',$theData);
@@ -1183,6 +1275,7 @@ class Admin
 
         $theData['listMenu']=json_encode($result);
 
+        Configs::$_['site_title']='Edit Menu';
 		echo view('header');
 		echo view('left');
 		echo view('edit_menu',$theData);
@@ -1228,6 +1321,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Comments';
 		echo view('header');
 		echo view('left');
 		echo view('comments',$theData);
@@ -1257,7 +1351,7 @@ class Admin
 
         $theData['theList']=$result;
 
-
+        Configs::$_['site_title']='Activities';
 		echo view('header');
 		echo view('left');
 		echo view('activities_logs',$theData);
@@ -1301,6 +1395,7 @@ class Admin
 
         $theData['listGroupPermissions']=$result;
 
+        Configs::$_['site_title']='Email Marketing Groups';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_group',$theData);
@@ -1365,6 +1460,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Email Marketing Jobs';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_jobs',$theData);
@@ -1403,6 +1499,7 @@ class Admin
         $theData['theList']=$result;
         $theData['listGroups']=$db->query("select * from emailmarketing_group_data order by title asc");
 
+        Configs::$_['site_title']='Email List';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_emaillist',$theData);
@@ -1450,6 +1547,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Histories';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_histories',$theData);
@@ -1556,6 +1654,7 @@ class Admin
 
 		// print_r($theData['send_data']);die();
 
+		Configs::$_['site_title']='Email Marketing Dashboard';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_dashboard',$theData);
@@ -1591,6 +1690,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Unsubscrible';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_unsubscrible',$theData);
@@ -1635,6 +1735,7 @@ class Admin
 		
         $theData['theData']=$db->query("select * from emailmarketing_jobs_data where job_id='".$job_id."'");
 
+        Configs::$_['site_title']='Send email';
 		echo view('header');
 		echo view('left');
 		echo view('email_marketing_send',$theData);
@@ -1642,6 +1743,60 @@ class Admin
 	}	
 
 
+	public static function api_keys()
+	{
+		if(!isLogined())
+		{
+			redirect_to(SITE_URL.'admin/login');
+		}
+
+		if(!isset(Configs::$_['user_permissions']['menu07']))
+		{
+			redirect_to(SITE_URL.'admin');
+		}
+		$theData=array(
+			'theList'=>[],
+			'totalPost'=>0,
+			'totalPage'=>0,
+			'pages'=>'',
+			'alert'=>'',
+			'user_data'=>'',
+		);
+
+		
+		$db=new Database();
+
+		$postFrom=getPost('from','0');
+		$user_c_edit=getGet('user_c','');
+
+		$queryStr=" select * from user_group_mst order by title asc ";
+
+        $theData['listGroup']=$db->query($queryStr);
+
+		$queryStr=" select * from user_level_mst  order by title asc";
+
+        $theData['listLevel']=$db->query($queryStr);
+
+		$queryStr=" SELECT a.*,b.title as group_title, c.title as level_title";
+		$queryStr.=" FROM user_mst a left join user_group_mst b ON a.group_c=b.group_c";
+		$queryStr.=" left join user_level_mst c ON a.level_c=c.level_id  WHERE a.user_id<>''";
+		$queryStr.=" order by a.upd_dt desc  limit ".$postFrom.",30";
+
+        $theData['listUser']=$db->query($queryStr);
+
+		if(isset($user_c_edit[2]))
+		{
+			$queryStr="select * from user_mst where user_id='".$user_c_edit."'";
+
+			$theData['user_data']=$db->query($queryStr);
+		}
+
+		Configs::$_['site_title']='API Keys';
+		echo view('header');
+		echo view('left');
+		echo view('api_keys',$theData);
+		echo view('footer');
+	}	
 	public static function users()
 	{
 		if(!isLogined())
@@ -1688,6 +1843,7 @@ class Admin
 			$theData['user_data']=$db->query($queryStr);
 		}
 
+		Configs::$_['site_title']='Users';
 		echo view('header');
 		echo view('left');
 		echo view('users',$theData);
@@ -1751,6 +1907,7 @@ class Admin
 
 		$theData['listMenu']=genListNestedMenu($listMenu,$listSubMenu);
 
+		Configs::$_['site_title']='Groups User';
 		echo view('header');
 		echo view('left');
 		echo view('group_user',$theData);
@@ -1787,6 +1944,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Levels';
 		echo view('header');
 		echo view('left');
 		echo view('level_user',$theData);
@@ -1819,6 +1977,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Permissions';
 		echo view('header');
 		echo view('left');
 		echo view('global_permission',$theData);
@@ -1853,6 +2012,7 @@ class Admin
 
         $theData['theList']=$result;
 
+        Configs::$_['site_title']='Short Urls';
 		echo view('header');
 		echo view('left');
 		echo view('short_urls',$theData);
@@ -1904,6 +2064,7 @@ class Admin
 
 		$theData['listInstalled']=$result;
 
+		Configs::$_['site_title']='Themes';
 		echo view('header');
 		echo view('left');
 		echo view('themes',$theData);
@@ -1977,7 +2138,7 @@ class Admin
 
 		// print_r($theData['file_content']);die();
 
-
+		Configs::$_['site_title']='Theme Edit';
 		echo view('header');
 		echo view('left');
 		echo view('theme_edit',$theData);
@@ -2051,6 +2212,7 @@ class Admin
 
 		// print_r($theData['file_content']);die();
 
+		Configs::$_['site_title']='Plugin Edit';
 		echo view('header');
 		echo view('left');
 		echo view('plugin_edit',$theData);
@@ -2063,6 +2225,8 @@ class Admin
 		{
 			redirect_to(SITE_URL.'admin/login');
 		}
+
+		Configs::$_['site_title']='Import Theme';
 		
 		echo view('header');
 		echo view('left');
@@ -2188,6 +2352,8 @@ class Admin
 
 		$theData['listInstalled']=$result;
 
+		Configs::$_['site_title']='Plugins';
+
 		echo view('header');
 		echo view('left');
 		echo view('plugins',$theData);
@@ -2205,6 +2371,8 @@ class Admin
 		{
 			redirect_to(SITE_URL.'admin/login');
 		}
+
+		Configs::$_['site_title']='Import Plugin';
 
 		echo view('header');
 		echo view('left');
@@ -2266,6 +2434,8 @@ class Admin
 		// print_r(timezone_identifiers_list());die();
 
 		$theData['listTimeZones']=timezone_identifiers_list();
+
+		Configs::$_['site_title']='Setting General';
 		
 		echo view('header');
 		echo view('left');

@@ -15,63 +15,166 @@ class Api
 		return $this->response->setJSON($data);
 	}
 
+    public static function call_api()
+    {
 
+        $api_nm=addslashes(getGet('api_nm'));
+        $apiLibsPath=THEMES_PATH.'api/api_libs/'.$api_nm.'.php';
+    
+        if(!file_exists($apiLibsPath))
+        {
+            return $apiLibsPath;
+        }
 
-    // public static function plugin_api($plugin_name,$funcName)
-    // {
-    //     $pluginPath=$this->getBasePath().'Libraries/plugins/'.$plugin_name.'/';
+        $key=trim(getPost('key',''));
+        $user_id=trim(getPost('user_id',''));
+        $permission_c=trim(getPost('permission_c',''));
 
-    //     if(file_exists($pluginPath.'api.php'))
-    //     {
-    //         require_once($pluginPath.'api.php');
+        if(Configs::$_['user_data']['user_id']=='GUEST')
+        {
+            $isValid=isValidApiKey($key,$user_id,$permission_c);
 
-    //         if(!class_exists('PluginApi'))
-    //         {
-    //             echo responseData('Class PluginApi not exists','yes');
-    //         }            
+            if($isValid==false)
+            {
+                echo responseData('Api key not valid.','yes');die();
+            }
+        }
+        else
+        {
+            $db=new Database(); 
 
-    //         $PluginApi=new PluginApi();
+            $hasPermission=$db->query("select count(*) from user_permission_menu_data where group_c='".Configs::$_['user_data']['group_c']."' AND menu_id='11017168'");
 
-    //         if(!method_exists($PluginApi,$funcName))
-    //         {
-    //             echo responseData('Method '.$funcName.' not exists','yes');
-    //         }
+            if(count($hasPermission)==0)
+            {
+                echo responseData('You not have permission to access this page.','yes');die();
+            }
+        }
 
-    //         $PluginApi->$funcName();
-    //     }
-    //     else
-    //     {
-    //         echo responseData('This plugin not support api!','yes');
-    //     }
-    // }
+    
+        $result='';
+    
+        require_once($apiLibsPath);
+    
+        if(function_exists($api_nm))
+        {
+            $result=$api_nm();
+        }
+    
+        die();
+    }
 
-    // public static function theme_api($plugin_name,$funcName)
-    // {
-    //     $pluginPath=$this->getBasePath().'Views/themes/'.$plugin_name.'/';
+    public static function paygate_add_new_product($inputData=[])
+    {
+        // $sendData=[];
+        // $sendData['title']='Test product title';
+        // $sendData['user_id']='111111';
+        // $sendData['quantity']='1000';
+        // $sendData['image']='http://localhost/1d.jpg';
+        // $sendData['price']='10';
+        // $sendData['descriptions']='Test product descriptions';
+        // $sendData['category_id']='20';
+        // $sendData['title']='Test product title';
+        // $sendData['download_file']='http://localhost/2d.jpg';
+        // $sendData['shipping']='0';
+        // $sendData['tags']='prod1,testtag';
 
-    //     if(file_exists($pluginPath.'api.php'))
-    //     {
-    //         require_once($pluginPath.'api.php');
+        $inputData['verify_password']=Configs::$_['payment_verify_password'];
+        
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => Configs::$_['payment_verify_url'].'res_api.php?api_nm=insert_new_product',
+            CURLOPT_POST => 1,
+            CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_POSTFIELDS => http_build_query($inputData)
+        ));
 
-    //         if(!class_exists('PluginApi'))
-    //         {
-    //             echo responseData('Class PluginApi not exists','yes');
-    //         }            
+        $resp = curl_exec($curl);
 
-    //         $PluginApi=new PluginApi();
+        $result=[];
+    
+        $result['error']='no';
+        $result['data']='no';
+    
+        if($resp===false)
+        {
+            $result['error']='yes';
+            $result['data']=curl_error($curl);
+        }
+        
+        curl_close($curl);  
+        
+        $result['data']=$resp;   
+    
+        return $result;
+    }
 
-    //         if(!method_exists($PluginApi,$funcName))
-    //         {
-    //             echo responseData('Method '.$funcName.' not exists','yes');
-    //         }
+    public static function paygate_pointback()
+    {
 
-    //         $PluginApi->$funcName();
-    //     }
-    //     else
-    //     {
-    //         echo responseData('This plugin not support api!','yes');
-    //     }
-    // }
+        $order_id=addslashes(getGet('order_id'));
+        $ip_add=addslashes(getGet('ip_add'));
+        
+        $verify_password=addslashes(getGet('verify_password'));
+
+        if(!isset($verify_password[1]))
+        {
+            die('Attacked detect!');
+        }
+
+        if(!isset($ip_add[1]))
+        {
+            die('Attacked detect!');
+        }
+
+        if($verify_password!=Configs::$_['payment_verify_password'])
+        {
+            die('Payment transaction not valid!');
+        }
+
+        $ip_add=base64_decode($ip_add);
+        // $from_url=urldecode($from_url);
+        $from_url=Configs::$_['payment_verify_url'];
+
+        $db=new Database(); 
+
+        $loadOrderData=$db->query("select * from payment_data where ip_add='".$ip_add."' AND status='0'");
+
+        if(count($loadOrderData) > 0)
+        {
+            $sourceAPIURL=$from_url.'res_api.php?api_nm=has_order_id&order_id='.$order_id;
+
+            try {
+                $sourceData=json_decode(file_get_contents($sourceAPIURL),true);
+            } catch (\Exception $ex) {
+                throw new Exception($ex->getMessage(), 1);
+            }
+
+            if($sourceData['error']=='no' && isset($sourceData['data']['order_data']) && isset($sourceData['data']['order_data']['order_id']))
+            {
+                $orderData=$sourceData['data']['order_data'];
+                $orderProdData=$sourceData['data']['product_data'];
+
+                if((int)$orderData['order_status_id']==2 || (int)$orderData['order_status_id']==5 || (int)$orderData['order_status_id']==1 || (int)$orderData['order_status_id']==15)
+                {
+                    $db->nonquery("update payment_data set order_id='".$order_id."',status='1',total='".$orderData['total']."',content='".serialize($orderProdData)."',comment='Payment status ".$orderData['status_name']." by payment method: ".$orderData['payment_method']."' where ip_add='".$ip_add."' AND status='0'");
+
+                    saveActivities('user_payment','Payment status '.$orderData['status_name'].' by payment method: '.$orderData['payment_method'],'system');        
+        
+                    // Load hook which prepare payment data then notify to user
+                    // load_hook('system_payment_completed',$sourceData['data']);
+                    load_hook('system_payment_completed',$loadOrderData[0]);
+                }
+            }
+
+        }
+        
+        
+    }
+    
 
     // Api Key
     public static function insert_new_api_key()
@@ -4177,11 +4280,11 @@ public static function add_new_category()
 
     if(strlen($parent_category_c) > 0)
     {
-        $query=$db->query("select sort_order from category_mst where parent_category_c='".$parent_category_c."' order by sort_order desc limit 0,1");  
+        $loadData=$db->query("select MAX(sort_order) as sort_order from category_mst where parent_category_c='".$parent_category_c."'");  
     }
     else
     {
-        $query=$db->query("select sort_order from category_mst order by sort_order desc limit 0,1");  
+        $loadData=$db->query("select MAX(sort_order) as sort_order from category_mst");  
     }
 
     if(isset($loadData[0]))
@@ -4194,8 +4297,6 @@ public static function add_new_category()
     clear_frontend_cache();
 
     saveActivities('category_add','Add new category '.$insertData['title'],$username);
-
-
 
     echo responseData('Done!');
     
@@ -4401,6 +4502,15 @@ public static function upload_media()
 
     $uploadPath=ROOT_PATH.'public/uploads/medias/'.$dirPath;
 
+    try {
+        if(!is_dir($uploadPath))
+        {
+            mkdir($uploadPath,0755,true);
+        }
+    } catch (Exception $e) {
+        
+    }    
+
     if (!empty($_FILES)) 
     {
         $totalFile=count($_FILES['medias']['tmp_name']);
@@ -4538,6 +4648,14 @@ public static function upload_media()
 
         $target_path=getPost('path','');
 
+        try {
+            if(!is_dir(ROOT_PATH.'public/uploads/medias/'.$target_path))
+            {
+                mkdir(ROOT_PATH.'public/uploads/medias/'.$target_path,0755,true);
+            }
+        } catch (Exception $e) {
+            
+        } 
 
         $result = scandir(ROOT_PATH.'public/uploads/medias/'.$target_path, 1);
 

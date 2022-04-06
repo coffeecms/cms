@@ -59,6 +59,7 @@
 				  <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"><?php echo get_text_by_lang('Postback','admin');?></a></li>
 				  <li class="nav-item"><a class="nav-link" href="#tab_9" data-toggle="tab"><?php echo get_text_by_lang('ID Length','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab"><?php echo get_text_by_lang('Updates','admin');?></a></li>
+                  <li class="nav-item"><a class="nav-link" href="#tab_11" data-toggle="tab"><?php echo get_text_by_lang('Opencart Paygate','admin');?></a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"><?php echo get_text_by_lang('Clean','admin');?></a></li>
                   
                 
@@ -66,6 +67,7 @@
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
+
                   <div class="tab-pane active" id="tab_1">
 
 						<div class="row" style="margin-top:10px;margin-bottom:10px;">
@@ -556,6 +558,23 @@
                   </div>
                   <!-- /.tab-pane -->
 
+				  <div class="tab-pane" id="tab_11">
+				  	<p><?php echo get_text_by_lang('Shop url','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control payment_verify_url " value="" name="general[title]" id="title" value="" />
+					</p>
+				  	<p><?php echo get_text_by_lang('Verify password','admin');?>:</p>
+					<p>
+					<input type="text" class="form-control payment_verify_password " value="" name="general[title]" id="title" value="" />
+					</p>
+				  
+					<p>
+					<button type="submit" name="btnSave" class="btn btn-info btnSavePage11"><?php echo get_text_by_lang('Save Changes','admin');?></button>
+					</p>
+				
+                  </div>
+                  <!-- /.tab-pane -->
+
                 </div>
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->
@@ -776,6 +795,56 @@ $(document).on('click','.btnSavePage4',function(){
       console.log(data); // JSON data parsed by `data.json()` call
       
       showAlertOK('','Done!');
+    });        
+});
+
+$(document).on('click','.btnSavePage11',function(){
+    var sendData={};
+
+		var jsonData={};
+    jsonData['payment_verify_url']=$('.payment_verify_url').val();
+    jsonData['payment_verify_password']=$('.payment_verify_password').val();
+
+    if(jsonData['payment_verify_url'].length==0)
+    {
+    	showAlert('','Shop url not allow blank!');
+
+    	return false;
+    }
+
+    if(jsonData['payment_verify_password'].length==0)
+    {
+    	showAlert('','Verify password not allow blank!');
+
+    	return false;
+    }
+    
+    sendData['type']='1';
+    sendData['save_data']=JSON.stringify(jsonData);
+
+    postData(API_URL+'system_setting_update', sendData).then(data => {
+      // console.log(data); // JSON data parsed by `data.json()` call
+
+      var url=$('.payment_verify_url').val();
+      var pass=$('.payment_verify_password').val();
+
+		    var sendData={};
+
+				var jsonData={};
+
+				sendData['verify_password']='<?php echo Configs::$_['payment_verify_password'];?>';
+				sendData['new_password']=pass;
+
+				postData(url+'res_api.php?api_nm=change_verify_password', sendData).then(data => {
+				  // console.log(data); // JSON data parsed by `data.json()` call
+				  
+				  showAlertOK('','Done!');
+
+				  setTimeout(function(){
+						// location.reload();
+				  }, 3000);		
+				});       
+
     });        
 });
 

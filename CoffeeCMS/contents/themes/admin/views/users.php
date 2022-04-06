@@ -546,6 +546,7 @@ $(document).on('click','.btnAdd',function(){
       $('#modalAdd').modal('hide');
       $('#modalEdit').modal('hide');
 
+      $('.btnSearch').trigger('click');
       showAlertOK('','Done!');
     }
 
