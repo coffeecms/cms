@@ -51,3 +51,11 @@
 
 ## Plugins
 - [Coffee Stats](https://github.com/coffeecms/coffeestats) : Track individual visitors using your website in real-time
+
+<div align="center">
+
+<h1>Customers:</h1>
+
+[Đọc truyện chữ](https://truyenchuhub.com/) 
+</div>
+
